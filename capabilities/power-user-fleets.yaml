@@ -1,0 +1,267 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: MarineTraffic Fleet Management
+  description: MarineTraffic Fleet Management. 4 operations. Self-contained Naftiko capability covering one MarineTraffic
+    AIS business surface.
+  tags:
+  - MarineTraffic
+  - AIS
+  - Maritime
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MARINETRAFFIC_API_KEY: MARINETRAFFIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: power-user-fleets
+    baseUri: https://services.marinetraffic.com/api
+    description: Create, modify, list, and clear vessel fleets for power-user accounts.
+    resources:
+    - name: setfleet-api_key
+      path: /setfleet/{api_key}
+      operations:
+      - name: setfleet
+        method: GET
+        description: Modify Fleet
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: mmsi
+          in: query
+          type: integer
+          description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to handle, comma separated values
+            supported </br></br> You can <b>instead</b> use imo or shipid
+          required: true
+        - name: imo
+          in: query
+          type: integer
+          description: The International Maritime Organization (IMO) number of the vessel you wish to handle, comma separated
+            values supported
+          required: false
+        - name: shipid
+          in: query
+          type: integer
+          description: A uniquely assigned ID by MarineTraffic for the subject vessel, comma separated values supported
+          required: false
+        - name: fleet_id
+          in: query
+          type: integer
+          description: If used, vessel will be added to the specific fleet, otherwise default fleet is used
+          required: false
+        - name: active
+          in: query
+          type: integer
+          description: 'Possible values are:  <ul>'
+          required: false
+        - name: delete
+          in: query
+          type: integer
+          description: Set this parameter to 1 to delete a vessel from your fleet
+          required: false
+    - name: getfleet-api_key
+      path: /getfleet/{api_key}
+      operations:
+      - name: getfleet
+        method: GET
+        description: Vessels in Fleet
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Version of the service to be executed. Use version 2 to get the latest
+          required: true
+        - name: fleet_id
+          in: query
+          type: integer
+          description: If used, will return specific fleet otherwise default fleet is used
+          required: false
+        - name: page
+          in: query
+          type: integer
+          description: Specifies the number of the results page to return. Use this parameter to navigate through paginated
+            results (with version 2) when the fleet contains more than 100 vessels.
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: getfleets-api_key
+      path: /getfleets/{api_key}
+      operations:
+      - name: getfleets
+        method: GET
+        description: List Fleets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: clearfleet-api_key
+      path: /clearfleet/{api_key}
+      operations:
+      - name: clearfleet
+        method: GET
+        description: Clear Fleet
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fleet_id
+          in: query
+          type: integer
+          description: The fleet id you wish to clear
+          required: true
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.MARINETRAFFIC_API_KEY}}'
+      placement: path
+  exposes:
+  - type: rest
+    namespace: power-user-fleets-rest
+    port: 8080
+    description: REST adapter for MarineTraffic Fleet Management. One resource per consumed operation.
+    resources:
+    - path: /v1/setfleet
+      name: setfleet-api_key
+      description: REST surface for setfleet-api_key.
+      operations:
+      - method: GET
+        name: setfleet
+        description: Modify Fleet
+        call: power-user-fleets.setfleet
+        with:
+          mmsi: rest.query.mmsi
+          imo: rest.query.imo
+          shipid: rest.query.shipid
+          fleet_id: rest.query.fleet_id
+          active: rest.query.active
+          delete: rest.query.delete
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/getfleet
+      name: getfleet-api_key
+      description: REST surface for getfleet-api_key.
+      operations:
+      - method: GET
+        name: getfleet
+        description: Vessels in Fleet
+        call: power-user-fleets.getfleet
+        with:
+          v: rest.query.v
+          fleet_id: rest.query.fleet_id
+          page: rest.query.page
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/getfleets
+      name: getfleets-api_key
+      description: REST surface for getfleets-api_key.
+      operations:
+      - method: GET
+        name: getfleets
+        description: List Fleets
+        call: power-user-fleets.getfleets
+        with:
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/clearfleet
+      name: clearfleet-api_key
+      description: REST surface for clearfleet-api_key.
+      operations:
+      - method: GET
+        name: clearfleet
+        description: Clear Fleet
+        call: power-user-fleets.clearfleet
+        with:
+          fleet_id: rest.query.fleet_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: power-user-fleets-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for MarineTraffic Fleet Management. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: marinetraffic-setfleet
+      description: Modify Fleet
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: power-user-fleets.setfleet
+      with:
+        mmsi: tools.mmsi
+        imo: tools.imo
+        shipid: tools.shipid
+        fleet_id: tools.fleet_id
+        active: tools.active
+        delete: tools.delete
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-getfleet
+      description: Vessels in Fleet
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: power-user-fleets.getfleet
+      with:
+        v: tools.v
+        fleet_id: tools.fleet_id
+        page: tools.page
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-getfleets
+      description: List Fleets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: power-user-fleets.getfleets
+      with:
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-clearfleet
+      description: Clear Fleet
+      hints:
+        readOnly: true
+        destructive: true
+        idempotent: true
+      call: power-user-fleets.clearfleet
+      with:
+        fleet_id: tools.fleet_id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,228 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: MarineTraffic Routing Information
+  description: MarineTraffic Routing Information. 2 operations. Self-contained Naftiko capability covering one MarineTraffic
+    AIS business surface.
+  tags:
+  - MarineTraffic
+  - AIS
+  - Maritime
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MARINETRAFFIC_API_KEY: MARINETRAFFIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: routing-information
+    baseUri: https://services.marinetraffic.com/api
+    description: Maritime routing and distance calculation across global sea lanes.
+    resources:
+    - name: exportroutes-api_key
+      path: /exportroutes/{api_key}
+      operations:
+      - name: exportroutes
+        method: GET
+        description: Vessel Route to Port
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: mmsi
+          in: query
+          type: integer
+          description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b>
+            use imo or shipid
+          required: true
+        - name: imo
+          in: query
+          type: integer
+          description: The International Maritime Organization (IMO) number of the vessel you wish to track
+          required: false
+        - name: shipid
+          in: query
+          type: integer
+          description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          required: false
+        - name: port_target_id
+          in: query
+          type: integer
+          description: The MarineTraffic ID of the port you wish to put as target port (found on the URL of the respective
+            Port page) or port UN/LOCODE
+          required: true
+        - name: includealternatives
+          in: query
+          type: integer
+          description: Use 1 to search for all available routes regarding the specific journey or 0 to not include alternative
+            routes
+          required: false
+        - name: includeinland
+          in: query
+          type: integer
+          description: Use 1 in order to receive routes which include inland waterways or 0 to not include alternative routes
+          required: false
+        - name: msgtype
+          in: query
+          type: string
+          description: 'Resolution of the response. Available values: <ul>'
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: exportroutes-api_key-2
+      path: /exportroutes/{api_key}
+      operations:
+      - name: exportroutes_
+        method: GET
+        description: Distance to Port
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: port_start_id
+          in: query
+          type: integer
+          description: The MarineTraffic ID of the port you wish to put as starting point (found on the URL of the respective
+            Port page) or port UN/LOCODE
+          required: true
+        - name: LAT
+          in: query
+          type: number
+          description: The latitude of the starting point </br></br> It can be used together with LON <b>instead</b> of port_start_id
+          required: false
+        - name: LON
+          in: query
+          type: integer
+          description: The longitude of the starting point </br></br> It can be used together with LAT <b>instead</b> of port_start_id
+          required: false
+        - name: port_target_id
+          in: query
+          type: integer
+          description: The MarineTraffic ID of the port you wish to put as target port (found on the URL of the respective
+            Port page) or port UN/LOCODE
+          required: true
+        - name: includealternatives
+          in: query
+          type: integer
+          description: Use 1 to search for all available routes regarding the specific journey or 0 to not include alternative
+            routes
+          required: false
+        - name: includeinland
+          in: query
+          type: integer
+          description: Use 1 in order to receive routes which include inland waterways or 0 to not include alternative routes
+          required: false
+        - name: msgtype
+          in: query
+          type: string
+          description: 'Resolution of the response. Available values: <ul>'
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.MARINETRAFFIC_API_KEY}}'
+      placement: path
+  exposes:
+  - type: rest
+    namespace: routing-information-rest
+    port: 8080
+    description: REST adapter for MarineTraffic Routing Information. One resource per consumed operation.
+    resources:
+    - path: /v1/exportroutes
+      name: exportroutes-api_key
+      description: REST surface for exportroutes-api_key.
+      operations:
+      - method: GET
+        name: exportroutes
+        description: Vessel Route to Port
+        call: routing-information.exportroutes
+        with:
+          mmsi: rest.query.mmsi
+          imo: rest.query.imo
+          shipid: rest.query.shipid
+          port_target_id: rest.query.port_target_id
+          includealternatives: rest.query.includealternatives
+          includeinland: rest.query.includeinland
+          msgtype: rest.query.msgtype
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/exportroutes
+      name: exportroutes-api_key-2
+      description: REST surface for exportroutes-api_key-2.
+      operations:
+      - method: GET
+        name: exportroutes_
+        description: Distance to Port
+        call: routing-information.exportroutes_
+        with:
+          port_start_id: rest.query.port_start_id
+          LAT: rest.query.LAT
+          LON: rest.query.LON
+          port_target_id: rest.query.port_target_id
+          includealternatives: rest.query.includealternatives
+          includeinland: rest.query.includeinland
+          msgtype: rest.query.msgtype
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: routing-information-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for MarineTraffic Routing Information. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: marinetraffic-exportroutes
+      description: Vessel Route to Port
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: routing-information.exportroutes
+      with:
+        mmsi: tools.mmsi
+        imo: tools.imo
+        shipid: tools.shipid
+        port_target_id: tools.port_target_id
+        includealternatives: tools.includealternatives
+        includeinland: tools.includeinland
+        msgtype: tools.msgtype
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-exportroutes_
+      description: Distance to Port
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: routing-information.exportroutes_
+      with:
+        port_start_id: tools.port_start_id
+        LAT: tools.LAT
+        LON: tools.LON
+        port_target_id: tools.port_target_id
+        includealternatives: tools.includealternatives
+        includeinland: tools.includeinland
+        msgtype: tools.msgtype
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.

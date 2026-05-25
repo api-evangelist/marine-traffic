@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/marine-traffic/main/json-schema/marine-traffic-vessel-position-schema.json",
+  "title": "MarineTraffic Vessel Position",
+  "description": "A single AIS-derived vessel position record as returned by the MarineTraffic AIS API (PS01–PS08 / MTA030AD families). Field semantics match the MarineTraffic AIS data dictionary at https://servicedocs.marinetraffic.com/.",
+  "type": "object",
+  "properties": {
+    "MMSI": {
+      "type": ["string","integer"],
+      "description": "Maritime Mobile Service Identity — 9-digit AIS-broadcast vessel identifier."
+    },
+    "IMO": {
+      "type": ["string","integer","null"],
+      "description": "International Maritime Organization number — permanent 7-digit vessel identifier (when known)."
+    },
+    "SHIP_ID": {
+      "type": ["string","integer"],
+      "description": "MarineTraffic internal vessel identifier."
+    },
+    "SHIPNAME": {
+      "type": ["string","null"],
+      "description": "Vessel name as broadcast via AIS Message 5."
+    },
+    "CALLSIGN": {
+      "type": ["string","null"],
+      "description": "Radio call sign assigned to the vessel."
+    },
+    "SHIPTYPE": {
+      "type": ["string","integer"],
+      "description": "AIS-coded ship type (numeric range 0–99 per ITU-R M.1371)."
+    },
+    "TYPE_NAME": {
+      "type": ["string","null"],
+      "description": "Human-readable MarineTraffic ship-type classification (e.g. \"Container Ship\", \"Tanker\")."
+    },
+    "LAT": {
+      "type": ["number","string"],
+      "description": "Latitude in WGS84 decimal degrees (-90 to 90)."
+    },
+    "LON": {
+      "type": ["number","string"],
+      "description": "Longitude in WGS84 decimal degrees (-180 to 180)."
+    },
+    "SPEED": {
+      "type": ["number","string","null"],
+      "description": "Speed Over Ground in tenths of a knot (raw AIS value); divide by 10 for SOG in knots."
+    },
+    "COURSE": {
+      "type": ["number","string","null"],
+      "description": "Course Over Ground in degrees from true north (0–359)."
+    },
+    "HEADING": {
+      "type": ["number","string","null"],
+      "description": "True heading in degrees (0–359). 511 means \"not available\"."
+    },
+    "STATUS": {
+      "type": ["string","integer","null"],
+      "description": "AIS navigational status code (0=under way using engine, 1=at anchor, 5=moored, ...)."
+    },
+    "DESTINATION": {
+      "type": ["string","null"],
+      "description": "Free-text destination as broadcast via AIS Message 5."
+    },
+    "ETA_AIS": {
+      "type": ["string","null"],
+      "format": "date-time",
+      "description": "Estimated Time of Arrival as broadcast via AIS."
+    },
+    "ETA_PREDICTED": {
+      "type": ["string","null"],
+      "format": "date-time",
+      "description": "MarineTraffic predictive ETA computed from voyage forecasting."
+    },
+    "DSRC": {
+      "type": ["string","null"],
+      "enum": ["TER","SAT",null],
+      "description": "Data source — TER (terrestrial AIS receiver) or SAT (satellite AIS)."
+    },
+    "TIMESTAMP": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp of the AIS position report."
+    },
+    "FLAG": {
+      "type": ["string","null"],
+      "description": "ISO 3166-1 alpha-2 flag-state country code."
+    },
+    "LENGTH": {
+      "type": ["number","string","null"],
+      "description": "Vessel length overall in metres."
+    },
+    "WIDTH": {
+      "type": ["number","string","null"],
+      "description": "Vessel beam in metres."
+    },
+    "DWT": {
+      "type": ["number","string","null"],
+      "description": "Deadweight tonnage in metric tons."
+    },
+    "GRT": {
+      "type": ["number","string","null"],
+      "description": "Gross registered tonnage."
+    },
+    "DRAUGHT": {
+      "type": ["number","string","null"],
+      "description": "Reported draught in tenths of a metre."
+    },
+    "CURRENT_PORT": {
+      "type": ["string","null"],
+      "description": "Resolved current-port name if the vessel is currently in port."
+    },
+    "LAST_PORT": {
+      "type": ["string","null"],
+      "description": "Last-known port departed."
+    },
+    "NEXT_PORT_NAME": {
+      "type": ["string","null"],
+      "description": "MarineTraffic-predicted next port name."
+    },
+    "NEXT_PORT_UNLOCODE": {
+      "type": ["string","null"],
+      "description": "UN/LOCODE for the predicted next port."
+    }
+  },
+  "required": ["MMSI","LAT","LON","TIMESTAMP"],
+  "additionalProperties": true
+}

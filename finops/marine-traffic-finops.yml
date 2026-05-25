@@ -1,0 +1,103 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: MarineTraffic
+providerId: marine-traffic
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - FinOps
+  - Cost Management
+  - FOCUS
+  - Maritime
+  - AIS
+description: >-
+  FOCUS-aligned FinOps profile for the MarineTraffic AIS Data API. Pricing is
+  credit-based — every API service charges N credits per response row or per
+  call against a prepaid credit balance. Cost optimization therefore lives in
+  three places: row-count discipline (filters / pagination), refresh-interval
+  awareness (cache windows), and service substitution (use VI04/VI07 instead of
+  polling PS05 for ETAs).
+sources:
+  - https://servicedocs.marinetraffic.com/
+  - https://www.kpler.com/product/maritime/data-services
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: MarineTraffic (Kpler)
+serviceCategory: Maritime Data and Analytics
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Prepaid (credit-based)
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Credit
+    - Adjustment
+  primaryUnit: credit
+  secondaryUnits:
+    - row
+    - call
+    - vessel_request
+focusColumns:
+  ServiceName: MarineTraffic AIS Data API
+  ServiceCategory: Maritime Data and Analytics
+  ProviderName: MarineTraffic
+  PublisherName: Kpler
+  InvoiceIssuerName: Kpler
+  PricingCategory: Usage-Based
+  PricingUnit: credit
+  BillingCurrency: USD
+meters:
+  - name: credits_consumed
+    unit: credit
+    aggregation: sum
+    dimensions:
+      - service_code
+      - api_key
+      - fleet_id
+      - port_id
+  - name: rows_returned
+    unit: row
+    aggregation: sum
+    dimensions:
+      - service_code
+      - api_key
+  - name: cached_responses
+    unit: call
+    aggregation: sum
+    description: Responses served inside the refresh interval (zero-cost).
+    dimensions:
+      - service_code
+      - api_key
+discountModels:
+  - name: Refresh-interval caching
+    discount: Free re-delivery of the same vessel/port/fleet inside the published refresh window.
+  - name: Volume / Enterprise
+    discount: Negotiated per-credit price for high-volume customers; contact sales.
+  - name: Bundled NMEA / cloud-database
+    discount: Enterprise bundles can mix REST API calls with live NMEA streaming or cloud-database access at a blended rate.
+unitEconomics:
+  - name: Cost per tracked vessel per day
+    metric: credits_consumed / unique_vessels_seen
+    target: Drive down via PS02/PS04 batch fleet queries (one call, many rows).
+  - name: Wasted-cache ratio
+    metric: cached_responses / total_requests
+    target: Low — repeat calls before refresh elapses indicate over-polling.
+  - name: ETA forecast vs raw-position polling
+    metric: cost(VI01+VI07) / cost(equivalent PS05 polling)
+    target: Use VI01/VI07 for ETA needs — they are far cheaper than minute-by-minute PS05 polling.
+principles:
+  - name: Visibility
+    description: Poll /exportcredits/{api_key} (PU06) regularly and ship the balance to a metric store; it is free.
+  - name: Allocation
+    description: Issue separate API keys per workload / customer / fleet so credit burn maps to a chargeback dimension.
+  - name: Optimization
+    description: Batch fleets, respect refresh intervals, prefer predictive services (VI*) over polling.
+  - name: Accountability
+    description: Set internal soft-budgets per fleet / customer; alert at 70 / 90 / 100 % of credit-balance burn.

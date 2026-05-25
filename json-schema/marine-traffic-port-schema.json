@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/marine-traffic/main/json-schema/marine-traffic-port-schema.json",
+  "title": "MarineTraffic Port",
+  "description": "A port entity in the MarineTraffic ports database — used by Ports Information (VI02/VI05/VI06), Events (EV01/EV03), and Reverse Geocoding (GI01).",
+  "type": "object",
+  "properties": {
+    "PORT_ID": {"type":["string","integer"],"description":"MarineTraffic internal port identifier."},
+    "PORT_NAME": {"type":"string","description":"Port name."},
+    "UNLOCODE": {"type":["string","null"],"description":"UN/LOCODE (e.g. NLRTM)."},
+    "COUNTRY_CODE": {"type":["string","null"],"description":"ISO 3166-1 alpha-2 country code."},
+    "COUNTRY_NAME": {"type":["string","null"],"description":"Country name."},
+    "LAT": {"type":["number","string"],"description":"Latitude in WGS84 decimal degrees."},
+    "LON": {"type":["number","string"],"description":"Longitude in WGS84 decimal degrees."},
+    "TYPE": {"type":["string","null"],"description":"Port type (e.g. \"Port\", \"Anchorage\", \"Terminal\")."},
+    "TIMEZONE": {"type":["string","null"],"description":"IANA timezone identifier (e.g. \"Europe/Amsterdam\")."},
+    "VESSELS_IN_PORT": {"type":["integer","string","null"],"description":"Count of vessels currently inside the port boundary."},
+    "EXPECTED_ARRIVALS_24H": {"type":["integer","string","null"],"description":"Count of vessels with predictive ETA in next 24h."},
+    "CONGESTION_INDEX": {"type":["number","string","null"],"description":"Port-congestion index (VI06) for the requested period."}
+  },
+  "required":["PORT_ID","PORT_NAME","LAT","LON"],
+  "additionalProperties": true
+}

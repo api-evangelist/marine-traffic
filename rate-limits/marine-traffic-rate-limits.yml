@@ -1,0 +1,101 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: MarineTraffic
+providerId: marine-traffic
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Maritime
+  - AIS
+  - Quotas
+  - Credits
+description: >-
+  Reconciled rate-limit and quota policy for the MarineTraffic AIS Data API.
+  Unlike per-second token-bucket APIs, MarineTraffic primarily meters by
+  credits-per-row against a prepaid credit balance, layered with a per-service
+  refresh interval ("call frequency") that defines how often a given vessel /
+  fleet / port can be re-queried before responses are served from cache.
+sources:
+  - https://servicedocs.marinetraffic.com/
+  - https://support.marinetraffic.com/en/articles/9552659-api-services
+  - https://support.marinetraffic.com/en/articles/9552800-api-most-common-response-error-codes
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+  notEnoughCredits: 402
+  unauthorized: 401
+  badRequest: 400
+algorithm: credits-and-refresh-interval
+authentication:
+  type: apikey
+  placement: path
+  name: api_key
+  note: Every request URL must include /{api_key}; share or rotation requires reissuing the key.
+quotas:
+  - name: Credit balance
+    description: >-
+      Each account has a pre-purchased credit balance. Every API call
+      decrements the balance by a service-specific number of credits
+      (typically per response row).
+    metric: credit
+    enforced: per-account
+  - name: Free trial
+    description: New accounts receive a one-time pool of trial credits.
+    metric: credit
+    enforced: per-account
+refreshIntervals:
+  description: >-
+    Per-service minimum-call-frequency caps the rate at which a given
+    vessel/port/fleet can be polled. Repeat requests inside the interval are
+    served from cache without consuming credits (and without delivering
+    fresher data). Exact values are published inline in each service section
+    of the AIS Data API Reference.
+  examples:
+    - service: PS02 / PS03 / PS04 (Vessel Positions — fleet, area, ports)
+      typicalInterval: 2 minutes
+    - service: PS05 (Vessel Positions — single vessel)
+      typicalInterval: 2 minutes
+    - service: PS06 (Vessel Positions — Custom Area)
+      typicalInterval: 2 minutes
+    - service: PS07 (Single Vessel)
+      typicalInterval: 2 minutes
+    - service: VI01 (Voyage Forecast)
+      typicalInterval: 2 minutes
+    - service: VI02 (Expected Port Arrivals)
+      typicalInterval: 10 minutes
+    - service: VI06 (Port Congestion)
+      typicalInterval: 1 hour
+    - service: VD02 (Vessel Master Data)
+      typicalInterval: 24 hours
+    - service: GI01 (Reverse Geocoding)
+      typicalInterval: 0 (no caching window)
+ipAndConcurrency:
+  description: >-
+    No published per-second RPS or per-IP cap — practical concurrency is
+    governed by credit-balance burn rate and per-service refresh intervals.
+    Enterprise contracts can negotiate dedicated concurrency and direct NMEA
+    streams.
+errorBehavior:
+  - code: 401
+    label: Unauthorized
+    cause: Missing or invalid API key.
+  - code: 402
+    label: Payment required
+    cause: Insufficient credit balance for the requested service.
+  - code: 403
+    label: Forbidden
+    cause: API key not enabled for this service or for the requested area.
+  - code: 429
+    label: Too many requests
+    cause: Same vessel / fleet / port queried before refresh interval elapsed.
+policies:
+  - name: Cache-aware billing
+    description: Repeat requests inside the refresh window are served from cache and do NOT decrement credits.
+  - name: Live vs delayed AIS
+    description: >-
+      Default AIS feed is delayed by 1 hour. Real-time (1-minute) AIS access
+      is a premium contract upgrade.
+  - name: Pre-purchase credits
+    description: Buy credits in advance to absorb usage spikes — there is no monthly auto-throttle once credits are exhausted.

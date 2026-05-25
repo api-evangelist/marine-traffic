@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/marine-traffic/main/json-schema/marine-traffic-voyage-forecast-schema.json",
+  "title": "MarineTraffic Voyage Forecast",
+  "description": "Machine-learning–derived voyage forecast for a vessel — destination prediction, ETA, route, and probability — as returned by VI01 / VI04 / VI07.",
+  "type": "object",
+  "properties": {
+    "MMSI": {"type":["string","integer"],"description":"Vessel MMSI."},
+    "IMO": {"type":["string","integer","null"],"description":"Vessel IMO."},
+    "SHIP_ID": {"type":["string","integer"],"description":"MarineTraffic internal vessel ID."},
+    "PREDICTED_DESTINATION_PORT": {
+      "type":["string","null"],
+      "description":"Predicted destination port name."
+    },
+    "PREDICTED_DESTINATION_UNLOCODE": {
+      "type":["string","null"],
+      "description":"UN/LOCODE of the predicted destination port."
+    },
+    "PREDICTED_DESTINATION_PROBABILITY": {
+      "type":["number","string","null"],
+      "description":"Probability score (0.0–1.0) for the destination prediction."
+    },
+    "PREDICTED_ETA_UTC": {
+      "type":["string","null"],
+      "format":"date-time",
+      "description":"Predictive ETA in UTC."
+    },
+    "AIS_DESTINATION": {
+      "type":["string","null"],
+      "description":"AIS-broadcast destination (raw text)."
+    },
+    "AIS_ETA_UTC": {
+      "type":["string","null"],
+      "format":"date-time",
+      "description":"AIS-broadcast ETA in UTC."
+    },
+    "SPEED_AVG_KN": {
+      "type":["number","string","null"],
+      "description":"Average speed used in the ETA calculation, in knots."
+    },
+    "ROUTE_DISTANCE_NM": {
+      "type":["number","string","null"],
+      "description":"Predicted route distance to destination, in nautical miles."
+    },
+    "DESTINATION_AREAS": {
+      "type":["array","null"],
+      "items":{
+        "type":"object",
+        "properties":{
+          "PORT_ID":{"type":["string","integer"]},
+          "PORT_NAME":{"type":"string"},
+          "UNLOCODE":{"type":["string","null"]},
+          "PROBABILITY":{"type":["number","string"]}
+        },
+        "additionalProperties": true
+      },
+      "description":"Ranked list of probable destination ports (VI04)."
+    },
+    "GENERATED_AT_UTC": {
+      "type":"string",
+      "format":"date-time",
+      "description":"UTC timestamp the forecast was generated."
+    }
+  },
+  "required":["MMSI"],
+  "additionalProperties": true
+}

@@ -1,0 +1,117 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: MarineTraffic
+providerId: marine-traffic
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Maritime
+  - AIS
+  - Vessel Tracking
+  - Credits
+description: >-
+  MarineTraffic / Kpler maritime data services price every API request in
+  "credits". Credits are pre-purchased in packages or consumed under negotiated
+  enterprise contracts. The exact credit cost varies per service code (PS01,
+  PS02, ..., VI06, ...) and per row/result returned. The plans below reflect
+  the published self-serve credit packages and the enterprise contract surface;
+  point your sales conversation at https://www.kpler.com/product/maritime/data-services.
+sources:
+  - https://servicedocs.marinetraffic.com/
+  - https://www.kpler.com/product/maritime/data-services
+  - https://support.marinetraffic.com/en/articles/9552659-api-services
+billingModel: credit-based
+billingUnit: credit
+notes:
+  - Every API service maps to a credit cost per row / per request — published
+    in the MarineTraffic service docs ("Credits per row").
+  - Some services (e.g. exportcredits / PU06) are free / unmetered for account
+    holders.
+  - Free trial credits are typically granted on new accounts; contact sales
+    for current promotional amounts.
+plans:
+  - id: marine-traffic-self-serve
+    name: Self-Serve API Credits
+    type: prepaid
+    description: >-
+      Self-serve credit packages purchasable through the MarineTraffic account
+      portal. Credits never expire but are consumed against the per-service
+      "credits per row" tariffs published in the API docs.
+    entries:
+      - label: API credits (self-serve)
+        name: api_credits
+        type: prepaid
+        metric: credit
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'contact-sales'
+        userMultiplied: false
+        description: >-
+          Credit packages start at small self-serve bundles. Public per-credit
+          price is not posted on the site; contact MarineTraffic / Kpler.
+  - id: marine-traffic-enterprise
+    name: Enterprise / Negotiated
+    type: enterprise
+    description: >-
+      Custom enterprise contracts for high-volume API consumers, NMEA live
+      streams, bulk CSV deliveries, and cloud-database access. Used by traders,
+      port operators, logistics managers, government authorities, and insurers.
+    entries:
+      - label: Enterprise contract
+        name: enterprise_contract
+        type: contract
+        metric: contract
+        limit: -1
+        timeFrame: annual
+        geo: global
+        price: 'contact-sales'
+        userMultiplied: false
+        description: Negotiated annual contract — pricing varies by data scope and access mode.
+servicesCreditPricing:
+  description: Indicative credit costs per service family (per row of response).
+  source: https://servicedocs.marinetraffic.com/
+  families:
+    - service: PS01 (Vessel Historical Track)
+      unit: credits_per_row
+    - service: PS02–PS05 (Vessel Positions in Area / Fleet)
+      unit: credits_per_row
+    - service: PS06 (Vessel Positions in Custom Area)
+      unit: credits_per_row
+    - service: PS07–PS08 (Single Vessel / Custom Area)
+      unit: credits_per_row
+    - service: EV01 (Port Calls)
+      unit: credits_per_row
+    - service: EV02 (Single Vessel Events)
+      unit: credits_per_row
+    - service: EV03 (Berth Calls)
+      unit: credits_per_row
+    - service: VD01 (Vessel Photo)
+      unit: credits_per_call
+    - service: VD02 (Vessel Master Data)
+      unit: credits_per_row
+    - service: VD03 (Search Vessel)
+      unit: credits_per_row
+    - service: VI01 (Voyage Forecast)
+      unit: credits_per_row
+    - service: VI02 (Expected Port Arrivals)
+      unit: credits_per_row
+    - service: VI03 (Routes / Distance)
+      unit: credits_per_row
+    - service: VI04 (Predictive Destination Areas)
+      unit: credits_per_row
+    - service: VI05 (Predictive Arrivals)
+      unit: credits_per_row
+    - service: VI06 (Port Congestion)
+      unit: credits_per_row
+    - service: VI07 (ETA to Port)
+      unit: credits_per_row
+    - service: GI01 (Reverse Geocoding)
+      unit: credits_per_call
+    - service: PU01–PU05 (Fleet Management)
+      unit: free
+    - service: PU06 (Credits Balance)
+      unit: free

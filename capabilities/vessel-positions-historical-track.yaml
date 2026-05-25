@@ -1,0 +1,290 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: MarineTraffic Vessel Historical Track
+  description: MarineTraffic Vessel Historical Track. 2 operations. Self-contained Naftiko capability covering one MarineTraffic
+    AIS business surface.
+  tags:
+  - MarineTraffic
+  - AIS
+  - Maritime
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MARINETRAFFIC_API_KEY: MARINETRAFFIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: vessel-positions-historical-track
+    baseUri: https://services.marinetraffic.com/api
+    description: Retrieve historical AIS track for a vessel over a defined time window.
+    resources:
+    - name: exportvesseltrack-api_key
+      path: /exportvesseltrack/{api_key}
+      operations:
+      - name: exportvesseltrack
+        method: GET
+        description: Single Vessel Historical Positions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Version of the service to be executed. Use version 3 to get the latest
+          required: false
+        - name: shipid
+          in: query
+          type: integer
+          description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use
+            imo or mmsi
+          required: true
+        - name: mmsi
+          in: query
+          type: integer
+          description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+          required: false
+        - name: imo
+          in: query
+          type: integer
+          description: The International Maritime Organization (IMO) number of the vessel you wish to track
+          required: false
+        - name: days
+          in: query
+          type: integer
+          description: The number of days, starting from the time of request and going backwards, for which the response should
+            look for position data </br></br> Maximum value is 190 (days)
+          required: true
+        - name: fromdate
+          in: query
+          type: string
+          description: Use with todate <b>instead</b> of days to get data for a date period
+          required: false
+        - name: todate
+          in: query
+          type: string
+          description: Use with fromdate <b>instead</b> of days to get data for a date period
+          required: false
+        - name: period
+          in: query
+          type: string
+          description: 'Limit position per vessel. Omit to get all the available positions </br></br> Values are: <ul>'
+          required: false
+        - name: msgtype
+          in: query
+          type: string
+          description: 'Resolution of the response. Available values: <ul>'
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: exportvesseltrack-api_key-2
+      path: /exportvesseltrack/{api_key}
+      operations:
+      - name: exportvesseltrack_
+        method: GET
+        description: Vessel Historical Positions in an Area
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Version of the service to be executed. Use version 3 to get the latest
+          required: false
+        - name: days
+          in: query
+          type: integer
+          description: The number of days, starting from the time of request and going backwards, for which the response should
+            look for position data </br></br> Maximum value is 190 (days)
+          required: true
+        - name: fromdate
+          in: query
+          type: string
+          description: Use with todate <b>instead</b> of days to get data for a date period
+          required: false
+        - name: todate
+          in: query
+          type: string
+          description: Use with fromdate <b>instead</b> of days to get data for a date period
+          required: false
+        - name: MINLAT
+          in: query
+          type: number
+          description: Use with MAXLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical
+            vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT
+            + MAXLON - MINLON has to
+          required: true
+        - name: MAXLAT
+          in: query
+          type: number
+          description: Use with MINLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical
+            vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT
+            + MAXLON - MINLON has to
+          required: true
+        - name: MINLON
+          in: query
+          type: number
+          description: Use with MINLAT, MAXLAT, MAXLON to define an area for which you wish to either get all the historical
+            vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT
+            + MAXLON - MINLON has to
+          required: true
+        - name: MAXLON
+          in: query
+          type: number
+          description: Use with MINLAT, MAXLAT, MINLON to define an area for which you wish to either get all the historical
+            vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT
+            + MAXLON - MINLON has to
+          required: true
+        - name: shipid
+          in: query
+          type: integer
+          description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use
+            imo or mmsi
+          required: false
+        - name: mmsi
+          in: query
+          type: integer
+          description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+          required: false
+        - name: imo
+          in: query
+          type: integer
+          description: The International Maritime Organization (IMO) number of the vessel you wish to track
+          required: false
+        - name: period
+          in: query
+          type: string
+          description: 'Limit position per vessel. Omit to get all the available positions </br></br> Values are: <ul>'
+          required: false
+        - name: msgtype
+          in: query
+          type: string
+          description: 'Resolution of the response. Available values: <ul>'
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.MARINETRAFFIC_API_KEY}}'
+      placement: path
+  exposes:
+  - type: rest
+    namespace: vessel-positions-historical-track-rest
+    port: 8080
+    description: REST adapter for MarineTraffic Vessel Historical Track. One resource per consumed operation.
+    resources:
+    - path: /v1/exportvesseltrack
+      name: exportvesseltrack-api_key
+      description: REST surface for exportvesseltrack-api_key.
+      operations:
+      - method: GET
+        name: exportvesseltrack
+        description: Single Vessel Historical Positions
+        call: vessel-positions-historical-track.exportvesseltrack
+        with:
+          v: rest.query.v
+          shipid: rest.query.shipid
+          mmsi: rest.query.mmsi
+          imo: rest.query.imo
+          days: rest.query.days
+          fromdate: rest.query.fromdate
+          todate: rest.query.todate
+          period: rest.query.period
+          msgtype: rest.query.msgtype
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/exportvesseltrack
+      name: exportvesseltrack-api_key-2
+      description: REST surface for exportvesseltrack-api_key-2.
+      operations:
+      - method: GET
+        name: exportvesseltrack_
+        description: Vessel Historical Positions in an Area
+        call: vessel-positions-historical-track.exportvesseltrack_
+        with:
+          v: rest.query.v
+          days: rest.query.days
+          fromdate: rest.query.fromdate
+          todate: rest.query.todate
+          MINLAT: rest.query.MINLAT
+          MAXLAT: rest.query.MAXLAT
+          MINLON: rest.query.MINLON
+          MAXLON: rest.query.MAXLON
+          shipid: rest.query.shipid
+          mmsi: rest.query.mmsi
+          imo: rest.query.imo
+          period: rest.query.period
+          msgtype: rest.query.msgtype
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: vessel-positions-historical-track-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for MarineTraffic Vessel Historical Track. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: marinetraffic-exportvesseltrack
+      description: Single Vessel Historical Positions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vessel-positions-historical-track.exportvesseltrack
+      with:
+        v: tools.v
+        shipid: tools.shipid
+        mmsi: tools.mmsi
+        imo: tools.imo
+        days: tools.days
+        fromdate: tools.fromdate
+        todate: tools.todate
+        period: tools.period
+        msgtype: tools.msgtype
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-exportvesseltrack_
+      description: Vessel Historical Positions in an Area
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vessel-positions-historical-track.exportvesseltrack_
+      with:
+        v: tools.v
+        days: tools.days
+        fromdate: tools.fromdate
+        todate: tools.todate
+        MINLAT: tools.MINLAT
+        MAXLAT: tools.MAXLAT
+        MINLON: tools.MINLON
+        MAXLON: tools.MAXLON
+        shipid: tools.shipid
+        mmsi: tools.mmsi
+        imo: tools.imo
+        period: tools.period
+        msgtype: tools.msgtype
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.

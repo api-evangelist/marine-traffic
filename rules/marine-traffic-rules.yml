@@ -1,0 +1,104 @@
+extends:
+  - [spectral:oas, recommended]
+documentationUrl: https://servicedocs.marinetraffic.com/
+functions: []
+rules:
+  marinetraffic-server-base:
+    description: All MarineTraffic AIS API specs must declare the canonical services.marinetraffic.com base server.
+    severity: error
+    given: $.servers
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          minItems: 1
+          contains:
+            type: object
+            properties:
+              url:
+                type: string
+                pattern: '^https://services\.marinetraffic\.com'
+            required: [url]
+
+  marinetraffic-api-key-in-path:
+    description: MarineTraffic operations authenticate via an `api_key` path parameter — every path must end in `/{api_key}`.
+    severity: warn
+    given: $.paths.*
+    then:
+      function: pattern
+      field: '@key'
+      functionOptions:
+        match: '.*\{api_key\}\s*$'
+
+  marinetraffic-operation-summary-title-case:
+    description: Operation summaries must use Title Case.
+    severity: warn
+    given: $.paths[*][get,post,put,delete,patch].summary
+    then:
+      function: pattern
+      functionOptions:
+        match: '^([A-Z][\\w''-]*)( (?:[A-Z][\\w''-]*|of|the|and|in|to|for|by|on|at|a|an|or|with|via))*$'
+
+  marinetraffic-operation-must-have-tag:
+    description: Each operation must declare exactly one tag drawn from the MarineTraffic taxonomy.
+    severity: error
+    given: $.paths[*][get,post,put,delete,patch]
+    then:
+      field: tags
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            type: string
+            enum:
+              - AIS API
+              - Vessel Positions (Legacy API)
+              - Vessel Historical Track
+              - Single Vessel Events
+              - Port Events
+              - Vessel Information
+              - Search Vessel
+              - Voyage Information
+              - Ports Information
+              - Routing Information
+              - Reverse Geocoding
+              - Fleets
+              - Balances
+              - Passage Plans
+              - Containers API
+              - MT Inbox
+
+  marinetraffic-response-content-json:
+    description: GET responses should declare an `application/json` content type. CSV / JSONO variants are allowed via the `protocol` parameter but JSON must be the default.
+    severity: info
+    given: $.paths[*][get].responses['200'].content
+    then:
+      function: truthy
+      field: 'application/json'
+
+  marinetraffic-no-trailing-slashes-in-paths:
+    description: Paths must not contain trailing whitespace (Redocly-style operation overloading creates duplicate path keys — not portable).
+    severity: warn
+    given: $.paths
+    then:
+      function: pattern
+      field: '@key'
+      functionOptions:
+        notMatch: '\s+$'
+
+  marinetraffic-parameter-protocol-enum:
+    description: When a `protocol` query parameter exists, its schema must enumerate json / jsono / csv / xml.
+    severity: warn
+    given: $..parameters[?(@.name=='protocol')].schema
+    then:
+      field: enum
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            enum: [json, jsono, csv, xml]

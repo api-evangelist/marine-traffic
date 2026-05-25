@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/marine-traffic/main/json-schema/marine-traffic-port-call-schema.json",
+  "title": "MarineTraffic Port Call",
+  "description": "A single port-call (or berth-call) record returned by the MarineTraffic Events endpoints (EV01 / EV03). One record per move type (Arrival / Departure) per vessel per port visit.",
+  "type": "object",
+  "properties": {
+    "MMSI": {
+      "type": ["string","integer"],
+      "description": "MMSI of the vessel making the call."
+    },
+    "IMO": {
+      "type": ["string","integer","null"],
+      "description": "IMO number of the vessel."
+    },
+    "SHIP_ID": {
+      "type": ["string","integer"],
+      "description": "MarineTraffic internal vessel identifier."
+    },
+    "SHIPNAME": {
+      "type": ["string","null"],
+      "description": "Vessel name."
+    },
+    "SHIPTYPE": {
+      "type": ["string","integer"],
+      "description": "AIS ship type code."
+    },
+    "TYPE_NAME": {
+      "type": ["string","null"],
+      "description": "Human-readable ship type."
+    },
+    "MOVE_TYPE": {
+      "type": "integer",
+      "enum": [0,1],
+      "description": "0 = Arrival, 1 = Departure."
+    },
+    "PORT_ID": {
+      "type": ["string","integer"],
+      "description": "MarineTraffic internal port identifier."
+    },
+    "PORT_NAME": {
+      "type": "string",
+      "description": "Human-readable port name."
+    },
+    "UNLOCODE": {
+      "type": ["string","null"],
+      "description": "UN/LOCODE for the port (e.g. NLRTM for Rotterdam)."
+    },
+    "COUNTRY_CODE": {
+      "type": ["string","null"],
+      "description": "ISO 3166-1 alpha-2 country code of the port."
+    },
+    "TIMESTAMP_LT": {
+      "type": "string",
+      "description": "Local-time timestamp of the call (port-local timezone)."
+    },
+    "TIMESTAMP_UTC": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp of the call."
+    },
+    "DRAUGHT": {
+      "type": ["number","string","null"],
+      "description": "Reported draught at the time of the call (tenths of a metre)."
+    },
+    "DESTINATION": {
+      "type": ["string","null"],
+      "description": "AIS-broadcast destination at the time of the call."
+    },
+    "ETA_UTC": {
+      "type": ["string","null"],
+      "format": "date-time",
+      "description": "AIS-broadcast ETA at the time of the call."
+    },
+    "VOYAGE_DURATION": {
+      "type": ["number","string","null"],
+      "description": "Voyage duration in hours since the previous departure event."
+    },
+    "TIME_IN_PORT": {
+      "type": ["number","string","null"],
+      "description": "Time in port in hours (set on Departure events)."
+    },
+    "BERTH_NAME": {
+      "type": ["string","null"],
+      "description": "Name of the berth touched (berth-calls only)."
+    },
+    "BERTH_ID": {
+      "type": ["string","integer","null"],
+      "description": "MarineTraffic internal berth identifier."
+    },
+    "TERMINAL_ID": {
+      "type": ["string","integer","null"],
+      "description": "MarineTraffic internal terminal identifier."
+    },
+    "MARKET": {
+      "type": ["string","null"],
+      "description": "Market classification (e.g. \"Containers\", \"Oil/Chemical Tankers\")."
+    },
+    "DWT": {
+      "type": ["number","string","null"],
+      "description": "Deadweight tonnage at time of call."
+    },
+    "GT": {
+      "type": ["number","string","null"],
+      "description": "Gross tonnage at time of call."
+    }
+  },
+  "required": ["MMSI","PORT_ID","MOVE_TYPE","TIMESTAMP_UTC"],
+  "additionalProperties": true
+}

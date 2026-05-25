@@ -1,0 +1,452 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: MarineTraffic Single Vessel Events
+  description: MarineTraffic Single Vessel Events. 3 operations. Self-contained Naftiko capability covering one MarineTraffic
+    AIS business surface.
+  tags:
+  - MarineTraffic
+  - AIS
+  - Maritime
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MARINETRAFFIC_API_KEY: MARINETRAFFIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: events-single-vessel
+    baseUri: https://services.marinetraffic.com/api
+    description: Port calls, berth calls and event timelines scoped to a specific vessel.
+    resources:
+    - name: portcalls-api_key
+      path: /portcalls/{api_key}
+      operations:
+      - name: portcalls
+        method: GET
+        description: Single Vessel Port Calls
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Version of the service to be executed. Use version 6 to get the latest
+          required: true
+        - name: shipid
+          in: query
+          type: integer
+          description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use
+            imo or mmsi
+          required: true
+        - name: mmsi
+          in: query
+          type: integer
+          description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+          required: false
+        - name: imo
+          in: query
+          type: integer
+          description: The International Maritime Organization (IMO) number of the vessel you wish to track
+          required: false
+        - name: timespan
+          in: query
+          type: integer
+          description: The maximum age, in minutes, of the returned port calls. Maximum value is 2880
+          required: false
+        - name: movetype
+          in: query
+          type: integer
+          description: Use 0 to only receive arrivals or 1 to only receive departures. If not used, the response will include
+            both
+          required: false
+        - name: exclude_intransit
+          in: query
+          type: integer
+          description: Use 1 to exclude vessels in transit
+          required: false
+        - name: fromdate
+          in: query
+          type: string
+          description: 'Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD
+            HH:MM'
+          required: false
+        - name: todate
+          in: query
+          type: string
+          description: 'Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD
+            HH:MM'
+          required: false
+        - name: dwt_min
+          in: query
+          type: integer
+          description: 'Data filter: minimum DWT </br></br> Applicable to IMO-having vessels'
+          required: false
+        - name: dwt_max
+          in: query
+          type: integer
+          description: 'Data filter: maximum DWT </br></br> Applicable to IMO-having vessels'
+          required: false
+        - name: gt_min
+          in: query
+          type: integer
+          description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels'
+          required: false
+        - name: gt_max
+          in: query
+          type: integer
+          description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels'
+          required: false
+        - name: market
+          in: query
+          type: string
+          description: Define market(s) for which you would like to receive port calls (single or comma separated values)
+            - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-clas
+          required: false
+        - name: msgtype
+          in: query
+          type: string
+          description: 'Resolution of the response. Available values: <ul>'
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: vesselevents-api_key
+      path: /vesselevents/{api_key}
+      operations:
+      - name: vesselevents
+        method: GET
+        description: Single Vessel Events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Version of the service to be executed. Use version 2 to get the latest
+          required: true
+        - name: shipid
+          in: query
+          type: integer
+          description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use
+            imo or mmsi
+          required: true
+        - name: mmsi
+          in: query
+          type: integer
+          description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+          required: false
+        - name: imo
+          in: query
+          type: integer
+          description: The International Maritime Organization (IMO) number of the vessel you wish to track
+          required: false
+        - name: timespan
+          in: query
+          type: integer
+          description: The maximum age, in minutes, of the returned port calls. Maximum value is 2880
+          required: false
+        - name: fromdate
+          in: query
+          type: string
+          description: 'Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+          required: false
+        - name: todate
+          in: query
+          type: string
+          description: 'Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+          required: false
+        - name: event_type
+          in: query
+          type: integer
+          description: You may use one or more event ids in comma separated format for the events you wish to receive
+          required: false
+        - name: limit_events
+          in: query
+          type: integer
+          description: Limit the number of results
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: berth-calls-api_key
+      path: /berth-calls/{api_key}
+      operations:
+      - name: berth-calls
+        method: GET
+        description: Single Vessel Berth Calls
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Version of the service to be executed. Use version 3 to get the latest
+          required: true
+        - name: shipid
+          in: query
+          type: integer
+          description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use
+            imo or mmsi
+          required: true
+        - name: mmsi
+          in: query
+          type: integer
+          description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+          required: false
+        - name: imo
+          in: query
+          type: integer
+          description: The International Maritime Organization (IMO) number of the vessel you wish to track
+          required: false
+        - name: timespan
+          in: query
+          type: integer
+          description: The maximum age, in minutes, of the returned port calls. Maximum value is 2880
+          required: false
+        - name: fromdate
+          in: query
+          type: string
+          description: 'Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or greater than provided fromdate. Maximum
+            period requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS.'
+          required: false
+        - name: todate
+          in: query
+          type: string
+          description: 'Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or less than provided todate. Maximum period
+            requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+          required: false
+        - name: market
+          in: query
+          type: string
+          description: Define market for which you would like to receive berth calls - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+            <ul>
+          required: false
+        - name: shipclass
+          in: query
+          type: integer
+          description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+          required: false
+        - name: dwt_min
+          in: query
+          type: integer
+          description: 'Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+            = 7,8)'
+          required: false
+        - name: dwt_max
+          in: query
+          type: integer
+          description: 'Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+            = 7,8)'
+          required: false
+        - name: gt_min
+          in: query
+          type: integer
+          description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels'
+          required: false
+        - name: gt_max
+          in: query
+          type: integer
+          description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels'
+          required: false
+        - name: movetype
+          in: query
+          type: integer
+          description: Use 0 to include both, 1 to only receive dockings or 2 for only undockings within the defined period.
+            If not used, only dockings are returned </br></br> <b>Available only from version 2 of the service</b>
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+        - name: msgtype
+          in: query
+          type: string
+          description: 'Resolution of the response. Available values: <ul>'
+          required: false
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.MARINETRAFFIC_API_KEY}}'
+      placement: path
+  exposes:
+  - type: rest
+    namespace: events-single-vessel-rest
+    port: 8080
+    description: REST adapter for MarineTraffic Single Vessel Events. One resource per consumed operation.
+    resources:
+    - path: /v1/portcalls
+      name: portcalls-api_key
+      description: REST surface for portcalls-api_key.
+      operations:
+      - method: GET
+        name: portcalls
+        description: Single Vessel Port Calls
+        call: events-single-vessel.portcalls
+        with:
+          v: rest.query.v
+          shipid: rest.query.shipid
+          mmsi: rest.query.mmsi
+          imo: rest.query.imo
+          timespan: rest.query.timespan
+          movetype: rest.query.movetype
+          exclude_intransit: rest.query.exclude_intransit
+          fromdate: rest.query.fromdate
+          todate: rest.query.todate
+          dwt_min: rest.query.dwt_min
+          dwt_max: rest.query.dwt_max
+          gt_min: rest.query.gt_min
+          gt_max: rest.query.gt_max
+          market: rest.query.market
+          msgtype: rest.query.msgtype
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/vesselevents
+      name: vesselevents-api_key
+      description: REST surface for vesselevents-api_key.
+      operations:
+      - method: GET
+        name: vesselevents
+        description: Single Vessel Events
+        call: events-single-vessel.vesselevents
+        with:
+          v: rest.query.v
+          shipid: rest.query.shipid
+          mmsi: rest.query.mmsi
+          imo: rest.query.imo
+          timespan: rest.query.timespan
+          fromdate: rest.query.fromdate
+          todate: rest.query.todate
+          event_type: rest.query.event_type
+          limit_events: rest.query.limit_events
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/berth-calls
+      name: berth-calls-api_key
+      description: REST surface for berth-calls-api_key.
+      operations:
+      - method: GET
+        name: berth-calls
+        description: Single Vessel Berth Calls
+        call: events-single-vessel.berth-calls
+        with:
+          v: rest.query.v
+          shipid: rest.query.shipid
+          mmsi: rest.query.mmsi
+          imo: rest.query.imo
+          timespan: rest.query.timespan
+          fromdate: rest.query.fromdate
+          todate: rest.query.todate
+          market: rest.query.market
+          shipclass: rest.query.shipclass
+          dwt_min: rest.query.dwt_min
+          dwt_max: rest.query.dwt_max
+          gt_min: rest.query.gt_min
+          gt_max: rest.query.gt_max
+          movetype: rest.query.movetype
+          protocol: rest.query.protocol
+          msgtype: rest.query.msgtype
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: events-single-vessel-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for MarineTraffic Single Vessel Events. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: marinetraffic-portcalls
+      description: Single Vessel Port Calls
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: events-single-vessel.portcalls
+      with:
+        v: tools.v
+        shipid: tools.shipid
+        mmsi: tools.mmsi
+        imo: tools.imo
+        timespan: tools.timespan
+        movetype: tools.movetype
+        exclude_intransit: tools.exclude_intransit
+        fromdate: tools.fromdate
+        todate: tools.todate
+        dwt_min: tools.dwt_min
+        dwt_max: tools.dwt_max
+        gt_min: tools.gt_min
+        gt_max: tools.gt_max
+        market: tools.market
+        msgtype: tools.msgtype
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-vesselevents
+      description: Single Vessel Events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: events-single-vessel.vesselevents
+      with:
+        v: tools.v
+        shipid: tools.shipid
+        mmsi: tools.mmsi
+        imo: tools.imo
+        timespan: tools.timespan
+        fromdate: tools.fromdate
+        todate: tools.todate
+        event_type: tools.event_type
+        limit_events: tools.limit_events
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-berth-calls
+      description: Single Vessel Berth Calls
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: events-single-vessel.berth-calls
+      with:
+        v: tools.v
+        shipid: tools.shipid
+        mmsi: tools.mmsi
+        imo: tools.imo
+        timespan: tools.timespan
+        fromdate: tools.fromdate
+        todate: tools.todate
+        market: tools.market
+        shipclass: tools.shipclass
+        dwt_min: tools.dwt_min
+        dwt_max: tools.dwt_max
+        gt_min: tools.gt_min
+        gt_max: tools.gt_max
+        movetype: tools.movetype
+        protocol: tools.protocol
+        msgtype: tools.msgtype
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,89 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: MarineTraffic Passage Plans
+  description: MarineTraffic Passage Plans. 1 operations. Self-contained Naftiko capability covering one MarineTraffic AIS
+    business surface.
+  tags:
+  - MarineTraffic
+  - AIS
+  - Maritime
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MARINETRAFFIC_API_KEY: MARINETRAFFIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: power-user-passage-plans
+    baseUri: https://services.marinetraffic.com/api
+    description: Import passage plans for power-user fleet operations.
+    resources:
+    - name: import-passage-plan-api_key
+      path: /import-passage-plan/{api_key}
+      operations:
+      - name: import-passage-plan
+        method: POST
+        description: Import Passage Plan
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Content-Type
+          in: header
+          type: string
+          description: Request's Content-Type
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.MARINETRAFFIC_API_KEY}}'
+      placement: path
+  exposes:
+  - type: rest
+    namespace: power-user-passage-plans-rest
+    port: 8080
+    description: REST adapter for MarineTraffic Passage Plans. One resource per consumed operation.
+    resources:
+    - path: /v1/import-passage-plan
+      name: import-passage-plan-api_key
+      description: REST surface for import-passage-plan-api_key.
+      operations:
+      - method: POST
+        name: import-passage-plan
+        description: Import Passage Plan
+        call: power-user-passage-plans.import-passage-plan
+        with:
+          Content-Type: rest.header.Content-Type
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: power-user-passage-plans-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for MarineTraffic Passage Plans. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: marinetraffic-import-passage-plan
+      description: Import Passage Plan
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: power-user-passage-plans.import-passage-plan
+      with:
+        Content-Type: tools.Content-Type
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

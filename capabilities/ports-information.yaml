@@ -1,0 +1,588 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: MarineTraffic Ports Information
+  description: MarineTraffic Ports Information. 4 operations. Self-contained Naftiko capability covering one MarineTraffic
+    AIS business surface.
+  tags:
+  - MarineTraffic
+  - AIS
+  - Maritime
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MARINETRAFFIC_API_KEY: MARINETRAFFIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: ports-information
+    baseUri: https://services.marinetraffic.com/api
+    description: Expected arrivals, predictive arrivals, and port congestion intelligence.
+    resources:
+    - name: expectedarrivals-api_key
+      path: /expectedarrivals/{api_key}
+      operations:
+      - name: expectedarrivals
+        method: GET
+        description: Expected Port Arrivals
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Version of the service to be executed. Use version 4 to get the latest
+          required: true
+        - name: portid
+          in: query
+          type: integer
+          description: The MarineTraffic ID of the port (found on the URL of the respective Port page)
+          required: true
+        - name: timespan
+          in: query
+          type: integer
+          description: Number of days in the future to look for expected arrivals, starting from the time the API call is
+            requested </br></br> Maximum value is 40 days </br></br> If neither this nor the fromdate/todate parameters are
+            used, the response only inclu
+          required: false
+        - name: days_last_signal
+          in: query
+          type: integer
+          description: Include vessels currently in port that have transmitted a position within the last x days (based on
+            their last signal timestamp). </br></br> This parameter only works when no other timeframe is defined.
+          required: false
+        - name: fromdate
+          in: query
+          type: string
+          description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define
+            the todate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+          required: false
+        - name: todate
+          in: query
+          type: string
+          description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define
+            the fromdate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+          required: false
+        - name: fromportid
+          in: query
+          type: integer
+          description: The MarineTraffic ID of the previous port (found on the URL of the respective Port page) or previous
+            port UNLOCODE
+          required: false
+        - name: shiptype
+          in: query
+          type: integer
+          description: 'Filter data by vessel type: <ul>'
+          required: false
+        - name: dwt_min
+          in: query
+          type: integer
+          description: 'Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+            = 7,8). If used, then you should also define the dwt_max parameter'
+          required: false
+        - name: dwt_max
+          in: query
+          type: integer
+          description: 'Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+            = 7,8). If used, then you should also define the dwt_min parameter'
+          required: false
+        - name: gt_min
+          in: query
+          type: integer
+          description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels. If used, then you should also
+            define the gt_max parameter'
+          required: false
+        - name: gt_max
+          in: query
+          type: integer
+          description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels. If used, then you should also
+            define the gt_min parameter'
+          required: false
+        - name: msgtype
+          in: query
+          type: string
+          description: 'Resolution of the response. Available values: <ul>'
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: expectedarrivals-api_key-2
+      path: /expectedarrivals/{api_key}
+      operations:
+      - name: expectedarrivals_
+        method: GET
+        description: Expected Country Arrivals
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Version of the service to be executed. Use version 4 to get the latest
+          required: true
+        - name: country
+          in: query
+          type: integer
+          description: The Country code of interest. Response includes all ports within the Country
+          required: true
+        - name: timespan
+          in: query
+          type: integer
+          description: Number of days in the future to look for expected arrivals, starting from the time the API call is
+            requested </br></br> Maximum value is 40 days </br></br> If neither this nor the fromdate/todate parameters are
+            used, the response only inclu
+          required: false
+        - name: days_last_signal
+          in: query
+          type: integer
+          description: Include vessels currently in port that have transmitted a position within the last x days (based on
+            their last signal timestamp). </br></br> This parameter only works when no other timeframe is defined.
+          required: false
+        - name: fromdate
+          in: query
+          type: string
+          description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define
+            the todate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+          required: false
+        - name: todate
+          in: query
+          type: string
+          description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define
+            the fromdate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+          required: false
+        - name: fromportid
+          in: query
+          type: integer
+          description: The MarineTraffic ID of the previous port (found on the URL of the respective Port page) or previous
+            port UNLOCODE
+          required: false
+        - name: shiptype
+          in: query
+          type: integer
+          description: 'Filter data by vessel type: <ul>'
+          required: false
+        - name: dwt_min
+          in: query
+          type: integer
+          description: 'Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+            = 7,8). If used, then you should also define the dwt_max parameter'
+          required: false
+        - name: dwt_max
+          in: query
+          type: integer
+          description: 'Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+            = 7,8). If used, then you should also define the dwt_min parameter'
+          required: false
+        - name: gt_min
+          in: query
+          type: integer
+          description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels. If used, then you should also
+            define the gt_max parameter'
+          required: false
+        - name: gt_max
+          in: query
+          type: integer
+          description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels. If used, then you should also
+            define the gt_min parameter'
+          required: false
+        - name: msgtype
+          in: query
+          type: string
+          description: 'Resolution of the response. Available values: <ul>'
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: predictive-arrivals-api_key
+      path: /predictive-arrivals/{api_key}
+      operations:
+      - name: predictive-arrivals
+        method: GET
+        description: Predictive Port Arrivals
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: portid
+          in: query
+          type: integer
+          description: The MarineTraffic ID of the port you wish to receive probable visits (found on the URL of the respective
+            Port page)
+          required: true
+        - name: market
+          in: query
+          type: integer
+          description: Define market for which you would like to receive probable visits - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+            <ul>
+          required: false
+        - name: shipclass
+          in: query
+          type: integer
+          description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+          required: false
+        - name: probability
+          in: query
+          type: integer
+          description: Define probability over which you would like to receive probable visits (accepted > 0.3)
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: port-congestion-api_key
+      path: /port-congestion/{api_key}
+      operations:
+      - name: port-congestion
+        method: GET
+        description: Port Congestion
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: portid
+          in: query
+          type: integer
+          description: The MarineTraffic ID of the port for which you wish to retrieve congestion metrics (found on the URL
+            of the respective Port page). </br></br> If you wish to retrieve congestion metrics for all ports, instead of
+            <b>portid</b> use <b>agg_port
+          required: true
+        - name: year
+          in: query
+          type: integer
+          description: Year of interest (data available back to 1 year). Information further back can be requested ad-hoc
+          required: true
+        - name: week
+          in: query
+          type: integer
+          description: Week of Year that is of interest (e.g. for week 18/2018 input 18). For range of weeks use comma e.g.
+            for weeks 30 to 35 (30,35)
+          required: true
+        - name: market
+          in: query
+          type: integer
+          description: Define market for which you would like to receive port congestion - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+            <ul>
+          required: true
+        - name: shipclass
+          in: query
+          type: integer
+          description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+            </br></br> If you wish to retrieve congestion metrics for
+          required: true
+        - name: agg_port
+          in: query
+          type: integer
+          description: '**If used, portid should not be in request** <ul>'
+          required: false
+        - name: agg_market
+          in: query
+          type: integer
+          description: '**If used, market should not be in request** <ul>'
+          required: false
+        - name: agg_shipclass
+          in: query
+          type: integer
+          description: '**If used, shipclass should not be in request** <ul>'
+          required: false
+        - name: time_anch
+          in: query
+          type: string
+          description: The median number of days spent at anchorage by the selected market/shipclass.
+          required: false
+        - name: time_port
+          in: query
+          type: string
+          description: The median number of days spent at port by the selected market/shipclass. Values indicate in between
+            set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if extended
+            version of the API is use
+          required: false
+        - name: vessels
+          in: query
+          type: integer
+          description: Number of vessels that were used in the median calculations. Value of parameter indicates greater than
+            relation </br></br><b>Available only if extended version of the API is used</b>
+          required: false
+        - name: calls
+          in: query
+          type: integer
+          description: Number of individual calls that were used in the median calculations (e.g. if the same vessel has called
+            twice within the same week, it will count twice in calls and once in vessels. Value of parameter indicates greater
+            than relation </br><
+          required: false
+        - name: time_anch_stdev
+          in: query
+          type: string
+          description: 'The standard deviation of days spent at anchorage the previous week. Values indicate in between set
+            to be returned (time_anch_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available
+            only if full version '
+          required: false
+        - name: time_anch_diff
+          in: query
+          type: string
+          description: The week-to-week difference of number of days spent at anchorage. Values indicate in between set to
+            be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version
+            of the API is used</b>
+          required: false
+        - name: time_anch_diff_perc
+          in: query
+          type: string
+          description: The week-to-week difference of number of days spent at anchorage as a percentage. Values indicate in
+            between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only
+            if full version of the API is
+          required: false
+        - name: time_port_stdev
+          in: query
+          type: string
+          description: The standard deviation of days spent at port the previous week. Values indicate in between set to be
+            returned (time_port_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available
+            only if full version of th
+          required: false
+        - name: time_port_diff
+          in: query
+          type: string
+          description: The week-to-week difference of number of days spent at port. Values indicate in between set to be returned
+            </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API
+            is used</b>
+          required: false
+        - name: time_port_diff_perc
+          in: query
+          type: string
+          description: The week-to-week difference of number of days spent at port as a percentage. Values indicate in between
+            set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full
+            version of the API is used
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.MARINETRAFFIC_API_KEY}}'
+      placement: path
+  exposes:
+  - type: rest
+    namespace: ports-information-rest
+    port: 8080
+    description: REST adapter for MarineTraffic Ports Information. One resource per consumed operation.
+    resources:
+    - path: /v1/expectedarrivals
+      name: expectedarrivals-api_key
+      description: REST surface for expectedarrivals-api_key.
+      operations:
+      - method: GET
+        name: expectedarrivals
+        description: Expected Port Arrivals
+        call: ports-information.expectedarrivals
+        with:
+          v: rest.query.v
+          portid: rest.query.portid
+          timespan: rest.query.timespan
+          days_last_signal: rest.query.days_last_signal
+          fromdate: rest.query.fromdate
+          todate: rest.query.todate
+          fromportid: rest.query.fromportid
+          shiptype: rest.query.shiptype
+          dwt_min: rest.query.dwt_min
+          dwt_max: rest.query.dwt_max
+          gt_min: rest.query.gt_min
+          gt_max: rest.query.gt_max
+          msgtype: rest.query.msgtype
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/expectedarrivals
+      name: expectedarrivals-api_key-2
+      description: REST surface for expectedarrivals-api_key-2.
+      operations:
+      - method: GET
+        name: expectedarrivals_
+        description: Expected Country Arrivals
+        call: ports-information.expectedarrivals_
+        with:
+          v: rest.query.v
+          country: rest.query.country
+          timespan: rest.query.timespan
+          days_last_signal: rest.query.days_last_signal
+          fromdate: rest.query.fromdate
+          todate: rest.query.todate
+          fromportid: rest.query.fromportid
+          shiptype: rest.query.shiptype
+          dwt_min: rest.query.dwt_min
+          dwt_max: rest.query.dwt_max
+          gt_min: rest.query.gt_min
+          gt_max: rest.query.gt_max
+          msgtype: rest.query.msgtype
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/predictive-arrivals
+      name: predictive-arrivals-api_key
+      description: REST surface for predictive-arrivals-api_key.
+      operations:
+      - method: GET
+        name: predictive-arrivals
+        description: Predictive Port Arrivals
+        call: ports-information.predictive-arrivals
+        with:
+          portid: rest.query.portid
+          market: rest.query.market
+          shipclass: rest.query.shipclass
+          probability: rest.query.probability
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/port-congestion
+      name: port-congestion-api_key
+      description: REST surface for port-congestion-api_key.
+      operations:
+      - method: GET
+        name: port-congestion
+        description: Port Congestion
+        call: ports-information.port-congestion
+        with:
+          portid: rest.query.portid
+          year: rest.query.year
+          week: rest.query.week
+          market: rest.query.market
+          shipclass: rest.query.shipclass
+          agg_port: rest.query.agg_port
+          agg_market: rest.query.agg_market
+          agg_shipclass: rest.query.agg_shipclass
+          time_anch: rest.query.time_anch
+          time_port: rest.query.time_port
+          vessels: rest.query.vessels
+          calls: rest.query.calls
+          time_anch_stdev: rest.query.time_anch_stdev
+          time_anch_diff: rest.query.time_anch_diff
+          time_anch_diff_perc: rest.query.time_anch_diff_perc
+          time_port_stdev: rest.query.time_port_stdev
+          time_port_diff: rest.query.time_port_diff
+          time_port_diff_perc: rest.query.time_port_diff_perc
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: ports-information-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for MarineTraffic Ports Information. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: marinetraffic-expectedarrivals
+      description: Expected Port Arrivals
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ports-information.expectedarrivals
+      with:
+        v: tools.v
+        portid: tools.portid
+        timespan: tools.timespan
+        days_last_signal: tools.days_last_signal
+        fromdate: tools.fromdate
+        todate: tools.todate
+        fromportid: tools.fromportid
+        shiptype: tools.shiptype
+        dwt_min: tools.dwt_min
+        dwt_max: tools.dwt_max
+        gt_min: tools.gt_min
+        gt_max: tools.gt_max
+        msgtype: tools.msgtype
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-expectedarrivals_
+      description: Expected Country Arrivals
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ports-information.expectedarrivals_
+      with:
+        v: tools.v
+        country: tools.country
+        timespan: tools.timespan
+        days_last_signal: tools.days_last_signal
+        fromdate: tools.fromdate
+        todate: tools.todate
+        fromportid: tools.fromportid
+        shiptype: tools.shiptype
+        dwt_min: tools.dwt_min
+        dwt_max: tools.dwt_max
+        gt_min: tools.gt_min
+        gt_max: tools.gt_max
+        msgtype: tools.msgtype
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-predictive-arrivals
+      description: Predictive Port Arrivals
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ports-information.predictive-arrivals
+      with:
+        portid: tools.portid
+        market: tools.market
+        shipclass: tools.shipclass
+        probability: tools.probability
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-port-congestion
+      description: Port Congestion
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ports-information.port-congestion
+      with:
+        portid: tools.portid
+        year: tools.year
+        week: tools.week
+        market: tools.market
+        shipclass: tools.shipclass
+        agg_port: tools.agg_port
+        agg_market: tools.agg_market
+        agg_shipclass: tools.agg_shipclass
+        time_anch: tools.time_anch
+        time_port: tools.time_port
+        vessels: tools.vessels
+        calls: tools.calls
+        time_anch_stdev: tools.time_anch_stdev
+        time_anch_diff: tools.time_anch_diff
+        time_anch_diff_perc: tools.time_anch_diff_perc
+        time_port_stdev: tools.time_port_stdev
+        time_port_diff: tools.time_port_diff
+        time_port_diff_perc: tools.time_port_diff_perc
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.

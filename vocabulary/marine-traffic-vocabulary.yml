@@ -1,0 +1,116 @@
+specification: API Commons Vocabulary
+specificationVersion: '0.1'
+provider: MarineTraffic
+providerId: marine-traffic
+created: '2026-05-25'
+modified: '2026-05-25'
+tags:
+  - Maritime
+  - AIS
+  - Shipping
+  - Vessel Tracking
+  - Ports
+description: >-
+  Domain vocabulary for the MarineTraffic AIS Data API. Maps the core maritime
+  and AIS concepts surfaced by the API to their authoritative external
+  vocabularies (ITU-R M.1371, UN/LOCODE, IMO, schema.org) so downstream
+  consumers can reconcile vessel, port, voyage, and event records across
+  providers.
+
+operationalDimensions:
+  - name: VesselIdentification
+    description: How a vessel is identified across AIS, registries, and provider databases.
+    terms:
+      - name: MMSI
+        description: Maritime Mobile Service Identity — 9-digit AIS-broadcast identifier.
+        authority: ITU-R M.585
+      - name: IMO
+        description: International Maritime Organization number — permanent 7-digit vessel identifier.
+        authority: IMO
+      - name: SHIP_ID
+        description: MarineTraffic internal numeric vessel ID. Stable but provider-specific.
+        authority: MarineTraffic
+      - name: CALLSIGN
+        description: ITU-allocated radio call sign.
+        authority: ITU
+  - name: PortIdentification
+    terms:
+      - name: PORT_ID
+        description: MarineTraffic internal port ID.
+        authority: MarineTraffic
+      - name: UNLOCODE
+        description: UN Code for Trade and Transport Locations (e.g. NLRTM = Rotterdam).
+        authority: UNECE
+      - name: BERTH_ID
+        description: MarineTraffic internal berth ID.
+        authority: MarineTraffic
+      - name: TERMINAL_ID
+        description: MarineTraffic internal terminal ID.
+        authority: MarineTraffic
+  - name: AisMessageType
+    description: AIS message types as defined by ITU-R M.1371 (selected subset emitted via MarineTraffic).
+    terms:
+      - name: Position Report (Type 1/2/3)
+        description: Class A position, course, speed, heading, navigational status.
+      - name: Static and Voyage Related Data (Type 5)
+        description: Static vessel data plus destination, ETA, draught.
+      - name: Standard Class B Position Report (Type 18)
+        description: Class B (lighter / leisure) position report.
+      - name: Static Data Report (Type 24)
+        description: Class B static data parts A and B.
+  - name: NavigationalStatus
+    description: AIS navigational status codes (0–15).
+    terms:
+      - { name: '0', description: Under way using engine }
+      - { name: '1', description: At anchor }
+      - { name: '2', description: Not under command }
+      - { name: '3', description: Restricted manoeuverability }
+      - { name: '4', description: Constrained by her draught }
+      - { name: '5', description: Moored }
+      - { name: '6', description: Aground }
+      - { name: '7', description: Engaged in Fishing }
+      - { name: '8', description: Under way sailing }
+  - name: DataSource
+    description: Source of an AIS position report.
+    terms:
+      - { name: TER, description: Terrestrial AIS receiver (S-AIS station / coastal receiver). }
+      - { name: SAT, description: Satellite AIS receiver. }
+  - name: MoveType
+    description: Direction of a port-call event.
+    terms:
+      - { name: '0', description: Arrival at port. }
+      - { name: '1', description: Departure from port. }
+
+capabilityDimensions:
+  - name: VesselTracking
+    description: Real-time and historical AIS position retrieval (PS01–PS08, MTA030AD, exportvesseltrack).
+  - name: EventDetection
+    description: Port calls and berth calls — provider-detected vessel events (EV01, EV03).
+  - name: VoyageIntelligence
+    description: Predictive voyages — destination prediction, ETA, port-arrival forecasts (VI01, VI04, VI05, VI07).
+  - name: PortIntelligence
+    description: Expected and predictive arrivals plus port-congestion analytics (VI02, VI05, VI06).
+  - name: VesselDatabase
+    description: Static vessel master data, photos, and ship search (VD01, VD02, VD03).
+  - name: Routing
+    description: Maritime route generation and distance (VI03).
+  - name: ReverseGeocoding
+    description: Coordinate → maritime location (port, berth, terminal, anchorage) (GI01).
+  - name: FleetManagement
+    description: Power-user fleet CRUD (PU01–PU05) plus passage-plan import.
+  - name: BillingAndQuotas
+    description: API credit balance inspection (PU06).
+
+referenceVocabularies:
+  - name: AIS
+    url: https://www.itu.int/ITU-R/M.1371/
+    description: ITU-R M.1371 — AIS technical characteristics and message catalogue.
+  - name: UN/LOCODE
+    url: https://unece.org/trade/cefact/UNLOCODE
+    description: UN Code for Trade and Transport Locations.
+  - name: IMO ship-type classification
+    url: https://www.imo.org/
+    description: IMO ship-type categories.
+  - name: schema.org
+    url: https://schema.org/
+    description: Used for Place / Country / Vehicle bridge classes in the JSON-LD context.

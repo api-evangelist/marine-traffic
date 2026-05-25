@@ -1,0 +1,114 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "marinetraffic": "https://services.marinetraffic.com/api/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "ais": "https://www.itu.int/ITU-R/M.1371/",
+
+    "Vessel": {
+      "@id": "schema:Vehicle",
+      "@context": {
+        "MMSI":         { "@id": "ais:mmsi",      "@type": "xsd:string" },
+        "IMO":          { "@id": "ais:imo",       "@type": "xsd:string" },
+        "SHIP_ID":      { "@id": "marinetraffic:shipId", "@type": "xsd:string" },
+        "SHIPNAME":     { "@id": "schema:name" },
+        "CALLSIGN":     { "@id": "ais:callSign",  "@type": "xsd:string" },
+        "FLAG":         { "@id": "schema:countryOfOrigin" },
+        "SHIPTYPE":     { "@id": "ais:shipType",  "@type": "xsd:integer" },
+        "TYPE_NAME":    { "@id": "schema:category" },
+        "LENGTH":       { "@id": "schema:height" },
+        "BREADTH":      { "@id": "schema:width" },
+        "DRAUGHT":      { "@id": "marinetraffic:draught", "@type": "xsd:decimal" },
+        "DEAD_WEIGHT":  { "@id": "marinetraffic:deadweight", "@type": "xsd:decimal" },
+        "GROSS_TONNAGE":{ "@id": "marinetraffic:grossTonnage", "@type": "xsd:decimal" },
+        "BUILT":        { "@id": "schema:productionDate" }
+      }
+    },
+
+    "VesselPosition": {
+      "@id": "marinetraffic:VesselPosition",
+      "@context": {
+        "MMSI":      { "@id": "ais:mmsi", "@type": "xsd:string" },
+        "SHIP_ID":   { "@id": "marinetraffic:shipId" },
+        "LAT":       { "@id": "geo:lat",  "@type": "xsd:decimal" },
+        "LON":       { "@id": "geo:long", "@type": "xsd:decimal" },
+        "SPEED":     { "@id": "marinetraffic:speedOverGround", "@type": "xsd:decimal" },
+        "COURSE":    { "@id": "marinetraffic:courseOverGround", "@type": "xsd:decimal" },
+        "HEADING":   { "@id": "marinetraffic:heading", "@type": "xsd:decimal" },
+        "STATUS":    { "@id": "ais:navigationalStatus" },
+        "DESTINATION":{ "@id": "marinetraffic:aisDestination" },
+        "ETA_AIS":   { "@id": "marinetraffic:aisEta",       "@type": "xsd:dateTime" },
+        "ETA_PREDICTED":{ "@id": "marinetraffic:predictedEta","@type": "xsd:dateTime" },
+        "DSRC":      { "@id": "marinetraffic:dataSource" },
+        "TIMESTAMP": { "@id": "dcterms:date", "@type": "xsd:dateTime" }
+      }
+    },
+
+    "PortCall": {
+      "@id": "marinetraffic:PortCall",
+      "@context": {
+        "MMSI":         { "@id": "ais:mmsi" },
+        "SHIP_ID":      { "@id": "marinetraffic:shipId" },
+        "PORT_ID":      { "@id": "marinetraffic:portId" },
+        "PORT_NAME":    { "@id": "schema:name" },
+        "UNLOCODE":     { "@id": "marinetraffic:unlocode" },
+        "MOVE_TYPE":    { "@id": "marinetraffic:moveType", "@type": "xsd:integer" },
+        "TIMESTAMP_UTC":{ "@id": "dcterms:date", "@type": "xsd:dateTime" },
+        "VOYAGE_DURATION":{ "@id":"marinetraffic:voyageDurationHours", "@type":"xsd:decimal" },
+        "TIME_IN_PORT": { "@id":"marinetraffic:timeInPortHours", "@type":"xsd:decimal" }
+      }
+    },
+
+    "BerthCall": {
+      "@id": "marinetraffic:BerthCall",
+      "@context": {
+        "MMSI":         { "@id": "ais:mmsi" },
+        "PORT_ID":      { "@id": "marinetraffic:portId" },
+        "BERTH_ID":     { "@id": "marinetraffic:berthId" },
+        "BERTH_NAME":   { "@id": "schema:name" },
+        "TERMINAL_ID":  { "@id": "marinetraffic:terminalId" },
+        "TIMESTAMP_UTC":{ "@id": "dcterms:date", "@type": "xsd:dateTime" }
+      }
+    },
+
+    "Port": {
+      "@id": "schema:Place",
+      "@context": {
+        "PORT_ID":     { "@id": "marinetraffic:portId" },
+        "PORT_NAME":   { "@id": "schema:name" },
+        "UNLOCODE":    { "@id": "marinetraffic:unlocode" },
+        "COUNTRY_CODE":{ "@id": "schema:addressCountry" },
+        "LAT":         { "@id": "geo:lat",  "@type": "xsd:decimal" },
+        "LON":         { "@id": "geo:long", "@type": "xsd:decimal" },
+        "TIMEZONE":    { "@id": "schema:timeZone" },
+        "CONGESTION_INDEX": { "@id": "marinetraffic:portCongestionIndex", "@type": "xsd:decimal" }
+      }
+    },
+
+    "VoyageForecast": {
+      "@id": "marinetraffic:VoyageForecast",
+      "@context": {
+        "MMSI":                          { "@id": "ais:mmsi" },
+        "PREDICTED_DESTINATION_PORT":    { "@id": "marinetraffic:predictedDestinationPort" },
+        "PREDICTED_DESTINATION_UNLOCODE":{ "@id": "marinetraffic:predictedDestinationUnlocode" },
+        "PREDICTED_DESTINATION_PROBABILITY":{ "@id": "marinetraffic:destinationProbability", "@type":"xsd:decimal" },
+        "PREDICTED_ETA_UTC":             { "@id": "marinetraffic:predictedEta", "@type": "xsd:dateTime" },
+        "ROUTE_DISTANCE_NM":             { "@id": "marinetraffic:routeDistanceNm", "@type":"xsd:decimal" },
+        "SPEED_AVG_KN":                  { "@id": "marinetraffic:averageSpeedKn", "@type":"xsd:decimal" }
+      }
+    },
+
+    "Fleet": {
+      "@id": "marinetraffic:Fleet",
+      "@context": {
+        "fleet_id":    { "@id": "marinetraffic:fleetId" },
+        "name":        { "@id": "schema:name" },
+        "vessels":     { "@id": "marinetraffic:vessels", "@container": "@list" }
+      }
+    }
+  }
+}

@@ -1,0 +1,274 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: MarineTraffic Vessel Positions (AIS API)
+  description: MarineTraffic Vessel Positions (AIS API). 3 operations. Self-contained Naftiko capability covering one MarineTraffic
+    AIS business surface.
+  tags:
+  - MarineTraffic
+  - AIS
+  - Maritime
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MARINETRAFFIC_API_KEY: MARINETRAFFIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: vessel-positions-ais
+    baseUri: https://services.marinetraffic.com/api
+    description: Retrieve current vessel positions for fleets, custom areas, and single vessels via the modern AIS API surface.
+    resources:
+    - name: exportvessels-api_key
+      path: /exportvessels/{api_key}
+      operations:
+      - name: exportvessels______
+        method: GET
+        description: Vessel Positions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Use latest version **9**
+          required: true
+        - name: timespan
+          in: query
+          type: integer
+          description: Overrides the default timespan
+          required: false
+        - name: vesseltypeid
+          in: query
+          type: integer
+          description: Filter vessels based on vessel types, comma separated ids supported </br></br><a href="https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types"
+            target='_blank'>more</a>
+          required: false
+        - name: cursor
+          in: query
+          type: string
+          description: The pagination cursor provided in the metadata section of the previous response
+          required: false
+        - name: limit
+          in: query
+          type: integer
+          description: The limit of vessels per page (min=1000, max=5000)
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: exportvessels-custom-area-api_key
+      path: /exportvessels-custom-area/{api_key}
+      operations:
+      - name: exportvessels-custom-area_
+        method: GET
+        description: Vessel Positions in an Area of Interest
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Use latest version **2**
+          required: true
+        - name: timespan
+          in: query
+          type: integer
+          description: Overrides the default timespan
+          required: false
+        - name: vesseltypeid
+          in: query
+          type: integer
+          description: Filter vessels based on vessel types, comma separated ids supported </br></br><a href="https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types"
+            target='_blank'>more</a>
+          required: false
+        - name: cursor
+          in: query
+          type: string
+          description: The pagination cursor provided in the metadata section of the previous response
+          required: false
+        - name: limit
+          in: query
+          type: integer
+          description: The limit of vessels per page (min=1000, max=5000)
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    - name: exportvessel-api_key
+      path: /exportvessel/{api_key}
+      operations:
+      - name: exportvessel_
+        method: GET
+        description: Single Vessel Positions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: v
+          in: query
+          type: integer
+          description: Use latest version **6**
+          required: true
+        - name: shipid
+          in: query
+          type: integer
+          description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use
+            imo or mmsi
+          required: true
+        - name: imo
+          in: query
+          type: integer
+          description: The International Maritime Organization (IMO) number of the vessel you wish to track
+          required: false
+        - name: mmsi
+          in: query
+          type: integer
+          description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+          required: false
+        - name: timespan
+          in: query
+          type: integer
+          description: Overrides the default timespan
+          required: false
+        - name: protocol
+          in: query
+          type: string
+          description: 'Response type. Use one of the following: <ul>'
+          required: false
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.MARINETRAFFIC_API_KEY}}'
+      placement: path
+  exposes:
+  - type: rest
+    namespace: vessel-positions-ais-rest
+    port: 8080
+    description: REST adapter for MarineTraffic Vessel Positions (AIS API). One resource per consumed operation.
+    resources:
+    - path: /v1/exportvessels
+      name: exportvessels-api_key
+      description: REST surface for exportvessels-api_key.
+      operations:
+      - method: GET
+        name: exportvessels______
+        description: Vessel Positions
+        call: vessel-positions-ais.exportvessels______
+        with:
+          v: rest.query.v
+          timespan: rest.query.timespan
+          vesseltypeid: rest.query.vesseltypeid
+          cursor: rest.query.cursor
+          limit: rest.query.limit
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/exportvessels-custom-area
+      name: exportvessels-custom-area-api_key
+      description: REST surface for exportvessels-custom-area-api_key.
+      operations:
+      - method: GET
+        name: exportvessels-custom-area_
+        description: Vessel Positions in an Area of Interest
+        call: vessel-positions-ais.exportvessels-custom-area_
+        with:
+          v: rest.query.v
+          timespan: rest.query.timespan
+          vesseltypeid: rest.query.vesseltypeid
+          cursor: rest.query.cursor
+          limit: rest.query.limit
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/exportvessel
+      name: exportvessel-api_key
+      description: REST surface for exportvessel-api_key.
+      operations:
+      - method: GET
+        name: exportvessel_
+        description: Single Vessel Positions
+        call: vessel-positions-ais.exportvessel_
+        with:
+          v: rest.query.v
+          shipid: rest.query.shipid
+          imo: rest.query.imo
+          mmsi: rest.query.mmsi
+          timespan: rest.query.timespan
+          protocol: rest.query.protocol
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: vessel-positions-ais-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for MarineTraffic Vessel Positions (AIS API). One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: marinetraffic-exportvessels______
+      description: Vessel Positions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vessel-positions-ais.exportvessels______
+      with:
+        v: tools.v
+        timespan: tools.timespan
+        vesseltypeid: tools.vesseltypeid
+        cursor: tools.cursor
+        limit: tools.limit
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-exportvessels-custom-area_
+      description: Vessel Positions in an Area of Interest
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vessel-positions-ais.exportvessels-custom-area_
+      with:
+        v: tools.v
+        timespan: tools.timespan
+        vesseltypeid: tools.vesseltypeid
+        cursor: tools.cursor
+        limit: tools.limit
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marinetraffic-exportvessel_
+      description: Single Vessel Positions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vessel-positions-ais.exportvessel_
+      with:
+        v: tools.v
+        shipid: tools.shipid
+        imo: tools.imo
+        mmsi: tools.mmsi
+        timespan: tools.timespan
+        protocol: tools.protocol
+      outputParameters:
+      - type: object
+        mapping: $.
