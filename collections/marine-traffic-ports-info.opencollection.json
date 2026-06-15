@@ -1,0 +1,406 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Ports Information API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ports Information",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Expected Port Arrivals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/expectedarrivals/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 4 to get the latest"
+              },
+              {
+                "name": "portid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port (found on the URL of the respective Port page)"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "Number of days in the future to look for expected arrivals, starting from the time the API call is requested </br></br> Maximum value is 40 days </br></br> If neither this nor the fromdate/todate parameters are used, the response only includes vessels currently in port (or the country’s ports) and the last vessel's signal is received during the last 2 days"
+              },
+              {
+                "name": "days_last_signal",
+                "value": "",
+                "type": "query",
+                "description": "Include vessels currently in port that have transmitted a position within the last x days (based on their last signal timestamp). </br></br> This parameter only works when no other timeframe is defined."
+              },
+              {
+                "name": "fromdate",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp in the future to start looking for expected arrivals. If used, then you should also define the todate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+              },
+              {
+                "name": "todate",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp in the future to start looking for expected arrivals. If used, then you should also define the fromdate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+              },
+              {
+                "name": "fromportid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the previous port (found on the URL of the respective Port page) or previous port UNLOCODE"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "dwt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_max parameter"
+              },
+              {
+                "name": "dwt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_min parameter"
+              },
+              {
+                "name": "gt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_max parameter"
+              },
+              {
+                "name": "gt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_min parameter"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, apart from the ETA information, the response includes main vessel particulars. If omitted, the returned records include only position and ETA reports"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get expected arrivals to a specific port. </br></br> <b>Notes</b> <ul>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>Use either **TIMESPAN** or **FROMDATE/TODATE** in order to look for expected arrivals in a specific date range</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your"
+        },
+        {
+          "info": {
+            "name": "Expected Country Arrivals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/expectedarrivals/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 4 to get the latest"
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "The Country code of interest. Response includes all ports within the Country"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "Number of days in the future to look for expected arrivals, starting from the time the API call is requested </br></br> Maximum value is 40 days </br></br> If neither this nor the fromdate/todate parameters are used, the response only includes vessels currently in port (or the country’s ports) and the last vessel's signal is received during the last 2 days"
+              },
+              {
+                "name": "days_last_signal",
+                "value": "",
+                "type": "query",
+                "description": "Include vessels currently in port that have transmitted a position within the last x days (based on their last signal timestamp). </br></br> This parameter only works when no other timeframe is defined."
+              },
+              {
+                "name": "fromdate",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp in the future to start looking for expected arrivals. If used, then you should also define the todate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+              },
+              {
+                "name": "todate",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp in the future to start looking for expected arrivals. If used, then you should also define the fromdate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+              },
+              {
+                "name": "fromportid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the previous port (found on the URL of the respective Port page) or previous port UNLOCODE"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "dwt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_max parameter"
+              },
+              {
+                "name": "dwt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_min parameter"
+              },
+              {
+                "name": "gt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_max parameter"
+              },
+              {
+                "name": "gt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_min parameter"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, apart from the ETA information, the response includes main vessel particulars. If omitted, the returned records include only position and ETA reports"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get expected arrivals to a specific country. </br></br> <b>Notes</b> <ul>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>Use either **TIMESPAN** or **FROMDATE/TODATE** in order to look for expected arrivals in a specific date range</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to y"
+        },
+        {
+          "info": {
+            "name": "Predictive Port Arrivals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/predictive-arrivals/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "portid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port you wish to receive probable visits (found on the URL of the respective Port page)"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "Define market for which you would like to receive probable visits - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all </li>\n  <li>if undefined and ship-class is defined, return based on ship-class</li>\n  <li>If defined and ship-class is undefined, return all ship-classes of the specific market</li>\n</ul>"
+              },
+              {
+                "name": "shipclass",
+                "value": "",
+                "type": "query",
+                "description": "Define ship class of interest - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a>"
+              },
+              {
+                "name": "probability",
+                "value": "",
+                "type": "query",
+                "description": "Define probability over which you would like to receive probable visits (accepted > 0.3)"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Receive a prediction of the vessels likely to arrive to a specific port. </br></br> <b>Notes</b> <ul>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">MARKET</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">SHIPCLASS</a></li>\n    <li>The <b>frequency of allowe"
+        },
+        {
+          "info": {
+            "name": "Port Congestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/port-congestion/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "portid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port for which you wish to retrieve congestion metrics (found on the URL of the respective Port page). </br></br> If you wish to retrieve congestion metrics for all ports, instead of <b>portid</b> use <b>agg_port=1</b>"
+              },
+              {
+                "name": "year",
+                "value": "",
+                "type": "query",
+                "description": "Year of interest (data available back to 1 year). Information further back can be requested ad-hoc"
+              },
+              {
+                "name": "week",
+                "value": "",
+                "type": "query",
+                "description": "Week of Year that is of interest (e.g. for week 18/2018 input 18). For range of weeks use comma e.g. for weeks 30 to 35 (30,35)"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "Define market for which you would like to receive port congestion - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then figures for ALL markets/ship-class</li>\n  <li>if undefined and ship-class is defined, returns based on ship-class for ALL applicable to size class markets</li>\n  <li>if defined and ship-class is undefined, returns figures for the specific market (no size class breakdown)</li>\n</ul> </br></br> If you wish to retrieve congestion metrics for all markets, instead of <b>market</b> use <b>agg_market</b> query parameter (=0 or =1)"
+              },
+              {
+                "name": "shipclass",
+                "value": "",
+                "type": "query",
+                "description": "Define ship class of interest - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> </br></br> If you wish to retrieve congestion metrics for all ship classes, instead of <b>shipclass</b> use <b>agg_shipclass</b> query parameter (=0 or =1)"
+              },
+              {
+                "name": "agg_port",
+                "value": "",
+                "type": "query",
+                "description": "**If used, portid should not be in request** <ul>\n  <li>when agg_port = 1 is used, aggregation result of all ports are returned</li>\n  <li>when agg_port = 1 is used, agg_market cannot be 1</li>\n</ul>"
+              },
+              {
+                "name": "agg_market",
+                "value": "",
+                "type": "query",
+                "description": "**If used, market should not be in request** <ul>\n  <li>if agg_market = 1, aggregation result of all markets will be returned</li>\n  <li>if 0, a breakdown of markets will be returned</li>\n</ul>"
+              },
+              {
+                "name": "agg_shipclass",
+                "value": "",
+                "type": "query",
+                "description": "**If used, shipclass should not be in request** <ul>\n  <li>if agg_shipclass = 1, aggregation result of all classes will be returned</li>\n  <li>if 0, a breakdown of classes will be returned</li>\n</ul>"
+              },
+              {
+                "name": "time_anch",
+                "value": "",
+                "type": "query",
+                "description": "The median number of days spent at anchorage by the selected market/shipclass.\nValues indicate in between set to be returned </br></br> Comma separated float\nnumbers (one decimal)\n</br></br><b>Available only if extended version of the API is used</b>"
+              },
+              {
+                "name": "time_port",
+                "value": "",
+                "type": "query",
+                "description": "The median number of days spent at port by the selected market/shipclass. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if extended version of the API is used</b>"
+              },
+              {
+                "name": "vessels",
+                "value": "",
+                "type": "query",
+                "description": "Number of vessels that were used in the median calculations. Value of parameter indicates greater than relation </br></br><b>Available only if extended version of the API is used</b>"
+              },
+              {
+                "name": "calls",
+                "value": "",
+                "type": "query",
+                "description": "Number of individual calls that were used in the median calculations (e.g. if the same vessel has called twice within the same week, it will count twice in calls and once in vessels. Value of parameter indicates greater than relation </br></br><b>Available only if extended version of the API is used</b>"
+              },
+              {
+                "name": "time_anch_stdev",
+                "value": "",
+                "type": "query",
+                "description": "The standard deviation of days spent at anchorage the previous week. Values indicate in between set to be returned (time_anch_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>"
+              },
+              {
+                "name": "time_anch_diff",
+                "value": "",
+                "type": "query",
+                "description": "The week-to-week difference of number of days spent at anchorage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>"
+              },
+              {
+                "name": "time_anch_diff_perc",
+                "value": "",
+                "type": "query",
+                "description": "The week-to-week difference of number of days spent at anchorage as a percentage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>"
+              },
+              {
+                "name": "time_port_stdev",
+                "value": "",
+                "type": "query",
+                "description": "The standard deviation of days spent at port the previous week. Values indicate in between set to be returned (time_port_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>"
+              },
+              {
+                "name": "time_port_diff",
+                "value": "",
+                "type": "query",
+                "description": "The week-to-week difference of number of days spent at port. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>"
+              },
+              {
+                "name": "time_port_diff_perc",
+                "value": "",
+                "type": "query",
+                "description": "The week-to-week difference of number of days spent at port as a percentage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Receive the Port Congestion for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">MARKET</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">SHIPCLASS</a></li>\n    <li>**NOT ALLOWED** combinations in request<"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

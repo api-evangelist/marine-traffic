@@ -1,0 +1,275 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Voyage Information API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Voyage Information",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Single Vessel Voyage Forecast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/voyageforecast/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 2 to get the latest"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related information (eg. distance travelled and to-go, load condition) and the estimated route to the vessel's destination"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get voyage information for a single vessel. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute"
+        },
+        {
+          "info": {
+            "name": "Fleet Voyage Forecast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/voyageforecast/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 2 to get the latest"
+              },
+              {
+                "name": "fleet_id",
+                "value": "",
+                "type": "query",
+                "description": "The fleet id you wish to receive voyage forecast for"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related information (eg. distance travelled and to-go, load condition) and the estimated route to the vessel's destination"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get voyage information for one for your MarineTraffic Fleets. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “"
+        },
+        {
+          "info": {
+            "name": "Single Vessel Predictive Destinations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/predictive-destination-areas/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+              },
+              {
+                "name": "fromportid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port you wish to receive a prediction (found on the URL of the respective Port page)"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Receive a prediction of the likely destination of a single vessel.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Fleet Predictive Destinations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/predictive-destination-areas/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "fleet_id",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the fleet you wish to track"
+              },
+              {
+                "name": "fromportid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port you wish to receive a prediction (found on the URL of the respective Port page)"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Receive a prediction of the likely destination for one of your MarineTraffic fleets.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</l"
+        },
+        {
+          "info": {
+            "name": "Vessel ETA to Port",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/etatoport/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 2 to get the latest"
+              },
+              {
+                "name": "portid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port you wish to receive ETA info </br></br> You can <b>instead</b> use unlocode"
+              },
+              {
+                "name": "unlocode",
+                "value": "",
+                "type": "query",
+                "description": "The UN LOCODE (without gaps or spaces) of the port you wish to receive ETA info"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+              },
+              {
+                "name": "speed_calc",
+                "value": "",
+                "type": "query",
+                "description": "The Speed of the Vessel that MarineTraffic will use to produce the ETA value <ul>\n  <li>if not defined the last average speed of the Vessel will be used</li>\n  <li>if no average speed exists then a default value of 12(kn) will be used</li>\n</ul>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get ETA and voyage information for a vessel of your choice, to any port you define.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

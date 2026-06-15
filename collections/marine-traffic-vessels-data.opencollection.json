@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Vessels Data API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vessel Information",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Vessel Photo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvesselphoto/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "vessel_id",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) or the IMO number of the vessel </br></br> You can <b>instead</b> use shipid"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Retrieve the most popular photo of a vessel.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Vessel Particulars (Legacy API)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/vesselmasterdata/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 5 to get the latest"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track (single or comma separated values) </br></br> You can <b>instead</b> use imo or shipid"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track (single or comma separated values)"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel (single or comma separated values)"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The timespan parameter defines the period of time, during which we want to receive the change in a vessel's details </br></br> The maximum value can be either 5 when the interval parameter is set to days or 2880 when the interval is set to minutes"
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "The interval parameter can be either minutes or days"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to be returned"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  </ul>"
+              }
+            ]
+          },
+          "docs": "⚠️This is a legacy endpoint.</br></br>\nA new and improved version is now available, offering enhanced data quality, latest features and better performance. \nWe strongly recommend switching to the latest version, which you can explore here: <a href=\"https://developers.kpler.com/spec/1240abb4-7ed9-42e2-ae5e-e13a047a16ec\">Vessel Particulars & Ownership.</a></br></br>\nIf you would like to see the new endpoint in action, feel free to <a href=\"https://www.kpler.com/demos/request-maritime-api-data-serv"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search Vessel",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Vessel by Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/shipsearch/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use  mmsi or imo"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> <b>NOTE:</b> Using MMSI may potentially return multiple records as multiple vessels might have transponded the same MMSI"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track </br></br> <b>NOTE:</b> Using IMO may potentially return multiple records as multiple vessels might have transponded the same IMO"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "type_name_id",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: AIS Shiptype </br></br> Find more information <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">here</a>"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Search for a vessel by unique identifier.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Search Vessel by Name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/shipsearch/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "shipname",
+                "value": "",
+                "type": "query",
+                "description": "The vessel name. The results will contain all vessels whose name is like the given words"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "type_name_id",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: AIS Shiptype </br></br> Find more information <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">here</a>"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Search for vessels by vessel name. </br></br> <b>Notes</b> </br> In case of multiple results:\n  <ul>\n    <li>the first 100 matches will be fetched</li>\n    <li>exact matches are always first on the returned list</li>\n  </ul>\n  </br>\n  <ul>\n    <li>Only active vessels are returned</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

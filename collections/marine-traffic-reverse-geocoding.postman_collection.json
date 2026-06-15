@@ -1,0 +1,279 @@
+{
+  "item": [
+    {
+      "id": "298aeba7-638a-482b-b1f7-880abb9918e7",
+      "name": "Reverse Geocoding",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "57f77292-ec6d-40ad-b405-ab8b3f82cfa8",
+          "name": "Reverse Geocoding of a Single Point",
+          "request": {
+            "name": "Reverse Geocoding of a Single Point",
+            "description": {
+              "content": "Get a list of geometries that a given point of coordinates intersects with.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reversegeocode",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "coordinates",
+                  "value": "<string>",
+                  "description": "(Required) A latitude/longitude pair that you wish to receive the MarineTraffic areas/assets that intersects with"
+                },
+                {
+                  "disabled": false,
+                  "key": "radius",
+                  "value": "<number>",
+                  "description": "Maximum distance (in NM) from the given point that should be searched for nearby areas/assets </br></br> Cannot be greater than 10NM"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_ports",
+                  "value": "<integer>",
+                  "description": "Flag that indicates if Ports information will be excluded from response in case given point intersects with them (0:no, 1:yes)"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_berths",
+                  "value": "<integer>",
+                  "description": "Flag that indicates if Berths information will be excluded from response in case given point intersects with them (0:no, 1:yes)"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_terminals",
+                  "value": "<integer>",
+                  "description": "Flag that indicates if Terminals information will be excluded from response in case given point intersects with them (0:no, 1:yes)"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_standard_areas",
+                  "value": "<integer>",
+                  "description": "Flag that indicates if Standard Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_custom_areas",
+                  "value": "<integer>",
+                  "description": "Flag that indicates if Custom Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ed3de6dd-6b25-4722-aa19-a0aace61cde9",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reversegeocode",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "coordinates",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "exclude_ports",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_berths",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_terminals",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_standard_areas",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_custom_areas",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"ID\": \"string\",\n    \"NAME\": \"string\",\n    \"TYPE\": \"string\",\n    \"SUBTYPE\": \"string\",\n    \"COUNTRY\": \"string\",\n    \"UNLOCODE\": \"string\",\n    \"GEOMETRY_CENTER\": \"string\",\n    \"DISTANCE\": \"string\",\n    \"TERMINAL\": \"string\",\n    \"URL\": \"string\"\n  },\n  {\n    \"ID\": \"string\",\n    \"NAME\": \"string\",\n    \"TYPE\": \"string\",\n    \"SUBTYPE\": \"string\",\n    \"COUNTRY\": \"string\",\n    \"UNLOCODE\": \"string\",\n    \"GEOMETRY_CENTER\": \"string\",\n    \"DISTANCE\": \"string\",\n    \"TERMINAL\": \"string\",\n    \"URL\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "462a1e86-28ff-4a07-82c4-993bb8e87011",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reversegeocode",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "coordinates",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "exclude_ports",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_berths",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_terminals",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_standard_areas",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_custom_areas",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1r\",\n      \"detail\": \"TOO MANY REQUESTS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.marinetraffic.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "da0f6149-2850-4a54-b323-3c7e15bdf23b",
+    "name": "MarineTraffic Reverse Geocoding API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Reverse geocoding of a single coordinate pair to a maritime-aware location (port, anchorage, sea region).\n\nContact Support:\n Name: MarineTraffic",
+      "type": "text/plain"
+    }
+  }
+}

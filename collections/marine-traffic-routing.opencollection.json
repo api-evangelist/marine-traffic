@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Routing Information API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Routing Information",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Vessel Route to Port",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportroutes/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+              },
+              {
+                "name": "port_target_id",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port you wish to put as target port (found on the URL of the respective Port page) or port UN/LOCODE"
+              },
+              {
+                "name": "includealternatives",
+                "value": "",
+                "type": "query",
+                "description": "Use 1 to search for all available routes regarding the specific journey or 0 to not include alternative routes"
+              },
+              {
+                "name": "includeinland",
+                "value": "",
+                "type": "query",
+                "description": "Use 1 in order to receive routes which include inland waterways or 0 to not include alternative routes"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes also route/waypoints as Linestring Geometry in WKT - Well-Known Text"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "<b>A newer version of this endpoint is available here: https://developers.kpler.com/spec/c78f79cf-4169-4a59-987d-e5970ea170f9</b></br></br>\nReceive a list of available routes and distances from a vessel to a port.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technicall"
+        },
+        {
+          "info": {
+            "name": "Distance to Port",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportroutes/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "port_start_id",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port you wish to put as starting point (found on the URL of the respective Port page) or port UN/LOCODE"
+              },
+              {
+                "name": "LAT",
+                "value": "",
+                "type": "query",
+                "description": "The latitude of the starting point </br></br> It can be used together with LON <b>instead</b> of port_start_id"
+              },
+              {
+                "name": "LON",
+                "value": "",
+                "type": "query",
+                "description": "The longitude of the starting point </br></br> It can be used together with LAT <b>instead</b> of port_start_id"
+              },
+              {
+                "name": "port_target_id",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port you wish to put as target port (found on the URL of the respective Port page) or port UN/LOCODE"
+              },
+              {
+                "name": "includealternatives",
+                "value": "",
+                "type": "query",
+                "description": "Use 1 to search for all available routes regarding the specific journey or 0 to not include alternative routes"
+              },
+              {
+                "name": "includeinland",
+                "value": "",
+                "type": "query",
+                "description": "Use 1 in order to receive routes which include inland waterways or 0 to not include alternative routes"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes also route/waypoints as Linestring Geometry in WKT - Well-Known Text"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "<b>A newer version of this endpoint is available here: https://developers.kpler.com/spec/c78f79cf-4169-4a59-987d-e5970ea170f9</b></br></br>\nReceive a list of available routes and distances from point or port to a specific port.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,658 @@
+{
+  "item": [
+    {
+      "id": "e2886bcc-b4df-43d9-abde-53e06eeacf7f",
+      "name": "Routing Information",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "55a8ce5d-29bd-4dff-b913-c760d4c98cd3",
+          "name": "Vessel Route to Port",
+          "request": {
+            "name": "Vessel Route to Port",
+            "description": {
+              "content": "<b>A newer version of this endpoint is available here: https://developers.kpler.com/spec/c78f79cf-4169-4a59-987d-e5970ea170f9</b></br></br>\nReceive a list of available routes and distances from a vessel to a port.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exportroutes",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "(Required) The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+                },
+                {
+                  "disabled": false,
+                  "key": "port_target_id",
+                  "value": "<integer>",
+                  "description": "(Required) The MarineTraffic ID of the port you wish to put as target port (found on the URL of the respective Port page) or port UN/LOCODE"
+                },
+                {
+                  "disabled": false,
+                  "key": "includealternatives",
+                  "value": "<integer>",
+                  "description": "Use 1 to search for all available routes regarding the specific journey or 0 to not include alternative routes"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeinland",
+                  "value": "<integer>",
+                  "description": "Use 1 in order to receive routes which include inland waterways or 0 to not include alternative routes"
+                },
+                {
+                  "disabled": false,
+                  "key": "msgtype",
+                  "value": "simple",
+                  "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes also route/waypoints as Linestring Geometry in WKT - Well-Known Text"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "51fc91c9-21db-46c1-a4b6-af4ee23807ef",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportroutes",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "port_target_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includealternatives",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeinland",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"DISTANCE\": \"2938\",\n    \"PANAMA\": \"0\",\n    \"SUEZ\": \"0\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f63a6c68-dbbd-43b4-bb8b-9f0cf20be996",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportroutes",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "port_target_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includealternatives",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeinland",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"2\",\n      \"detail\": \"VESSEL MMSI OR IMO OR SHIPID MISSING\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21b2b819-a75e-4e0f-bf6d-d6070c3e100f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportroutes",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "port_target_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includealternatives",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeinland",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1r\",\n      \"detail\": \"TOO MANY REQUESTS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0dd14eb5-0ae8-4d8a-a317-8d94c5fc47e9",
+          "name": "Distance to Port",
+          "request": {
+            "name": "Distance to Port",
+            "description": {
+              "content": "<b>A newer version of this endpoint is available here: https://developers.kpler.com/spec/c78f79cf-4169-4a59-987d-e5970ea170f9</b></br></br>\nReceive a list of available routes and distances from point or port to a specific port.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exportroutes",
+                "{{api_key}} "
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "port_start_id",
+                  "value": "<integer>",
+                  "description": "(Required) The MarineTraffic ID of the port you wish to put as starting point (found on the URL of the respective Port page) or port UN/LOCODE"
+                },
+                {
+                  "disabled": false,
+                  "key": "LAT",
+                  "value": "<number>",
+                  "description": "The latitude of the starting point </br></br> It can be used together with LON <b>instead</b> of port_start_id"
+                },
+                {
+                  "disabled": false,
+                  "key": "LON",
+                  "value": "<integer>",
+                  "description": "The longitude of the starting point </br></br> It can be used together with LAT <b>instead</b> of port_start_id"
+                },
+                {
+                  "disabled": false,
+                  "key": "port_target_id",
+                  "value": "<integer>",
+                  "description": "(Required) The MarineTraffic ID of the port you wish to put as target port (found on the URL of the respective Port page) or port UN/LOCODE"
+                },
+                {
+                  "disabled": false,
+                  "key": "includealternatives",
+                  "value": "<integer>",
+                  "description": "Use 1 to search for all available routes regarding the specific journey or 0 to not include alternative routes"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeinland",
+                  "value": "<integer>",
+                  "description": "Use 1 in order to receive routes which include inland waterways or 0 to not include alternative routes"
+                },
+                {
+                  "disabled": false,
+                  "key": "msgtype",
+                  "value": "simple",
+                  "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes also route/waypoints as Linestring Geometry in WKT - Well-Known Text"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "98902e1e-751d-4223-aefb-761d83fa0bd1",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportroutes",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "port_start_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "LAT",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "LON",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "port_target_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includealternatives",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeinland",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"DISTANCE\": \"2938\",\n    \"PANAMA\": \"0\",\n    \"SUEZ\": \"0\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "159ddee0-0aab-4864-81d0-0d77d5b13bc9",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportroutes",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "port_start_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "LAT",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "LON",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "port_target_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includealternatives",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeinland",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"2a6\",\n      \"detail\": \"PORT IS MISSING\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb43a9d1-223d-4f3f-8ddf-cfa7a2c446bf",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportroutes",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "port_start_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "LAT",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "LON",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "port_target_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includealternatives",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeinland",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.marinetraffic.com/api",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) API key: 40-character hexadecimal number",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "api_key"
+    }
+  ],
+  "info": {
+    "_postman_id": "8198a310-ae8d-4c30-be95-37c7632f8b16",
+    "name": "MarineTraffic Routing Information API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Maritime route generation and distance calculation between ports / coordinates, accounting for sea lanes and traffic patterns.\n\nContact Support:\n Name: MarineTraffic",
+      "type": "text/plain"
+    }
+  }
+}

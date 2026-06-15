@@ -1,0 +1,559 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Events API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Single Vessel Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Single Vessel Port Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/portcalls/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 6 to get the latest"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned port calls. Maximum value is 2880"
+              },
+              {
+                "name": "movetype",
+                "value": "",
+                "type": "query",
+                "description": "Use 0 to only receive arrivals or 1 to only receive departures. If not used, the response will include both"
+              },
+              {
+                "name": "exclude_intransit",
+                "value": "",
+                "type": "query",
+                "description": "Use 1 to exclude vessels in transit"
+              },
+              {
+                "name": "fromdate",
+                "value": "",
+                "type": "query",
+                "description": "Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD HH:MM"
+              },
+              {
+                "name": "todate",
+                "value": "",
+                "type": "query",
+                "description": "Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD HH:MM"
+              },
+              {
+                "name": "dwt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum DWT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "dwt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum DWT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "gt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum GT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "gt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum GT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "Define market(s) for which you would like to receive port calls (single or comma separated values) - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Retrieve arrival and departure information of a vessel for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>Data is available for dates **after** 2015-01-16</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**MOVE_TYPE** values: 1=Departure, 0=Arrival</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your"
+        },
+        {
+          "info": {
+            "name": "Single Vessel Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/vesselevents/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 2 to get the latest"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned port calls. Maximum value is 2880"
+              },
+              {
+                "name": "fromdate",
+                "value": "",
+                "type": "query",
+                "description": "Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+              },
+              {
+                "name": "todate",
+                "value": "",
+                "type": "query",
+                "description": "Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+              },
+              {
+                "name": "event_type",
+                "value": "",
+                "type": "query",
+                "description": "You may use one or more event ids in comma separated format for the events you wish to receive"
+              },
+              {
+                "name": "limit_events",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of results"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get event based intelligence for a vessel. </br></br> <b>Notes</b> <ul>\n    <li>Here is a <a href=\"https://support.marinetraffic.com/en/articles/9552887-what-is-the-significance-of-the-marinetraffic-events\">COMPLETE LIST OF EVENT TYPES</a> available for this endpoint. You can use these as values for the **event_type** query parameter. </li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a"
+        },
+        {
+          "info": {
+            "name": "Single Vessel Berth Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/berth-calls/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 3 to get the latest"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned port calls. Maximum value is 2880"
+              },
+              {
+                "name": "fromdate",
+                "value": "",
+                "type": "query",
+                "description": "Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or greater than provided fromdate. Maximum period requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS."
+              },
+              {
+                "name": "todate",
+                "value": "",
+                "type": "query",
+                "description": "Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or less than provided todate. Maximum period requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "Define market for which you would like to receive berth calls - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all</li>\n  <li>if undefined and ship-class is defined, return based on ship-class</li>\n  <li>if defined and ship-class is undefined, return all ship-classes of the specific market</li>\n</ul>"
+              },
+              {
+                "name": "shipclass",
+                "value": "",
+                "type": "query",
+                "description": "Define ship class of interest - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a>"
+              },
+              {
+                "name": "dwt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8)"
+              },
+              {
+                "name": "dwt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8)"
+              },
+              {
+                "name": "gt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum GT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "gt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum GT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "movetype",
+                "value": "",
+                "type": "query",
+                "description": "Use 0 to include both, 1 to only receive dockings or 2 for only undockings within the defined period. If not used, only dockings are returned </br></br> <b>Available only from version 2 of the service</b>"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+              }
+            ]
+          },
+          "docs": "Get berth arrival and departure information for a specific vessel. </br></br> <b>Notes</b> <ul>\n    <li>Data is available for dates **after** 2017-07-03</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Port Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Port Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/portcalls/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 6 to get the latest"
+              },
+              {
+                "name": "portid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port you wish to monitor (found on the URL of the respective Port page) or port UN/LOCODE"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned port calls. Maximum value is 2880"
+              },
+              {
+                "name": "movetype",
+                "value": "",
+                "type": "query",
+                "description": "Use 0 to only receive arrivals or 1 to only receive departures. If not used, the response will include both"
+              },
+              {
+                "name": "exclude_intransit",
+                "value": "",
+                "type": "query",
+                "description": "Use 1 to exclude vessels in transit"
+              },
+              {
+                "name": "fromdate",
+                "value": "",
+                "type": "query",
+                "description": "Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD HH:MM"
+              },
+              {
+                "name": "todate",
+                "value": "",
+                "type": "query",
+                "description": "Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD HH:MM"
+              },
+              {
+                "name": "dwt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum DWT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "dwt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum DWT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "gt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum GT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "gt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum GT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "Define market(s) for which you would like to receive port calls (single or comma separated values) - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Retrieve arrival and departure information at a specific port for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>Data is available for dates **after** 2015-01-16</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**MOVE_TYPE** values: 1=Departure, 0=Arrival</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed "
+        },
+        {
+          "info": {
+            "name": "Berth Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/berth-calls/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 3 to get the latest"
+              },
+              {
+                "name": "portid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the port you wish to monitor (found on the URL of the respective Port page) </br></br> You can <b>instead</b> use port_unlocode, berthid or terminalid"
+              },
+              {
+                "name": "port_unlocode",
+                "value": "",
+                "type": "query",
+                "description": "Port UN LOCODE (without gaps or spaces)"
+              },
+              {
+                "name": "berthid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the berth you wish to monitor (list to be provided upon request) "
+              },
+              {
+                "name": "terminalid",
+                "value": "",
+                "type": "query",
+                "description": "The MarineTraffic ID of the terminal you wish to monitor (list to be provided upon request)"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned port calls. Maximum value is 2880"
+              },
+              {
+                "name": "fromdate",
+                "value": "",
+                "type": "query",
+                "description": "Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or greater than provided fromdate. Maximum period requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS."
+              },
+              {
+                "name": "todate",
+                "value": "",
+                "type": "query",
+                "description": "Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or less than provided todate. Maximum period requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "Define market for which you would like to receive berth calls - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all</li>\n  <li>if undefined and ship-class is defined, return based on ship-class</li>\n  <li>if defined and ship-class is undefined, return all ship-classes of the specific market</li>\n</ul>"
+              },
+              {
+                "name": "shipclass",
+                "value": "",
+                "type": "query",
+                "description": "Define ship class of interest - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a>"
+              },
+              {
+                "name": "dwt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8)"
+              },
+              {
+                "name": "dwt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8)"
+              },
+              {
+                "name": "gt_min",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: minimum GT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "gt_max",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: maximum GT </br></br> Applicable to IMO-having vessels"
+              },
+              {
+                "name": "movetype",
+                "value": "",
+                "type": "query",
+                "description": "Use 0 to include both, 1 to only receive dockings or 2 for only undockings within the defined period. If not used, only dockings are returned </br></br> <b>Available only from version 2 of the service</b>"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+              }
+            ]
+          },
+          "docs": "Retrieve arrival and departure information at a specific port, berth or terminal, for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>Data is available for dates **after** 2017-07-03</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraff"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

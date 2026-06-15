@@ -1,0 +1,1364 @@
+{
+  "item": [
+    {
+      "id": "1eae8d4b-113f-4585-80ec-0d2b4e2c33fc",
+      "name": "Voyage Information",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "46592ca4-45a4-408b-bc1c-452e2375e3ec",
+          "name": "Single Vessel Voyage Forecast",
+          "request": {
+            "name": "Single Vessel Voyage Forecast",
+            "description": {
+              "content": "Get voyage information for a single vessel. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "voyageforecast",
+                "{{api_key}} "
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "1",
+                  "description": "(Required) Version of the service to be executed. Use version 2 to get the latest"
+                },
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "(Required) The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+                },
+                {
+                  "disabled": false,
+                  "key": "msgtype",
+                  "value": "simple",
+                  "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related information (eg. distance travelled and to-go, load condition) and the estimated route to the vessel's destination"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d7b96bb-4ca9-447e-a7ca-2e1983135161",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "voyageforecast",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"SHIP_ID\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"DESTINATION\": \"string\",\n    \"LAST_PORT_ID\": \"string\",\n    \"LAST_PORT\": \"string\",\n    \"LAST_PORT_UNLOCODE\": \"string\",\n    \"LAST_PORT_TIME\": \"1967-09-06T04:42:57.787Z\",\n    \"NEXT_PORT_ID\": \"string\",\n    \"NEXT_PORT_NAME\": \"string\",\n    \"NEXT_PORT_UNLOCODE\": \"string\",\n    \"ETA\": \"2011-11-20T20:59:40.762Z\",\n    \"ETA_CALC\": \"1951-07-21T09:56:12.679Z\"\n  },\n  {\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"SHIP_ID\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"DESTINATION\": \"string\",\n    \"LAST_PORT_ID\": \"string\",\n    \"LAST_PORT\": \"string\",\n    \"LAST_PORT_UNLOCODE\": \"string\",\n    \"LAST_PORT_TIME\": \"1972-01-16T00:27:35.194Z\",\n    \"NEXT_PORT_ID\": \"string\",\n    \"NEXT_PORT_NAME\": \"string\",\n    \"NEXT_PORT_UNLOCODE\": \"string\",\n    \"ETA\": \"1988-03-20T21:57:47.230Z\",\n    \"ETA_CALC\": \"2026-06-05T14:46:28.333Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb96f3e2-8886-4fa9-8ef2-d769a7895b53",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "voyageforecast",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"2a\",\n      \"detail\": \"VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE MISSING\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b1b803b-0157-446a-ba94-b7d3d2f7192e",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "voyageforecast",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1r\",\n      \"detail\": \"TOO MANY REQUESTS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "78499877-626e-4550-a9f2-83085fabb7c8",
+          "name": "Fleet Voyage Forecast",
+          "request": {
+            "name": "Fleet Voyage Forecast",
+            "description": {
+              "content": "Get voyage information for one for your MarineTraffic Fleets. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "voyageforecast",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "1",
+                  "description": "(Required) Version of the service to be executed. Use version 2 to get the latest"
+                },
+                {
+                  "disabled": false,
+                  "key": "fleet_id",
+                  "value": "<integer>",
+                  "description": "(Required) The fleet id you wish to receive voyage forecast for"
+                },
+                {
+                  "disabled": false,
+                  "key": "msgtype",
+                  "value": "simple",
+                  "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related information (eg. distance travelled and to-go, load condition) and the estimated route to the vessel's destination"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d19e0e83-8f76-41ac-936d-d52c28dfff39",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "voyageforecast",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fleet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"SHIP_ID\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"DESTINATION\": \"string\",\n    \"LAST_PORT_ID\": \"string\",\n    \"LAST_PORT\": \"string\",\n    \"LAST_PORT_UNLOCODE\": \"string\",\n    \"LAST_PORT_TIME\": \"2005-01-04T09:13:33.236Z\",\n    \"NEXT_PORT_ID\": \"string\",\n    \"NEXT_PORT_NAME\": \"string\",\n    \"NEXT_PORT_UNLOCODE\": \"string\",\n    \"ETA\": \"1962-02-16T19:22:55.997Z\",\n    \"ETA_CALC\": \"2018-08-02T13:25:40.709Z\"\n  },\n  {\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"SHIP_ID\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"DESTINATION\": \"string\",\n    \"LAST_PORT_ID\": \"string\",\n    \"LAST_PORT\": \"string\",\n    \"LAST_PORT_UNLOCODE\": \"string\",\n    \"LAST_PORT_TIME\": \"1963-12-25T05:17:47.592Z\",\n    \"NEXT_PORT_ID\": \"string\",\n    \"NEXT_PORT_NAME\": \"string\",\n    \"NEXT_PORT_UNLOCODE\": \"string\",\n    \"ETA\": \"2020-08-31T19:56:38.063Z\",\n    \"ETA_CALC\": \"2019-02-25T23:41:10.396Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea0e2444-9b25-41c4-ae29-4b88388cb4c3",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "voyageforecast",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fleet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"6b\",\n      \"detail\": \"FLEET NOT FOUND\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6e5b1ad-f908-4b2b-8776-615c4a2d16f9",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "voyageforecast",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fleet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "75aa133c-884f-4904-8135-6c748378713a",
+          "name": "Single Vessel Predictive Destinations",
+          "request": {
+            "name": "Single Vessel Predictive Destinations",
+            "description": {
+              "content": "Receive a prediction of the likely destination of a single vessel.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "predictive-destination-areas",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "(Required) The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromportid",
+                  "value": "<integer>",
+                  "description": "The MarineTraffic ID of the port you wish to receive a prediction (found on the URL of the respective Port page)"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "650d34eb-1085-467a-84e9-6ff7e5a6fe1f",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "predictive-destination-areas",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromportid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"IMO\": \"9450832\",\n    \"SHIP_ID\": \"4615400\",\n    \"MMSI\": \"538003690\",\n    \"SHIPNAME\": \"APHRODITE M\",\n    \"SHIPCLASS\": \"HANDYSIZE\",\n    \"MARKET\": \"DRY BULK\",\n    \"MANAGER\": \"EMPIRE BULKERS\",\n    \"OWNER\": \"BANK OF AMERICA LEASING AND CAPITAL\",\n    \"FROM_PORT_ID\": \"257\",\n    \"FROM_PORT\": \"ARATU\",\n    \"NEXT_PORT_1_ID\": \"5018\",\n    \"NEXT_PORT_1\": \"FORTALEZA\",\n    \"NEXT_PORT_1_PROB\": \"0.400\",\n    \"NEXT_AREA_1\": \"ECSA\",\n    \"NEXT_AREA_1_PROB\": \"1.000\",\n    \"NEXT_PORT_2_ID\": \"5026\",\n    \"NEXT_PORT_2\": \"RECIFE\",\n    \"NEXT_PORT_2_PROB\": \"0.200\",\n    \"NEXT_AREA_2\": \"ECSA\",\n    \"NEXT_AREA_2_PROB\": \"1.000\",\n    \"NEXT_PORT_3_ID\": \"645\",\n    \"NEXT_PORT_3\": \"VITORIA\",\n    \"NEXT_PORT_3_PROB\": \"0.200\",\n    \"NEXT_AREA_3\": \"ECSA\",\n    \"NEXT_AREA_3_PROB\": \"1.000\",\n    \"NEXT_PORT_4_ID\": \"2479\",\n    \"NEXT_PORT_4\": \"CABEDELO\",\n    \"NEXT_PORT_4_PROB\": \"0.200\",\n    \"NEXT_AREA_4\": \"ECSA\",\n    \"NEXT_AREA_4_PROB\": \"1.000\",\n    \"NEXT_PORT_5_ID\": \"\",\n    \"NEXT_PORT_5\": \"\",\n    \"NEXT_PORT_5_PROB\": \"\",\n    \"NEXT_AREA_5\": \"\",\n    \"NEXT_AREA_5_PROB\": \"\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d34f589-4610-44ce-af69-518d573f4458",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "predictive-destination-areas",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromportid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1\",\n      \"detail\": \"INCORRECT CALL-CHECK PARAMETERS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cb3dc13-fdc0-461f-befb-c2445550389b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "predictive-destination-areas",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromportid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "423c8815-eda3-4fd3-a963-f9b796fce2ad",
+          "name": "Fleet Predictive Destinations",
+          "request": {
+            "name": "Fleet Predictive Destinations",
+            "description": {
+              "content": "Receive a prediction of the likely destination for one of your MarineTraffic fleets.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "predictive-destination-areas",
+                "{{api_key}} "
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fleet_id",
+                  "value": "<integer>",
+                  "description": "(Required) The MarineTraffic ID of the fleet you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromportid",
+                  "value": "<integer>",
+                  "description": "The MarineTraffic ID of the port you wish to receive a prediction (found on the URL of the respective Port page)"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4710a99a-162a-41a9-b131-e1761ea967cd",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "predictive-destination-areas",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fleet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromportid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"IMO\": \"9450832\",\n    \"SHIP_ID\": \"4615400\",\n    \"MMSI\": \"538003690\",\n    \"SHIPNAME\": \"APHRODITE M\",\n    \"SHIPCLASS\": \"HANDYSIZE\",\n    \"MARKET\": \"DRY BULK\",\n    \"MANAGER\": \"EMPIRE BULKERS\",\n    \"OWNER\": \"BANK OF AMERICA LEASING AND CAPITAL\",\n    \"FROM_PORT_ID\": \"257\",\n    \"FROM_PORT\": \"ARATU\",\n    \"NEXT_PORT_1_ID\": \"5018\",\n    \"NEXT_PORT_1\": \"FORTALEZA\",\n    \"NEXT_PORT_1_PROB\": \"0.400\",\n    \"NEXT_AREA_1\": \"ECSA\",\n    \"NEXT_AREA_1_PROB\": \"1.000\",\n    \"NEXT_PORT_2_ID\": \"5026\",\n    \"NEXT_PORT_2\": \"RECIFE\",\n    \"NEXT_PORT_2_PROB\": \"0.200\",\n    \"NEXT_AREA_2\": \"ECSA\",\n    \"NEXT_AREA_2_PROB\": \"1.000\",\n    \"NEXT_PORT_3_ID\": \"645\",\n    \"NEXT_PORT_3\": \"VITORIA\",\n    \"NEXT_PORT_3_PROB\": \"0.200\",\n    \"NEXT_AREA_3\": \"ECSA\",\n    \"NEXT_AREA_3_PROB\": \"1.000\",\n    \"NEXT_PORT_4_ID\": \"2479\",\n    \"NEXT_PORT_4\": \"CABEDELO\",\n    \"NEXT_PORT_4_PROB\": \"0.200\",\n    \"NEXT_AREA_4\": \"ECSA\",\n    \"NEXT_AREA_4_PROB\": \"1.000\",\n    \"NEXT_PORT_5_ID\": \"\",\n    \"NEXT_PORT_5\": \"\",\n    \"NEXT_PORT_5_PROB\": \"\",\n    \"NEXT_AREA_5\": \"\",\n    \"NEXT_AREA_5_PROB\": \"\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7943d1f9-ecf4-4c52-be46-c26aca0cacb5",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "predictive-destination-areas",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fleet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromportid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1\",\n      \"detail\": \"INCORRECT CALL-CHECK PARAMETERS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85ebcd3e-1768-4c0a-8b4b-90b2ca995f1e",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "predictive-destination-areas",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fleet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromportid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "338978d2-ed0b-4d86-b1f1-0d1febcc6c18",
+          "name": "Vessel ETA to Port",
+          "request": {
+            "name": "Vessel ETA to Port",
+            "description": {
+              "content": "Get ETA and voyage information for a vessel of your choice, to any port you define.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "etatoport",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "1",
+                  "description": "(Required) Version of the service to be executed. Use version 2 to get the latest"
+                },
+                {
+                  "disabled": false,
+                  "key": "portid",
+                  "value": "<integer>",
+                  "description": "(Required) The MarineTraffic ID of the port you wish to receive ETA info </br></br> You can <b>instead</b> use unlocode"
+                },
+                {
+                  "disabled": false,
+                  "key": "unlocode",
+                  "value": "<string>",
+                  "description": "The UN LOCODE (without gaps or spaces) of the port you wish to receive ETA info"
+                },
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "(Required) The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+                },
+                {
+                  "disabled": false,
+                  "key": "speed_calc",
+                  "value": "<integer>",
+                  "description": "The Speed of the Vessel that MarineTraffic will use to produce the ETA value <ul>\n  <li>if not defined the last average speed of the Vessel will be used</li>\n  <li>if no average speed exists then a default value of 12(kn) will be used</li>\n</ul>"
+                },
+                {
+                  "disabled": false,
+                  "key": "msgtype",
+                  "value": "simple",
+                  "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a04ff7ba-34ba-46b6-87d1-377d94956da1",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etatoport",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "portid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "unlocode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "speed_calc",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"SHIP_ID\": \"4615400\",\n    \"MMSI\": \"538003690\",\n    \"IMO\": \"9450832\",\n    \"LAST_PORT_ID\": \"133\",\n    \"LAST_PORT\": \"TERNEUZEN\",\n    \"LAST_PORT_UNLOCODE\": \"NLTNZ\",\n    \"LAST_PORT_TIME\": \"2020-10-23T07:20:00.000Z\",\n    \"NEXT_PORT_NAME\": \"ARATU\",\n    \"NEXT_PORT_UNLOCODE\": \"BRARB\",\n    \"ETA_PORT_NAME\": \"ROTTERDAM\",\n    \"ETA_PORT_UNLOCODE\": \"NLRTM\",\n    \"ETA_CALC\": \"2020-11-17T04:18:35.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87e3ba8a-b963-4943-b857-63d43f77efa5",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etatoport",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "portid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "unlocode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "speed_calc",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"2a10\",\n      \"detail\": \"PORT_ID OR UNLOCODE MISSING\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "157f0193-676c-4ba0-a284-838e166f6f35",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etatoport",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "portid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "unlocode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "speed_calc",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.marinetraffic.com/api",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) API key: 40-character hexadecimal number",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "api_key"
+    }
+  ],
+  "info": {
+    "_postman_id": "0f41396c-5cd2-4fcd-89b4-69ea2cbe6d84",
+    "name": "MarineTraffic Voyage Information API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Voyage forecasts, predictive destination areas, and vessel ETA to port — combining live AIS positions with machine-learning–driven predictive intelligence.\n\nContact Support:\n Name: MarineTraffic",
+      "type": "text/plain"
+    }
+  }
+}

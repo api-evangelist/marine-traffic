@@ -1,388 +1,346 @@
 aid: marine-traffic
 url: https://raw.githubusercontent.com/api-evangelist/marine-traffic/refs/heads/main/apis.yml
 apis:
-- aid: marine-traffic:marine-traffic-vessel-positions-api
-  name: MarineTraffic Vessel Positions API
-  tags:
+  - aid: marine-traffic:marine-traffic-vessel-positions-api
+    name: MarineTraffic Vessel Positions API
+    tags:
+      - AIS
+      - Maritime
+      - Vessel Tracking
+      - Vessel Positions
+    humanURL: https://servicedocs.marinetraffic.com/
+    properties:
+      - url: https://servicedocs.marinetraffic.com/
+        type: Documentation
+      - url: openapi/marine-traffic-vessel-positions-openapi.yml
+        type: OpenAPI
+      - url: json-schema/marine-traffic-vessel-position-schema.json
+        type: JSONSchema
+      - url: json-ld/marine-traffic-context.jsonld
+        type: JSONLD
+      - url: examples/marine-traffic-vessel-position-example.json
+        type: Example
+    description: >-
+      Real-time and historical AIS vessel positions sourced from 13,000+ terrestrial AIS receivers and satellite AIS
+      feeds. Query by single vessel (MMSI / IMO / SHIP_ID), by fleet, by predefined area of interest, by port, or by a
+      custom bounding box. Includes both the modern AIS API (`/exportvessels`, `/exportvessel`,
+      `/exportvessels-custom-area` — MTA030AD-family with cursor pagination) and the legacy PS01–PS08 surface, plus the
+      Vessel Historical Track endpoint (`/exportvesseltrack`) for replaying a vessel's track over a defined window.
+  - aid: marine-traffic:marine-traffic-events-api
+    name: MarineTraffic Events API
+    tags:
+      - AIS
+      - Maritime
+      - Port Calls
+      - Berth Calls
+      - Events
+    humanURL: https://servicedocs.marinetraffic.com/
+    properties:
+      - url: https://servicedocs.marinetraffic.com/
+        type: Documentation
+      - url: openapi/marine-traffic-events-openapi.yml
+        type: OpenAPI
+      - url: json-schema/marine-traffic-port-call-schema.json
+        type: JSONSchema
+      - url: examples/marine-traffic-port-call-example.json
+        type: Example
+    description: >-
+      Port calls, berth calls, and event timelines — surfaces every arrival, departure, and berth touch detected by the
+      MarineTraffic AIS network. Scope by vessel (`/portcalls`, `/vesselevents`, `/berth-calls` with MMSI/IMO/SHIP_ID)
+      or by port (same endpoints scoped with port_id / UNLOCODE / berth_id / terminal_id). Returns voyage duration,
+      time-in-port, draught, market segment, and full vessel/port keys for downstream joining.
+  - aid: marine-traffic:marine-traffic-vessels-data-api
+    name: MarineTraffic Vessels Data API
+    tags:
+      - AIS
+      - Maritime
+      - Vessel Database
+      - Search
+    humanURL: https://servicedocs.marinetraffic.com/
+    properties:
+      - url: https://servicedocs.marinetraffic.com/
+        type: Documentation
+      - url: openapi/marine-traffic-vessels-data-openapi.yml
+        type: OpenAPI
+      - url: json-schema/marine-traffic-vessel-master-schema.json
+        type: JSONSchema
+    description: >-
+      Vessel master data (`/vesselmasterdata`), vessel photographs (`/exportvesselphoto`), and the ship-database search
+      surface (`/shipsearch` by identifier or by name). Returns the full static AIS record plus MarineTraffic
+      enrichments — owner, manager, builder, classification society, build year, dimensions, deadweight, gross tonnage,
+      and current operational status.
+  - aid: marine-traffic:marine-traffic-voyage-information-api
+    name: MarineTraffic Voyage Information API
+    tags:
+      - AIS
+      - Maritime
+      - Voyage Forecasting
+      - Predictive Intelligence
+      - ETA
+    humanURL: https://servicedocs.marinetraffic.com/
+    properties:
+      - url: https://servicedocs.marinetraffic.com/
+        type: Documentation
+      - url: openapi/marine-traffic-voyage-info-openapi.yml
+        type: OpenAPI
+      - url: json-schema/marine-traffic-voyage-forecast-schema.json
+        type: JSONSchema
+      - url: examples/marine-traffic-voyage-forecast-example.json
+        type: Example
+    description: >-
+      Machine-learning–powered voyage intelligence: voyage forecast (`/voyageforecast`), predictive destination areas
+      (`/predictive-destination-areas`), and ETA-to-port (`/etatoport`). Combines live AIS positions, port-call history,
+      and predictive routing to deliver destination predictions with probability scores, ranked alternative destination
+      ports, and predictive ETAs that outperform raw AIS-broadcast ETAs.
+  - aid: marine-traffic:marine-traffic-ports-information-api
+    name: MarineTraffic Ports Information API
+    tags:
+      - AIS
+      - Maritime
+      - Ports
+      - Port Congestion
+      - Predictive Arrivals
+    humanURL: https://servicedocs.marinetraffic.com/
+    properties:
+      - url: https://servicedocs.marinetraffic.com/
+        type: Documentation
+      - url: openapi/marine-traffic-ports-info-openapi.yml
+        type: OpenAPI
+      - url: json-schema/marine-traffic-port-schema.json
+        type: JSONSchema
+    description: >-
+      Port-centric analytics: expected port arrivals (`/expectedarrivals`), predictive arrivals using MarineTraffic's
+      destination model (`/predictive-arrivals`), and port-congestion intelligence (`/port-congestion`) with
+      anchorage-time, in-port-time, vessels-in-port, and call-count metrics aggregated by market or ship class for a
+      given port and ISO week.
+  - aid: marine-traffic:marine-traffic-routing-api
+    name: MarineTraffic Routing Information API
+    tags:
+      - AIS
+      - Maritime
+      - Routing
+      - Distance
+    humanURL: https://servicedocs.marinetraffic.com/
+    properties:
+      - url: https://servicedocs.marinetraffic.com/
+        type: Documentation
+      - url: openapi/marine-traffic-routing-openapi.yml
+        type: OpenAPI
+    description: >-
+      Maritime route generation and distance calculation across global sea lanes via `/exportroutes`. Compute the
+      great-circle or sea-lane-aware route from a vessel's current position (MMSI/IMO/SHIP_ID) — or an arbitrary origin
+      port / LAT-LON pair — to a target port, with optional inland-waterway and alternative-route inclusion.
+  - aid: marine-traffic:marine-traffic-reverse-geocoding-api
+    name: MarineTraffic Reverse Geocoding API
+    tags:
+      - AIS
+      - Maritime
+      - Geocoding
+      - Geographic
+    humanURL: https://servicedocs.marinetraffic.com/
+    properties:
+      - url: https://servicedocs.marinetraffic.com/
+        type: Documentation
+      - url: openapi/marine-traffic-reverse-geocoding-openapi.yml
+        type: OpenAPI
+    description: >-
+      Maritime-aware reverse geocoding (`/reversegeocode`) — resolves a single coordinate pair to the nearest port,
+      anchorage, terminal, berth, or standard / custom area within a configurable radius. The single geographic
+      primitive in the API; useful for tagging AIS positions with port and berth context.
+  - aid: marine-traffic:marine-traffic-power-user-api
+    name: MarineTraffic Power User API
+    tags:
+      - AIS
+      - Maritime
+      - Fleet Management
+      - Account
+      - Passage Plans
+    humanURL: https://servicedocs.marinetraffic.com/
+    properties:
+      - url: https://servicedocs.marinetraffic.com/
+        type: Documentation
+      - url: openapi/marine-traffic-power-user-openapi.yml
+        type: OpenAPI
+    description: >-
+      Power-user administration surface: fleet CRUD (`/setfleet`, `/getfleet`, `/getfleets`, `/clearfleet`), API
+      credit-balance inspection (`/exportcredits` — free), and passage-plan import (`/import-passage-plan`, POST). Used
+      to maintain customer fleet definitions, monitor credit burn, and push voyage plans into the MarineTraffic
+      platform.
+name: MarineTraffic
+tags:
   - AIS
   - Maritime
   - Vessel Tracking
-  - Vessel Positions
-  humanURL: https://servicedocs.marinetraffic.com/
-  properties:
-  - url: https://servicedocs.marinetraffic.com/
-    type: Documentation
-  - url: openapi/marine-traffic-vessel-positions-openapi.yml
-    type: OpenAPI
-  - url: json-schema/marine-traffic-vessel-position-schema.json
-    type: JSONSchema
-  - url: json-ld/marine-traffic-context.jsonld
-    type: JSONLD
-  - url: examples/marine-traffic-vessel-position-example.json
-    type: Example
-  - type: NaftikoCapability
-    url: capabilities/vessel-positions-ais.yaml
-  - type: NaftikoCapability
-    url: capabilities/vessel-positions-historical-track.yaml
-  description: >-
-    Real-time and historical AIS vessel positions sourced from 13,000+
-    terrestrial AIS receivers and satellite AIS feeds. Query by single vessel
-    (MMSI / IMO / SHIP_ID), by fleet, by predefined area of interest, by port,
-    or by a custom bounding box. Includes both the modern AIS API
-    (`/exportvessels`, `/exportvessel`, `/exportvessels-custom-area` —
-    MTA030AD-family with cursor pagination) and the legacy PS01–PS08 surface,
-    plus the Vessel Historical Track endpoint (`/exportvesseltrack`) for
-    replaying a vessel's track over a defined window.
-- aid: marine-traffic:marine-traffic-events-api
-  name: MarineTraffic Events API
-  tags:
-  - AIS
-  - Maritime
-  - Port Calls
-  - Berth Calls
-  - Events
-  humanURL: https://servicedocs.marinetraffic.com/
-  properties:
-  - url: https://servicedocs.marinetraffic.com/
-    type: Documentation
-  - url: openapi/marine-traffic-events-openapi.yml
-    type: OpenAPI
-  - url: json-schema/marine-traffic-port-call-schema.json
-    type: JSONSchema
-  - url: examples/marine-traffic-port-call-example.json
-    type: Example
-  - type: NaftikoCapability
-    url: capabilities/events-single-vessel.yaml
-  - type: NaftikoCapability
-    url: capabilities/events-port.yaml
-  description: >-
-    Port calls, berth calls, and event timelines — surfaces every arrival,
-    departure, and berth touch detected by the MarineTraffic AIS network.
-    Scope by vessel (`/portcalls`, `/vesselevents`, `/berth-calls` with
-    MMSI/IMO/SHIP_ID) or by port (same endpoints scoped with port_id / UNLOCODE
-    / berth_id / terminal_id). Returns voyage duration, time-in-port, draught,
-    market segment, and full vessel/port keys for downstream joining.
-- aid: marine-traffic:marine-traffic-vessels-data-api
-  name: MarineTraffic Vessels Data API
-  tags:
-  - AIS
-  - Maritime
-  - Vessel Database
-  - Search
-  humanURL: https://servicedocs.marinetraffic.com/
-  properties:
-  - url: https://servicedocs.marinetraffic.com/
-    type: Documentation
-  - url: openapi/marine-traffic-vessels-data-openapi.yml
-    type: OpenAPI
-  - url: json-schema/marine-traffic-vessel-master-schema.json
-    type: JSONSchema
-  - type: NaftikoCapability
-    url: capabilities/vessels-data-information.yaml
-  - type: NaftikoCapability
-    url: capabilities/vessels-data-search.yaml
-  description: >-
-    Vessel master data (`/vesselmasterdata`), vessel photographs
-    (`/exportvesselphoto`), and the ship-database search surface
-    (`/shipsearch` by identifier or by name). Returns the full static AIS
-    record plus MarineTraffic enrichments — owner, manager, builder,
-    classification society, build year, dimensions, deadweight, gross tonnage,
-    and current operational status.
-- aid: marine-traffic:marine-traffic-voyage-information-api
-  name: MarineTraffic Voyage Information API
-  tags:
-  - AIS
-  - Maritime
-  - Voyage Forecasting
-  - Predictive Intelligence
-  - ETA
-  humanURL: https://servicedocs.marinetraffic.com/
-  properties:
-  - url: https://servicedocs.marinetraffic.com/
-    type: Documentation
-  - url: openapi/marine-traffic-voyage-info-openapi.yml
-    type: OpenAPI
-  - url: json-schema/marine-traffic-voyage-forecast-schema.json
-    type: JSONSchema
-  - url: examples/marine-traffic-voyage-forecast-example.json
-    type: Example
-  - type: NaftikoCapability
-    url: capabilities/voyage-information.yaml
-  description: >-
-    Machine-learning–powered voyage intelligence: voyage forecast
-    (`/voyageforecast`), predictive destination areas
-    (`/predictive-destination-areas`), and ETA-to-port (`/etatoport`). Combines
-    live AIS positions, port-call history, and predictive routing to deliver
-    destination predictions with probability scores, ranked alternative
-    destination ports, and predictive ETAs that outperform raw AIS-broadcast
-    ETAs.
-- aid: marine-traffic:marine-traffic-ports-information-api
-  name: MarineTraffic Ports Information API
-  tags:
-  - AIS
-  - Maritime
+  - Shipping
   - Ports
-  - Port Congestion
-  - Predictive Arrivals
-  humanURL: https://servicedocs.marinetraffic.com/
-  properties:
-  - url: https://servicedocs.marinetraffic.com/
-    type: Documentation
-  - url: openapi/marine-traffic-ports-info-openapi.yml
-    type: OpenAPI
-  - url: json-schema/marine-traffic-port-schema.json
-    type: JSONSchema
-  - type: NaftikoCapability
-    url: capabilities/ports-information.yaml
-  description: >-
-    Port-centric analytics: expected port arrivals (`/expectedarrivals`),
-    predictive arrivals using MarineTraffic's destination model
-    (`/predictive-arrivals`), and port-congestion intelligence
-    (`/port-congestion`) with anchorage-time, in-port-time, vessels-in-port,
-    and call-count metrics aggregated by market or ship class for a given
-    port and ISO week.
-- aid: marine-traffic:marine-traffic-routing-api
-  name: MarineTraffic Routing Information API
-  tags:
-  - AIS
-  - Maritime
-  - Routing
-  - Distance
-  humanURL: https://servicedocs.marinetraffic.com/
-  properties:
-  - url: https://servicedocs.marinetraffic.com/
-    type: Documentation
-  - url: openapi/marine-traffic-routing-openapi.yml
-    type: OpenAPI
-  - type: NaftikoCapability
-    url: capabilities/routing-information.yaml
-  description: >-
-    Maritime route generation and distance calculation across global sea lanes
-    via `/exportroutes`. Compute the great-circle or sea-lane-aware route from
-    a vessel's current position (MMSI/IMO/SHIP_ID) — or an arbitrary origin
-    port / LAT-LON pair — to a target port, with optional inland-waterway and
-    alternative-route inclusion.
-- aid: marine-traffic:marine-traffic-reverse-geocoding-api
-  name: MarineTraffic Reverse Geocoding API
-  tags:
-  - AIS
-  - Maritime
-  - Geocoding
-  - Geographic
-  humanURL: https://servicedocs.marinetraffic.com/
-  properties:
-  - url: https://servicedocs.marinetraffic.com/
-    type: Documentation
-  - url: openapi/marine-traffic-reverse-geocoding-openapi.yml
-    type: OpenAPI
-  - type: NaftikoCapability
-    url: capabilities/reverse-geocoding.yaml
-  description: >-
-    Maritime-aware reverse geocoding (`/reversegeocode`) — resolves a single
-    coordinate pair to the nearest port, anchorage, terminal, berth, or
-    standard / custom area within a configurable radius. The single geographic
-    primitive in the API; useful for tagging AIS positions with port and
-    berth context.
-- aid: marine-traffic:marine-traffic-power-user-api
-  name: MarineTraffic Power User API
-  tags:
-  - AIS
-  - Maritime
-  - Fleet Management
-  - Account
-  - Passage Plans
-  humanURL: https://servicedocs.marinetraffic.com/
-  properties:
-  - url: https://servicedocs.marinetraffic.com/
-    type: Documentation
-  - url: openapi/marine-traffic-power-user-openapi.yml
-    type: OpenAPI
-  - type: NaftikoCapability
-    url: capabilities/power-user-fleets.yaml
-  - type: NaftikoCapability
-    url: capabilities/power-user-balances.yaml
-  - type: NaftikoCapability
-    url: capabilities/power-user-passage-plans.yaml
-  description: >-
-    Power-user administration surface: fleet CRUD (`/setfleet`, `/getfleet`,
-    `/getfleets`, `/clearfleet`), API credit-balance inspection
-    (`/exportcredits` — free), and passage-plan import
-    (`/import-passage-plan`, POST). Used to maintain customer fleet
-    definitions, monitor credit burn, and push voyage plans into the
-    MarineTraffic platform.
-name: MarineTraffic
-tags:
-- AIS
-- Maritime
-- Vessel Tracking
-- Shipping
-- Ports
-- Voyage Forecasting
-- Geospatial
-- Kpler
+  - Voyage Forecasting
+  - Geospatial
+  - Kpler
 kind: contract
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
-- url: https://www.marinetraffic.com/
-  name: MarineTraffic
-  type: Portal
-- url: https://servicedocs.marinetraffic.com/
-  name: AIS Data API Reference
-  type: Documentation
-- url: https://servicedocs.marinetraffic.com/
-  name: API Reference
-  type: APIReference
-- url: https://www.kpler.com/product/maritime/data-services
-  name: Kpler / MarineTraffic Maritime Data Services
-  type: Portal
-- url: https://support.marinetraffic.com/en/articles/9552659-api-services
-  name: API Services — Common Problems and Solutions
-  type: Support
-- url: https://support.marinetraffic.com/en/articles/9552800-api-most-common-response-error-codes
-  name: API Most Common Response Error Codes
-  type: Errors
-- url: https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted
-  name: What Kind of Information is AIS Transmitted
-  type: Documentation
-- url: https://support.marinetraffic.com/
-  name: MarineTraffic Support Center
-  type: Support
-- url: https://www.marinetraffic.com/en/ais/home
-  name: MarineTraffic Live Map
-  type: Sandbox
-- url: https://github.com/marinetraffic
-  name: MarineTraffic on GitHub
-  type: GitHubOrganization
-- url: https://github.com/marinetraffic/mt-ais-toolbox
-  name: mt-ais-toolbox — AIS Density Map Toolbox
-  type: Tool
-- url: https://www.linkedin.com/company/marinetraffic
-  name: MarineTraffic on LinkedIn
-  type: LinkedIn
-- url: https://twitter.com/MarineTraffic
-  name: MarineTraffic on Twitter / X
-  type: Twitter
-- url: openapi/marine-traffic-openapi.yml
-  type: OpenAPI
-  name: Combined MarineTraffic AIS Data API (all surfaces)
-- url: rules/marine-traffic-rules.yml
-  type: SpectralRules
-- url: vocabulary/marine-traffic-vocabulary.yml
-  type: Vocabulary
-- url: json-ld/marine-traffic-context.jsonld
-  type: JSONLD
-- url: plans/marine-traffic-plans-pricing.yml
-  type: Plans
-- url: rate-limits/marine-traffic-rate-limits.yml
-  type: RateLimits
-- url: finops/marine-traffic-finops.yml
-  type: FinOps
-- type: Features
-  data:
-  - name: AIS vessel positions (live + delayed)
-    description: >-
-      Vessel positions sourced from 13,000+ terrestrial AIS receivers and
-      satellite AIS, accessible by single vessel, fleet, area of interest,
-      port, or bounding box. Default delay 1 hour; real-time access via
-      enterprise contract.
-  - name: Vessel historical track
-    description: Replay a vessel's AIS track over a defined date / day window.
-  - name: Port calls and berth calls
-    description: Provider-detected arrival, departure, and berth-touch events per vessel and per port, with voyage duration and time-in-port.
-  - name: Vessel master data
-    description: Static AIS plus MarineTraffic-enriched fields — owner, manager, builder, class, build year, dimensions, deadweight, gross tonnage.
-  - name: Vessel photographs
-    description: Ship-photo retrieval via VD01.
-  - name: Vessel search
-    description: Search the ship database by identifier (IMO / MMSI / SHIP_ID / call sign) or by name.
-  - name: Voyage forecasts
-    description: Predictive destination, ETA, and route distance for a single vessel or a whole fleet (VI01).
-  - name: Predictive destination areas
-    description: Probability-ranked candidate destination ports for a vessel or fleet (VI04).
-  - name: ETA to port
-    description: Predictive ETA to a specific destination port (VI07).
-  - name: Expected and predictive port arrivals
-    description: Per-port arrival forecasts (VI02 / VI05) filtered by market, ship class, draught, and time window.
-  - name: Port congestion analytics
-    description: Anchorage time, in-port time, vessel and call counts per port / market / ship-class / ISO week (VI06).
-  - name: Maritime routing
-    description: Sea-lane-aware route + distance computation between origin and destination (VI03).
-  - name: Reverse geocoding
-    description: Coordinate-to-maritime-location resolution (port, anchorage, berth, terminal, custom area) (GI01).
-  - name: Fleet management
-    description: CRUD on power-user fleets — set, get, list, clear (PU01–PU05).
-  - name: Account credit balance
-    description: Live balance inspection via /exportcredits (free).
-  - name: Passage plan import
-    description: POST /import-passage-plan to ingest voyage plans for power-user fleets.
-  - name: Multiple response protocols
-    description: Per-call response format — json (default), jsono, xml, csv — via the protocol query parameter.
-  - name: 13,000+ terrestrial AIS receivers + satellite AIS
-    description: Hybrid global coverage operated by Kpler / MarineTraffic.
-  - name: Live NMEA streams (enterprise)
-    description: Direct NMEA AIS streams available as an enterprise data product alongside the REST API.
-  - name: Cloud database / bulk delivery (enterprise)
-    description: Hosted cloud-database access and bulk CSV deliveries for high-volume customers.
-  sources:
-  - https://servicedocs.marinetraffic.com/
-  - https://www.kpler.com/product/maritime/data-services
-  updated: '2026-05-25'
-- type: UseCases
-  data:
-  - name: Commodity trading and freight intelligence
-    description: Power voyage analytics, tonnage tracking, and supply forecasting for commodity desks.
-  - name: Port operations and logistics
-    description: Anticipate berth demand, optimize pilotage and tug allocation, and reduce dwell.
-  - name: Vessel tracking dashboards
-    description: Build fleet dashboards and customer-facing tracking pages using PS04 + VI07.
-  - name: Compliance and sanctions monitoring
-    description: Detect dark fleet behavior, AIS gaps, port-call patterns, and sanctioned vessel touches.
-  - name: Marine insurance underwriting
-    description: Underwrite hull / P&I and route insurance with verified call histories and port-congestion data.
-  - name: Government and coast guard situational awareness
-    description: Feed maritime domain awareness systems with AIS, port-call, and routing context.
-  - name: Carbon and ESG reporting
-    description: Compute voyage-level CO2 estimates by combining VI03 routing + VD02 master data + AIS speed.
-- type: Integrations
-  data:
-  - name: Kpler
-    description: MarineTraffic is part of the Kpler maritime intelligence platform; AIS APIs sit alongside Kpler trade flow data.
-  - name: Postman / API clients
-    description: Standard REST + JSON; works directly in Postman, Insomnia, or any HTTP client.
-  - name: GIS / mapping
-    description: Output is lat/lon-tagged — integrates with QGIS, Mapbox, Leaflet, and Esri.
-  - name: NMEA-compatible bridge systems
-    description: Enterprise NMEA streams integrate with ECDIS, fleet-management software, and bridge electronics.
-  - name: AIS density-map toolbox
-    description: MarineTraffic publishes mt-ais-toolbox on GitHub for density-map generation from AIS data.
-- type: Solutions
-  data:
-  - name: Self-serve REST API
-    description: Public REST APIs metered against a prepaid credit balance — what this catalog covers.
-  - name: NMEA live AIS streams
-    description: Raw NMEA AIS for bridge-side and processing-pipeline customers (enterprise).
-  - name: Cloud database access
-    description: Hosted MarineTraffic database for SQL / analytics workloads (enterprise).
-  - name: Custom data extracts
-    description: Bespoke CSV / JSON delivery against custom queries (enterprise).
+  - url: https://www.marinetraffic.com/
+    name: MarineTraffic
+    type: Portal
+  - url: https://servicedocs.marinetraffic.com/
+    name: AIS Data API Reference
+    type: Documentation
+  - url: https://servicedocs.marinetraffic.com/
+    name: API Reference
+    type: APIReference
+  - url: https://www.kpler.com/product/maritime/data-services
+    name: Kpler / MarineTraffic Maritime Data Services
+    type: Portal
+  - url: https://support.marinetraffic.com/en/articles/9552659-api-services
+    name: API Services — Common Problems and Solutions
+    type: Support
+  - url: https://support.marinetraffic.com/en/articles/9552800-api-most-common-response-error-codes
+    name: API Most Common Response Error Codes
+    type: Errors
+  - url: https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted
+    name: What Kind of Information is AIS Transmitted
+    type: Documentation
+  - url: https://support.marinetraffic.com/
+    name: MarineTraffic Support Center
+    type: Support
+  - url: https://www.marinetraffic.com/en/ais/home
+    name: MarineTraffic Live Map
+    type: Sandbox
+  - url: https://github.com/marinetraffic
+    name: MarineTraffic on GitHub
+    type: GitHubOrganization
+  - url: https://github.com/marinetraffic/mt-ais-toolbox
+    name: mt-ais-toolbox — AIS Density Map Toolbox
+    type: Tool
+  - url: https://www.linkedin.com/company/marinetraffic
+    name: MarineTraffic on LinkedIn
+    type: LinkedIn
+  - url: https://twitter.com/MarineTraffic
+    name: MarineTraffic on Twitter / X
+    type: Twitter
+  - url: openapi/marine-traffic-openapi.yml
+    type: OpenAPI
+    name: Combined MarineTraffic AIS Data API (all surfaces)
+  - url: rules/marine-traffic-rules.yml
+    type: SpectralRules
+  - url: vocabulary/marine-traffic-vocabulary.yml
+    type: Vocabulary
+  - url: json-ld/marine-traffic-context.jsonld
+    type: JSONLD
+  - url: plans/marine-traffic-plans-pricing.yml
+    type: Plans
+  - url: rate-limits/marine-traffic-rate-limits.yml
+    type: RateLimits
+  - url: finops/marine-traffic-finops.yml
+    type: FinOps
+  - type: Features
+    data:
+      - name: AIS vessel positions (live + delayed)
+        description: >-
+          Vessel positions sourced from 13,000+ terrestrial AIS receivers and satellite AIS, accessible by single
+          vessel, fleet, area of interest, port, or bounding box. Default delay 1 hour; real-time access via enterprise
+          contract.
+      - name: Vessel historical track
+        description: Replay a vessel's AIS track over a defined date / day window.
+      - name: Port calls and berth calls
+        description: >-
+          Provider-detected arrival, departure, and berth-touch events per vessel and per port, with voyage duration and
+          time-in-port.
+      - name: Vessel master data
+        description: >-
+          Static AIS plus MarineTraffic-enriched fields — owner, manager, builder, class, build year, dimensions,
+          deadweight, gross tonnage.
+      - name: Vessel photographs
+        description: Ship-photo retrieval via VD01.
+      - name: Vessel search
+        description: Search the ship database by identifier (IMO / MMSI / SHIP_ID / call sign) or by name.
+      - name: Voyage forecasts
+        description: Predictive destination, ETA, and route distance for a single vessel or a whole fleet (VI01).
+      - name: Predictive destination areas
+        description: Probability-ranked candidate destination ports for a vessel or fleet (VI04).
+      - name: ETA to port
+        description: Predictive ETA to a specific destination port (VI07).
+      - name: Expected and predictive port arrivals
+        description: Per-port arrival forecasts (VI02 / VI05) filtered by market, ship class, draught, and time window.
+      - name: Port congestion analytics
+        description: Anchorage time, in-port time, vessel and call counts per port / market / ship-class / ISO week (VI06).
+      - name: Maritime routing
+        description: Sea-lane-aware route + distance computation between origin and destination (VI03).
+      - name: Reverse geocoding
+        description: Coordinate-to-maritime-location resolution (port, anchorage, berth, terminal, custom area) (GI01).
+      - name: Fleet management
+        description: CRUD on power-user fleets — set, get, list, clear (PU01–PU05).
+      - name: Account credit balance
+        description: Live balance inspection via /exportcredits (free).
+      - name: Passage plan import
+        description: POST /import-passage-plan to ingest voyage plans for power-user fleets.
+      - name: Multiple response protocols
+        description: Per-call response format — json (default), jsono, xml, csv — via the protocol query parameter.
+      - name: 13,000+ terrestrial AIS receivers + satellite AIS
+        description: Hybrid global coverage operated by Kpler / MarineTraffic.
+      - name: Live NMEA streams (enterprise)
+        description: Direct NMEA AIS streams available as an enterprise data product alongside the REST API.
+      - name: Cloud database / bulk delivery (enterprise)
+        description: Hosted cloud-database access and bulk CSV deliveries for high-volume customers.
+    sources:
+      - https://servicedocs.marinetraffic.com/
+      - https://www.kpler.com/product/maritime/data-services
+    updated: '2026-05-25'
+  - type: UseCases
+    data:
+      - name: Commodity trading and freight intelligence
+        description: Power voyage analytics, tonnage tracking, and supply forecasting for commodity desks.
+      - name: Port operations and logistics
+        description: Anticipate berth demand, optimize pilotage and tug allocation, and reduce dwell.
+      - name: Vessel tracking dashboards
+        description: Build fleet dashboards and customer-facing tracking pages using PS04 + VI07.
+      - name: Compliance and sanctions monitoring
+        description: Detect dark fleet behavior, AIS gaps, port-call patterns, and sanctioned vessel touches.
+      - name: Marine insurance underwriting
+        description: Underwrite hull / P&I and route insurance with verified call histories and port-congestion data.
+      - name: Government and coast guard situational awareness
+        description: Feed maritime domain awareness systems with AIS, port-call, and routing context.
+      - name: Carbon and ESG reporting
+        description: Compute voyage-level CO2 estimates by combining VI03 routing + VD02 master data + AIS speed.
+  - type: Integrations
+    data:
+      - name: Kpler
+        description: >-
+          MarineTraffic is part of the Kpler maritime intelligence platform; AIS APIs sit alongside Kpler trade flow
+          data.
+      - name: Postman / API clients
+        description: Standard REST + JSON; works directly in Postman, Insomnia, or any HTTP client.
+      - name: GIS / mapping
+        description: Output is lat/lon-tagged — integrates with QGIS, Mapbox, Leaflet, and Esri.
+      - name: NMEA-compatible bridge systems
+        description: Enterprise NMEA streams integrate with ECDIS, fleet-management software, and bridge electronics.
+      - name: AIS density-map toolbox
+        description: MarineTraffic publishes mt-ais-toolbox on GitHub for density-map generation from AIS data.
+  - type: Solutions
+    data:
+      - name: Self-serve REST API
+        description: Public REST APIs metered against a prepaid credit balance — what this catalog covers.
+      - name: NMEA live AIS streams
+        description: Raw NMEA AIS for bridge-side and processing-pipeline customers (enterprise).
+      - name: Cloud database access
+        description: Hosted MarineTraffic database for SQL / analytics workloads (enterprise).
+      - name: Custom data extracts
+        description: Bespoke CSV / JSON delivery against custom queries (enterprise).
 created: '2026-05-25T00:00:00.000Z'
 modified: '2026-05-25'
 position: Consuming
 description: >-
-  MarineTraffic is the leading maritime intelligence and AIS ship-tracking
-  platform — now part of Kpler. The MarineTraffic AIS Data API exposes the
-  same live + historical vessel positions, port calls, berth calls, vessel
-  master data, voyage forecasts, predictive arrivals, port-congestion
-  analytics, sea-lane routing, reverse geocoding, and fleet management
-  endpoints that power the public marinetraffic.com map and the Kpler maritime
-  data services. Data is sourced from 13,000+ terrestrial AIS receivers plus
-  satellite AIS, served as REST/JSON (with CSV / XML / JSONO alternatives),
-  authenticated via a per-key prepaid credit balance, and metered in credits
-  per response row with per-service refresh-interval caching.
+  MarineTraffic is the leading maritime intelligence and AIS ship-tracking platform — now part of Kpler. The
+  MarineTraffic AIS Data API exposes the same live + historical vessel positions, port calls, berth calls, vessel master
+  data, voyage forecasts, predictive arrivals, port-congestion analytics, sea-lane routing, reverse geocoding, and fleet
+  management endpoints that power the public marinetraffic.com map and the Kpler maritime data services. Data is sourced
+  from 13,000+ terrestrial AIS receivers plus satellite AIS, served as REST/JSON (with CSV / XML / JSONO alternatives),
+  authenticated via a per-key prepaid credit balance, and metered in credits per response row with per-service
+  refresh-interval caching.
 maintainers:
-- FN: Kin Lane
-  email: info@apievangelist.com
-  X: apievangelist
-  url: https://apievangelist.com
+  - FN: Kin Lane
+    email: info@apievangelist.com
+    X: apievangelist
+    url: https://apievangelist.com
 specificationVersion: '0.16'

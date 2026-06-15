@@ -1,0 +1,230 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Power User API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fleets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Modify Fleet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/setfleet/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to handle, comma separated values supported </br></br> You can <b>instead</b> use imo or shipid"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to handle, comma separated values supported"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel, comma separated values supported"
+              },
+              {
+                "name": "fleet_id",
+                "value": "",
+                "type": "query",
+                "description": "If used, vessel will be added to the specific fleet, otherwise default fleet is used"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Possible values are:  <ul>\n  <li>0 to set to inactive</li>\n  <li>1 to activate</li>\n  <li>2 to enable satellite coverage</li>\n</ul>"
+              },
+              {
+                "name": "delete",
+                "value": "",
+                "type": "query",
+                "description": "Set this parameter to 1 to delete a vessel from your fleet"
+              }
+            ]
+          },
+          "docs": "Manage your MarineTraffic fleet. </br></br> To **create a new item** in a fleet, use the active parameter. If the item already exists, it will **update** item's status. </br></br> The active parameter can have values of 0, 1, 2 which corresponds to the three states of the fleet items (inactive, active, sat enabled) </br></br> The **delete** parameter must have a value of 1 and it **removes** the entry from the fleet. </br></br> If MMSI, IMO and SHIP ID are passed, the MMSI takes precedence and t"
+        },
+        {
+          "info": {
+            "name": "Vessels in Fleet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/getfleet/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 2 to get the latest"
+              },
+              {
+                "name": "fleet_id",
+                "value": "",
+                "type": "query",
+                "description": "If used, will return specific fleet otherwise default fleet is used"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the number of the results page to return. Use this parameter to navigate through paginated results (with version 2) when the fleet contains more than 100 vessels."
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get a detailed listing of vessels included in one of your MarineTraffic fleets.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</"
+        },
+        {
+          "info": {
+            "name": "List Fleets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/getfleets/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get an overview list of all your MarineTraffic fleets.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Clear Fleet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/clearfleet/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "fleet_id",
+                "value": "",
+                "type": "query",
+                "description": "The fleet id you wish to clear"
+              }
+            ]
+          },
+          "docs": "Clear your MarineTraffic fleet from all vessels.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Balances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Credits Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportcredits/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              }
+            ]
+          },
+          "docs": "Get a snapshot of your current credits balance.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Passage Plans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import Passage Plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.marinetraffic.com/api/import-passage-plan/:api_key",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import a passage plan for one of your managed vessels. </br></br> <b>Notes</b> <ul>\n    <li>Passage plans can only be imported for vessels that belong to user's managed vessels (see <a href=\"https://www.marinetraffic.com/en/online-services/plans/fleet-ops\">Fleet Operations</a> solution for more info)</li>\n    <li>Accepted file formats are CSV, RTZ or RT3</li>\n    <li>Maximum file size supported is 20MB</li>\n    <li>File should contain at least 2 waypoints</li>\n    <li>Imported passage plans over"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
