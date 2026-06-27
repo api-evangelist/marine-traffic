@@ -19,7 +19,7 @@ apis:
       - url: json-ld/marine-traffic-context.jsonld
         type: JSONLD
       - url: examples/marine-traffic-vessel-position-example.json
-        type: Example
+        type: Examples
     description: >-
       Real-time and historical AIS vessel positions sourced from 13,000+ terrestrial AIS receivers and satellite AIS
       feeds. Query by single vessel (MMSI / IMO / SHIP_ID), by fleet, by predefined area of interest, by port, or by a
@@ -43,7 +43,7 @@ apis:
       - url: json-schema/marine-traffic-port-call-schema.json
         type: JSONSchema
       - url: examples/marine-traffic-port-call-example.json
-        type: Example
+        type: Examples
     description: >-
       Port calls, berth calls, and event timelines — surfaces every arrival, departure, and berth touch detected by the
       MarineTraffic AIS network. Scope by vessel (`/portcalls`, `/vesselevents`, `/berth-calls` with MMSI/IMO/SHIP_ID)
@@ -86,7 +86,7 @@ apis:
       - url: json-schema/marine-traffic-voyage-forecast-schema.json
         type: JSONSchema
       - url: examples/marine-traffic-voyage-forecast-example.json
-        type: Example
+        type: Examples
     description: >-
       Machine-learning–powered voyage intelligence: voyage forecast (`/voyageforecast`), predictive destination areas
       (`/predictive-destination-areas`), and ETA-to-port (`/etatoport`). Combines live AIS positions, port-call history,
@@ -197,7 +197,7 @@ common:
     type: Support
   - url: https://support.marinetraffic.com/en/articles/9552800-api-most-common-response-error-codes
     name: API Most Common Response Error Codes
-    type: Errors
+    type: ErrorCodes
   - url: https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted
     name: What Kind of Information is AIS Transmitted
     type: Documentation
@@ -212,7 +212,7 @@ common:
     type: GitHubOrganization
   - url: https://github.com/marinetraffic/mt-ais-toolbox
     name: mt-ais-toolbox — AIS Density Map Toolbox
-    type: Tool
+    type: Tools
   - url: https://www.linkedin.com/company/marinetraffic
     name: MarineTraffic on LinkedIn
     type: LinkedIn
