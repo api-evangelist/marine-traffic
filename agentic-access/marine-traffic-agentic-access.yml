@@ -1,0 +1,811 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/marine-traffic-events-openapi.yml, openapi/marine-traffic-openapi.yml, openapi/marine-traffic-ports-info-openapi.yml,
+  openapi/marine-traffic-power-user-openapi.yml, openapi/marine-traffic-reverse-geocoding-openapi.yml,
+  openapi/marine-traffic-routing-openapi.yml, openapi/marine-traffic-vessel-positions-openapi.yml,
+  openapi/marine-traffic-vessels-data-openapi.yml, openapi/marine-traffic-voyage-info-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 78
+  by_action_class:
+    connected: 76
+    acting: 2
+  by_consequence:
+    read: 76
+    write: 2
+  human_in_the_loop_required: 0
+operations:
+- path: /portcalls/{api_key}
+  method: get
+  operationId: portcalls
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /vesselevents/{api_key}
+  method: get
+  operationId: vesselevents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /berth-calls/{api_key}
+  method: get
+  operationId: berth-calls
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/portcalls/{api_key} '
+  method: get
+  operationId: portcalls_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/berth-calls/{api_key} '
+  method: get
+  operationId: berth-calls_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvesseltrack/{api_key}
+  method: get
+  operationId: exportvesseltrack
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvesseltrack/{api_key} '
+  method: get
+  operationId: exportvesseltrack_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvessels/{api_key}
+  method: get
+  operationId: exportvessels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key} '
+  method: get
+  operationId: exportvessels__
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key}  '
+  method: get
+  operationId: exportvessels___
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key}   '
+  method: get
+  operationId: exportvessels____
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key}    '
+  method: get
+  operationId: exportvessels_____
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvessel/{api_key}
+  method: get
+  operationId: exportvessel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvessels-custom-area/{api_key}
+  method: get
+  operationId: exportvessels-custom-area
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key}     '
+  method: get
+  operationId: exportvessels______
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels-custom-area/{api_key} '
+  method: get
+  operationId: exportvessels-custom-area_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessel/{api_key} '
+  method: get
+  operationId: exportvessel_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /portcalls/{api_key}
+  method: get
+  operationId: portcalls
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /vesselevents/{api_key}
+  method: get
+  operationId: vesselevents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /berth-calls/{api_key}
+  method: get
+  operationId: berth-calls
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/portcalls/{api_key} '
+  method: get
+  operationId: portcalls_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/berth-calls/{api_key} '
+  method: get
+  operationId: berth-calls_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvesselphoto/{api_key}
+  method: get
+  operationId: exportvesselphoto
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /vesselmasterdata/{api_key}
+  method: get
+  operationId: vesselmasterdata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /shipsearch/{api_key}
+  method: get
+  operationId: shipsearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/shipsearch/{api_key} '
+  method: get
+  operationId: shipsearch_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/voyageforecast/{api_key} '
+  method: get
+  operationId: voyageforecast_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /voyageforecast/{api_key}
+  method: get
+  operationId: voyageforecast
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /predictive-destination-areas/{api_key}
+  method: get
+  operationId: predictive-destination-areas
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/predictive-destination-areas/{api_key} '
+  method: get
+  operationId: predictive-destination-areas_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /etatoport/{api_key}
+  method: get
+  operationId: etatoport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /expectedarrivals/{api_key}
+  method: get
+  operationId: expectedarrivals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/expectedarrivals/{api_key} '
+  method: get
+  operationId: expectedarrivals_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /predictive-arrivals/{api_key}
+  method: get
+  operationId: predictive-arrivals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /port-congestion/{api_key}
+  method: get
+  operationId: port-congestion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportroutes/{api_key}
+  method: get
+  operationId: exportroutes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportroutes/{api_key} '
+  method: get
+  operationId: exportroutes_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /reversegeocode/{api_key}
+  method: get
+  operationId: reversegeocode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /setfleet/{api_key}
+  method: get
+  operationId: setfleet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /getfleet/{api_key}
+  method: get
+  operationId: getfleet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /getfleets/{api_key}
+  method: get
+  operationId: getfleets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /clearfleet/{api_key}
+  method: get
+  operationId: clearfleet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportcredits/{api_key}
+  method: get
+  operationId: exportcredits
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /import-passage-plan/{api_key}
+  method: post
+  operationId: import-passage-plan
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /expectedarrivals/{api_key}
+  method: get
+  operationId: expectedarrivals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/expectedarrivals/{api_key} '
+  method: get
+  operationId: expectedarrivals_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /predictive-arrivals/{api_key}
+  method: get
+  operationId: predictive-arrivals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /port-congestion/{api_key}
+  method: get
+  operationId: port-congestion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /setfleet/{api_key}
+  method: get
+  operationId: setfleet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /getfleet/{api_key}
+  method: get
+  operationId: getfleet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /getfleets/{api_key}
+  method: get
+  operationId: getfleets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /clearfleet/{api_key}
+  method: get
+  operationId: clearfleet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportcredits/{api_key}
+  method: get
+  operationId: exportcredits
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /import-passage-plan/{api_key}
+  method: post
+  operationId: import-passage-plan
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /reversegeocode/{api_key}
+  method: get
+  operationId: reversegeocode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportroutes/{api_key}
+  method: get
+  operationId: exportroutes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportroutes/{api_key} '
+  method: get
+  operationId: exportroutes_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvesseltrack/{api_key}
+  method: get
+  operationId: exportvesseltrack
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvesseltrack/{api_key} '
+  method: get
+  operationId: exportvesseltrack_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvessels/{api_key}
+  method: get
+  operationId: exportvessels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key} '
+  method: get
+  operationId: exportvessels__
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key}  '
+  method: get
+  operationId: exportvessels___
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key}   '
+  method: get
+  operationId: exportvessels____
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key}    '
+  method: get
+  operationId: exportvessels_____
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvessel/{api_key}
+  method: get
+  operationId: exportvessel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvessels-custom-area/{api_key}
+  method: get
+  operationId: exportvessels-custom-area
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels/{api_key}     '
+  method: get
+  operationId: exportvessels______
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessels-custom-area/{api_key} '
+  method: get
+  operationId: exportvessels-custom-area_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/exportvessel/{api_key} '
+  method: get
+  operationId: exportvessel_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exportvesselphoto/{api_key}
+  method: get
+  operationId: exportvesselphoto
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /vesselmasterdata/{api_key}
+  method: get
+  operationId: vesselmasterdata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /shipsearch/{api_key}
+  method: get
+  operationId: shipsearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/shipsearch/{api_key} '
+  method: get
+  operationId: shipsearch_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/voyageforecast/{api_key} '
+  method: get
+  operationId: voyageforecast_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /voyageforecast/{api_key}
+  method: get
+  operationId: voyageforecast
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /predictive-destination-areas/{api_key}
+  method: get
+  operationId: predictive-destination-areas
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: '/predictive-destination-areas/{api_key} '
+  method: get
+  operationId: predictive-destination-areas_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /etatoport/{api_key}
+  method: get
+  operationId: etatoport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
