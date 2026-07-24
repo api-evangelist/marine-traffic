@@ -1,0 +1,97 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Events AIS API Balances API
+  version: 1.0.0
+  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: Balances
+paths:
+  /exportcredits/{api_key}:
+    get:
+      tags:
+      - Balances
+      summary: Credits Balance
+      description: "Get a snapshot of your current credits balance.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: exportcredits
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_pu04_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_pu04_default'
+              examples:
+                Default:
+                  summary: Default
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ROW>\n    <CREDITS USER_ID=\"13541873\" CREDIT_BALANCE=\"1542\" LAST_CHARGED=\"2017-01-17T12:23:24\"/>\n</ROW>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+components:
+  parameters:
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+  schemas:
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    200_pu04_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          USER_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject MarineTraffic registered user
+          CREDIT_BALANCE:
+            type: string
+            description: The current Credits balance of the user
+          LAST_CHARGED:
+            type: string
+            description: The last date and time (in UTC) that the user purchased Credits
+      example:
+      - USER_ID: '13541873'
+        CREDIT_BALANCE: '1542'
+        LAST_CHARGED: '2017-01-17T12:23:24.000Z'

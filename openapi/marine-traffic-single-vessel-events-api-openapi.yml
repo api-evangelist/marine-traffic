@@ -1,0 +1,1395 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Events AIS API Single Vessel Events API
+  version: 1.0.0
+  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: Single Vessel Events
+paths:
+  /portcalls/{api_key}:
+    get:
+      tags:
+      - Single Vessel Events
+      summary: Single Vessel Port Calls
+      description: "Retrieve arrival and departure information of a vessel for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>Data is available for dates **after** 2015-01-16</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**MOVE_TYPE** values: 1=Departure, 0=Arrival</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: portcalls
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_EV01'
+      - $ref: '#/components/parameters/shipid_EV01'
+      - $ref: '#/components/parameters/mmsi_EV01'
+      - $ref: '#/components/parameters/imo_EV01'
+      - $ref: '#/components/parameters/timespan_EV01'
+      - $ref: '#/components/parameters/movetype_EV01'
+      - $ref: '#/components/parameters/exclude_intransit_EV01'
+      - $ref: '#/components/parameters/fromdate_EV01'
+      - $ref: '#/components/parameters/todate_EV01'
+      - $ref: '#/components/parameters/dwt_min_EV01'
+      - $ref: '#/components/parameters/dwt_max_EV01'
+      - $ref: '#/components/parameters/gt_min_EV01'
+      - $ref: '#/components/parameters/gt_max_EV01'
+      - $ref: '#/components/parameters/market_EV01'
+      - $ref: '#/components/parameters/msgtype_EV01'
+      - $ref: '#/components/parameters/protocol_new'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_ev01_default'
+                - $ref: '#/components/schemas/200_ev01_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_ev01_default'
+                - $ref: '#/components/schemas/200_ev01_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<PORTCALLS>\n    <PORTCALL SHIP_ID=\"3726902\" IMO=\"9320556\" MMSI=\"310624000\" SHIPNAME=\"QUEEN VICTORIA\" TIMESTAMP_LT=\"2020-10-19T20:56:00\" TIMESTAMP_UTC=\"2020-10-19T19:56:00\" MOVE_TYPE=\"1\" TYPE_NAME=\"Passenger Ship\" PORT_ID=\"22541\" PORT_NAME=\"PORTLAND UK ANCH\" PORT_COUNTRY_CODE=\"\" PORT_UNLOCODE=\"\" MARKET=\"\"/>\n    <PORTCALL SHIP_ID=\"3726902\" IMO=\"9320556\" MMSI=\"310624000\" SHIPNAME=\"QUEEN VICTORIA\" TIMESTAMP_LT=\"2020-10-19T04:11:00\" TIMESTAMP_UTC=\"2020-10-19T03:11:00\" MOVE_TYPE=\"0\" TYPE_NAME=\"Passenger Ship\" PORT_ID=\"22541\" PORT_NAME=\"PORTLAND UK ANCH\" PORT_COUNTRY_CODE=\"\" PORT_UNLOCODE=\"\" MARKET=\"\"/>\n</PORTCALLS>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<PORTCALLS>\n    <PORTCALL SHIP_ID=\"3726902\" IMO=\"9320556\" MMSI=\"310624000\" SHIPNAME=\"QUEEN VICTORIA\" MOVE_TYPE=\"1\" TYPE_NAME=\"Passenger Ship\" DRAUGHT=\"80\" INTRANSIT=\"0\" DISTANCE_TRAVELLED=\"121\" VOYAGE_SPEED_AVG=\"\" VOYAGE_SPEED_MAX=\"\" VOYAGE_IDLE_TIME_MINS=\"\" ELAPSED_NOANCH=\"4444\" PORT_ID=\"22541\" PORT_NAME=\"PORTLAND UK ANCH\" PORT_COUNTRY_CODE=\"\" PORT_LAT=\"\" PORT_LON=\"\" PORT_UNLOCODE=\"\" TIMESTAMP_LT=\"2020-10-19T20:56:00\" TIMESTAMP_UTC=\"2020-10-19T19:56:00\"  MARKET=\"\"/>\n    <PORTCALL SHIP_ID=\"3726902\" IMO=\"9320556\" MMSI=\"310624000\" SHIPNAME=\"QUEEN VICTORIA\" MOVE_TYPE=\"0\" TYPE_NAME=\"Passenger Ship\" DRAUGHT=\"80\" INTRANSIT=\"0\" DISTANCE_TRAVELLED=\"121\" VOYAGE_SPEED_AVG=\"105\" VOYAGE_SPEED_MAX=\"197\" VOYAGE_IDLE_TIME_MINS=\"2754\" ELAPSED_NOANCH=\"3439\" PORT_ID=\"22541\" PORT_NAME=\"PORTLAND UK ANCH\" PORT_COUNTRY_CODE=\"\" PORT_LAT=\"\" PORT_LON=\"\" PORT_UNLOCODE=\"\" TIMESTAMP_LT=\"2020-10-19T04:11:00\" TIMESTAMP_UTC=\"2020-10-19T03:11:00\"  MARKET=\"\"/>\n</PORTCALLS>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_ev01_date_range_out_of_bounds'
+                - $ref: '#/components/schemas/400_ev01_missing_ship_identifier'
+                - $ref: '#/components/schemas/400_ev01_polling_range_out_of_limit'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_ev01_date_range_out_of_bounds'
+                - $ref: '#/components/schemas/400_ev01_missing_ship_identifier'
+                - $ref: '#/components/schemas/400_ev01_polling_range_out_of_limit'
+              examples:
+                Date range out of bounds:
+                  summary: Date range out of bounds
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1g\" DESCRIPTION=\"DATE RANGE OUT OF BOUNDS\"/>\n    </STATUS>\n</RESPONSE>"
+                Missing ship identifier:
+                  summary: Missing ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a\" DESCRIPTION=\"VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+                Polling range out of limit:
+                  summary: Polling range out of limit
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1f\" DESCRIPTION=\"POLLING RANGE MAXIMUM IS 190 DAYS\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /vesselevents/{api_key}:
+    get:
+      tags:
+      - Single Vessel Events
+      summary: Single Vessel Events
+      description: "Get event based intelligence for a vessel. </br></br> <b>Notes</b> <ul>\n    <li>Here is a <a href=\"https://support.marinetraffic.com/en/articles/9552887-what-is-the-significance-of-the-marinetraffic-events\">COMPLETE LIST OF EVENT TYPES</a> available for this endpoint. You can use these as values for the **event_type** query parameter. </li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>"
+      operationId: vesselevents
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_EV02'
+      - $ref: '#/components/parameters/shipid_EV02'
+      - $ref: '#/components/parameters/mmsi_EV02'
+      - $ref: '#/components/parameters/imo_EV02'
+      - $ref: '#/components/parameters/timespan_EV02'
+      - $ref: '#/components/parameters/fromdate_EV02'
+      - $ref: '#/components/parameters/todate_EV02'
+      - $ref: '#/components/parameters/event_type_EV02'
+      - $ref: '#/components/parameters/limit_events_EV02'
+      - $ref: '#/components/parameters/protocol_new'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_ev02_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_ev02_default'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<EVENTS>\n    <EVENT SHIPNAME=\"QUEEN VICTORIA\" MMSI=\"310624000\" IMO=\"\" SHIP_ID=\"\" EVENT_ID=\"1\" EVENT_NAME=\"FIRST_DAILY_POS\" EVENT_CONTENT=\"At N 50° 12' 06.53'' - W 002° 41' 31.37''\" TIMESTAMP=\"2020-10-20T00:13:00\"/>\n    <EVENT SHIPNAME=\"QUEEN VICTORIA\" MMSI=\"310624000\" IMO=\"\" SHIP_ID=\"\" EVENT_ID=\"6\" EVENT_NAME=\"UNDERWAY\" EVENT_CONTENT=\"At N 50° 35' 15.59'' - W 002° 21' 27.11''\" TIMESTAMP=\"2020-10-19T19:56:00\"/>\n    <EVENT SHIPNAME=\"QUEEN VICTORIA\" MMSI=\"310624000\" IMO=\"\" SHIP_ID=\"\" EVENT_ID=\"16\" EVENT_NAME=\"STATUS_CHANGED\" EVENT_CONTENT=\"From [At Anchor] To [Underway using Engine]\" TIMESTAMP=\"2020-10-19T19:51:00\"/>\n    <EVENT SHIPNAME=\"QUEEN VICTORIA\" MMSI=\"310624000\" IMO=\"\" SHIP_ID=\"\" EVENT_ID=\"13\" EVENT_NAME=\"DESTINATION_CHANGED\" EVENT_CONTENT=\"From [GB WEYMOUTH BAY] To [GBSOU]\" TIMESTAMP=\"2020-10-19T18:57:00\"/>\n    <EVENT SHIPNAME=\"QUEEN VICTORIA\" MMSI=\"310624000\" IMO=\"\" SHIP_ID=\"\" EVENT_ID=\"15\" EVENT_NAME=\"ETA_CHANGED\" EVENT_CONTENT=\"From [2020-10-17 05:00] To [2020-10-20 21:00]\" TIMESTAMP=\"2020-10-19T18:57:00\"/>\n</EVENTS>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_ev02_invalid_date_range'
+                - $ref: '#/components/schemas/400_ev02_missing_ship_identifier'
+                - $ref: '#/components/schemas/400_ev02_polling_range_out_of_limit'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_ev02_invalid_date_range'
+                - $ref: '#/components/schemas/400_ev02_missing_ship_identifier'
+                - $ref: '#/components/schemas/400_ev02_polling_range_out_of_limit'
+              examples:
+                Invalid date range:
+                  summary: Invalid date range
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1g\" DESCRIPTION=\"DATE RANGE OUT OF BOUNDS\"/>\n    </STATUS>\n</RESPONSE>"
+                Missing ship identifier:
+                  summary: Missing ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a\" DESCRIPTION=\"VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+                Polling range out of limit:
+                  summary: Polling range out of limit
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1f\" DESCRIPTION=\"POLLING RANGE MAXIMUM IS 190 DAYS\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /berth-calls/{api_key}:
+    get:
+      tags:
+      - Single Vessel Events
+      summary: Single Vessel Berth Calls
+      description: "Get berth arrival and departure information for a specific vessel. </br></br> <b>Notes</b> <ul>\n    <li>Data is available for dates **after** 2017-07-03</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">MARKET</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">SHIPCLASS</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: berth-calls
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_EV03'
+      - $ref: '#/components/parameters/shipid_EV03'
+      - $ref: '#/components/parameters/mmsi_EV03'
+      - $ref: '#/components/parameters/imo_EV03'
+      - $ref: '#/components/parameters/timespan_EV03'
+      - $ref: '#/components/parameters/fromdate_EV03'
+      - $ref: '#/components/parameters/todate_EV03'
+      - $ref: '#/components/parameters/market_EV03'
+      - $ref: '#/components/parameters/shipclass_EV03'
+      - $ref: '#/components/parameters/dwt_min_EV03'
+      - $ref: '#/components/parameters/dwt_max_EV03'
+      - $ref: '#/components/parameters/gt_min_EV03'
+      - $ref: '#/components/parameters/gt_max_EV03'
+      - $ref: '#/components/parameters/movetype_EV03'
+      - $ref: '#/components/parameters/protocol_new'
+      - $ref: '#/components/parameters/msgtype_EV03'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_ev03_default'
+                - $ref: '#/components/schemas/200_ev03_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_ev03_default'
+                - $ref: '#/components/schemas/200_ev03_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<BERTHCALLS>\n    <BERTHCALL SHIP_ID=\"371681\" MMSI=\"310627000\" IMO=\"9241061\" DOCK_TIMESTAMP_LT=\"2020-10-14 07:18:00\" DOCK_TIMESTAMP_UTC=\"2020-10-14 06:18:00\" DOCK_TIMESTAMP_OFFSET=\"1.000000\" UNDOCK_TIMESTAMP_LT=\"2020-10-14 17:46:00\" UNDOCK_TIMESTAMP_UTC=\"2020-10-14 16:46:00\" UNDOCK_TIMESTAMP_OFFSET=\"1.000000\" SHIPNAME=\"QUEEN MARY 2\" TYPE_NAME=\"Passenger Ship\" DWT=\"19189\" GRT=\"149215\" FLAG=\"BM\" YEAR_BUILT=\"2003\" BERTH_ID=\"923\" BERTH_NAME=\"Berth 101\" TERMINAL_ID=\"1288\" TERMINAL_NAME=\"City Cruise Terminal\" PORT_ID=\"106\" PORT_NAME=\"SOUTHAMPTON\" PORT_UNLOCODE=\"GBSOU\" PORT_COUNTRY_CODE=\"GB\" DESTINATION_ID=\"\" DESTINATION=\"\" MARKET=\"\"/>\n</BERTHCALLS>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<BERTHCALLS>\n    <BERTHCALL SHIP_ID=\"371681\" MMSI=\"310627000\" IMO=\"9241061\" DOCK_TIMESTAMP_LT=\"2020-10-14 07:18:00\" DOCK_TIMESTAMP_UTC=\"2020-10-14 06:18:00\" DOCK_TIMESTAMP_OFFSET=\"1.000000\" UNDOCK_TIMESTAMP_LT=\"2020-10-14 17:46:00\" UNDOCK_TIMESTAMP_UTC=\"2020-10-14 16:46:00\" UNDOCK_TIMESTAMP_OFFSET=\"1.000000\" SHIPNAME=\"QUEEN MARY 2\" TYPE_NAME=\"Passenger Ship\" DWT=\"19189\" GRT=\"149215\" FLAG=\"BM\" YEAR_BUILT=\"2003\" BERTH_ID=\"923\" BERTH_NAME=\"Berth 101\" TERMINAL_ID=\"1288\" TERMINAL_NAME=\"City Cruise Terminal\" PORT_ID=\"106\" PORT_NAME=\"SOUTHAMPTON\" PORT_UNLOCODE=\"GBSOU\" PORT_COUNTRY_CODE=\"GB\" DESTINATION_ID=\"\" DESTINATION=\"\" ARR_TIMESTAMP_LT=\"2020-10-14 06:26:00\" ARR_TIMESTAMP_UTC=\"2020-10-14 05:26:00\" ARR_DRAUGHT=\"101\" ARR_LOAD_STATUS=\"0\" DISTANCE_TRAVELLED=\"439\" VOYAGE_SPEED_AVG=\"106\" VOYAGE_SPEED_MAX=\"155\" VOYAGE_IDLE_TIME_MINS=\"37120\" PREVIOUS_NOANCH_ID=\"106\" PREVIOUS_NOANCH_TIMESTAMP=\"2020-09-16 17:22:00\" MARKET=\"\" PREVIOUS_NOANCH_NAME=\"SOUTHAMPTON\" ELAPSED_NOANCH=\"39604\" DEP_TIMESTAMP_LT=\"2020-10-14 18:00:00\" DEP_TIMESTAMP_UTC=\"2020-10-14 17:00:00\" DEP_DRAUGHT=\"101\" DEP_LOAD_STATUS=\"0\" PORT_OPERATION=\"0\" TIME_AT_BERTH=\"628\" TIME_AT_PORT=\"694\"/>\n</BERTHCALLS>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_ev03_date_range_out_of_bounds'
+                - $ref: '#/components/schemas/400_ev03_missing_ship_identifier'
+                - $ref: '#/components/schemas/400_ev03_polling_range_out_of_limit'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_ev03_date_range_out_of_bounds'
+                - $ref: '#/components/schemas/400_ev03_missing_ship_identifier'
+                - $ref: '#/components/schemas/400_ev03_polling_range_out_of_limit'
+              examples:
+                Date range out of bounds:
+                  summary: Date range out of bounds
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1g\" DESCRIPTION=\"DATE RANGE OUT OF BOUNDS\"/>\n    </STATUS>\n</RESPONSE>"
+                Missing ship identifier:
+                  summary: Missing ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a8\" DESCRIPTION=\"VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE OR BERTHID OR TERMINALID MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+                Polling range out of limit:
+                  summary: Polling range out of limit
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1m\" DESCRIPTION=\"POLLING RANGE EXCEEDED BY 15 DAYS\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+components:
+  schemas:
+    400_ev02_invalid_date_range:
+      title: Invalid date range
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1g
+          detail: DATE RANGE OUT OF BOUNDS
+    200_ev01_extended:
+      title: Extended
+      type: array
+      items:
+        type: object
+        properties:
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          TIMESTAMP_LT:
+            type: string
+            description: The Date and Time (in Local Time) of the Port Call
+            format: date-time
+          TIMESTAMP_UTC:
+            type: string
+            description: The Date and Time (in UTC) of the Port Call
+            format: date-time
+          MOVE_TYPE:
+            type: string
+            description: 0 or 1 - specifies the Port Call type (0 = Arrival, 1 = Departure)
+          TYPE_NAME:
+            type: string
+            description: The Type of the subject vessel
+          PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Port
+          PORT_NAME:
+            type: string
+            description: The Name of the subject Port
+          PORT_COUNTRY_CODE:
+            type: string
+            description: The Country Code of the subject Port
+          PORT_LAT:
+            type: string
+            description: The latitude of the subject Port
+          PORT_LON:
+            type: string
+            description: The longitude of the subject Port
+          PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the subject Port
+          DRAUGHT:
+            type: string
+            description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
+          LOAD_STATUS:
+            type: string
+            description: 'The load status of the subject vessel (0 : N/A, 1 : In Ballast, 2 : Partially Laden, 3 : Fully Laden) </br></br> <b>Available after 2017-10-01 (YYYY-MM-DD)</b>'
+          PORT_OPERATION:
+            type: string
+            description: 'Indicates LOAD/DISCHARGE operations in the subject Port Call event (0 : N/A, 1 : load, 2 : discharge, 3 : both, 4 : none) </br></br> <b>Available after 2017-10-01 (YYYY-MM-DD)</b>'
+          INTRANSIT:
+            type: string
+            description: 0 or 1 - specifies whether the vessel anchored in the Port or was In Transit (1 = In Transit)
+          DISTANCE_TRAVELLED:
+            type: string
+            description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
+          VOYAGE_SPEED_AVG:
+            type: string
+            description: Average Maintained Speed (in knots x10) since the last Port Call while steaming at speed > 5 knots - Updated upon Arrival
+          VOYAGE_SPEED_MAX:
+            type: string
+            description: Maximum Recorded Speed (in knots x10) since the last Port Call - Updated upon Arrival
+          VOYAGE_IDLE_TIME_MINS:
+            type: string
+            description: Total time in minutes since the previous Port Call while the vessel stopped or moving at speed < 3 knots - Updated upon Arrival
+          ELAPSED_NOANCH:
+            type: string
+            description: Total time of Voyage since the previous Port Call except Anchorages and Canals - Updated upon Arrival
+          DISTANCE_LEG:
+            type: string
+            description: The distance (in NM) between the last two calls regardless of Port Type
+          MARKET:
+            type: string
+            description: The commercial market segment the subject vessel belongs to
+          SHIPCLASS:
+            type: string
+            description: The class of the subject vessel based on vessel type and size
+      example:
+      - SHIP_ID: '3351323'
+        IMO: '0'
+        MMSI: '244770588'
+        SHIPNAME: PIETERNELLA
+        TIMESTAMP_LT: '2020-10-20T12:15:00'
+        TIMESTAMP_UTC: '2020-10-20T10:15:00'
+        MOVE_TYPE: '0'
+        TYPE_NAME: Inland, Unknown
+        PORT_ID: '1766'
+        PORT_NAME: AMSTERDAM
+        PORT_COUNTRY_CODE: ''
+        PORT_LAT: ''
+        PORT_LON: ''
+        PORT_UNLOCODE: NLAMS
+        DRAUGHT: '59'
+        LOAD_STATUS: '0'
+        PORT_OPERATION: '0'
+        INTRANSIT: '0'
+        DISTANCE_TRAVELLED: '0'
+        VOYAGE_SPEED_AVG: null
+        VOYAGE_SPEED_MAX: null
+        VOYAGE_IDLE_TIME_MINS: null
+        ELAPSED_NOANCH: '672'
+        DISTANCE_LEG: null
+        MARKET: DRY BREAKBULK
+        SHIPCLASS: null
+      - SHIP_ID: '241767'
+        IMO: '0'
+        MMSI: '244690666'
+        SHIPNAME: BRABANT
+        TIMESTAMP_LT: '2020-10-20T12:14:00.000Z'
+        TIMESTAMP_UTC: '2020-10-20T10:14:00.000Z'
+        MOVE_TYPE: '1'
+        TYPE_NAME: Inland, Motor Freighter
+        PORT_ID: '1766'
+        PORT_NAME: AMSTERDAM
+        PORT_COUNTRY_CODE: ''
+        PORT_LAT: ''
+        PORT_LON: ''
+        PORT_UNLOCODE: NLAMS
+        DRAUGHT: '18'
+        LOAD_STATUS: '0'
+        PORT_OPERATION: '0'
+        INTRANSIT: '0'
+        DISTANCE_TRAVELLED: '76'
+        VOYAGE_SPEED_AVG: '86'
+        VOYAGE_SPEED_MAX: '102'
+        VOYAGE_IDLE_TIME_MINS: '525'
+        ELAPSED_NOANCH: '1057'
+        DISTANCE_LEG: '17'
+        MARKET: DRY BREAKBULK
+        SHIPCLASS: null
+    400_ev03_date_range_out_of_bounds:
+      title: Date range out of bounds
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1g
+          detail: DATE RANGE OUT OF BOUNDS
+    200_ev02_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          EVENT_ID:
+            type: string
+            description: The ID of the subject event - more
+          EVENT_NAME:
+            type: string
+            description: The Name of the subject Event
+          EVENT_CONTENT:
+            type: string
+            description: The description of the subject Event
+          TIMESTAMP:
+            type: string
+            description: The date and time (in UTC) that the subject vessel's position or event was recorded by MarineTraffic
+            format: date-time
+      example:
+      - MMSI: '310624000'
+        IMO: ''
+        SHIP_ID: ''
+        SHIPNAME: QUEEN VICTORIA
+        EVENT_ID: '1'
+        EVENT_NAME: FIRST_DAILY_POS
+        EVENT_CONTENT: At N 50° 12' 06.53'' - W 002° 41' 31.37''
+        TIMESTAMP: '2020-10-20T00:13:00.000Z'
+      - MMSI: '310624000'
+        IMO: ''
+        SHIP_ID: ''
+        SHIPNAME: QUEEN VICTORIA
+        EVENT_ID: '6'
+        EVENT_NAME: UNDERWAY
+        EVENT_CONTENT: At N 50° 35' 15.59'' - W 002° 21' 27.11''
+        TIMESTAMP: '2020-10-19T19:56:00.000Z'
+    200_ev03_extended:
+      title: Extended
+      type: array
+      items:
+        type: object
+        properties:
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          DOCK_TIMESTAMP_LT:
+            type: string
+            description: The Date and Time (in Local Time) the subject vessel was Docked at the Berth
+            format: date-time
+          DOCK_TIMESTAMP_UTC:
+            type: string
+            description: The Date and Time (in UTC) the subject vessel was Docked at the Berth
+            format: date-time
+          DOCK_TIMESTAMP_OFFSET:
+            type: string
+            description: The time zone offset at the time of arrival/docking
+          UNDOCK_TIMESTAMP_LT:
+            type: string
+            description: The Date and Time (in Local Time) the subject vessel was Undocked from the Berth
+            format: date-time
+          UNDOCK_TIMESTAMP_UTC:
+            type: string
+            description: The Date and Time (in UTC) the subject vessel was Undocked from the Berth
+            format: date-time
+          UNDOCK_TIMESTAMP_OFFSET:
+            type: string
+            description: The time zone offset at the time of undocking/departure
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          TYPE_NAME:
+            type: string
+            description: The Type of the subject vessel.
+          DWT:
+            type: string
+            description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
+          GRT:
+            type: string
+            description: Gross Tonnage - unitless measure that calculates the moulded volume of all enclosed spaces of a ship
+          FLAG:
+            type: string
+            description: The flag of the subject vessel according to AIS transmissions
+          YEAR_BUILT:
+            type: string
+            description: The year that the subject vessel was built
+          BERTH_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Berth
+          BERTH_NAME:
+            type: string
+            description: The Name of the subject Berth
+          TERMINAL_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Terminal where the Berth belongs (if available)
+          TERMINAL_NAME:
+            type: string
+            description: The Name of the Terminal where the Berth belongs (if available)
+          PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Port
+          PORT_NAME:
+            type: string
+            description: The Name of the subject Port
+          PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the subject Port
+          PORT_COUNTRY_CODE:
+            type: string
+            description: The Country of the subject Port
+          DESTINATION_ID:
+            type: string
+            description: Api Rspfield Destination Id
+          DESTINATION:
+            type: string
+            description: The Destination of the subject vessel according to the AIS transmissions
+          ARR_TIMESTAMP_LT:
+            type: string
+            description: The Date and Time (in Local Time) the subject vessel arrived at the port, before the docking
+            format: date-time
+          ARR_TIMESTAMP_UTC:
+            type: string
+            description: The Date and Time (in UTC) the subject vessel arrived at the port, before the docking
+            format: date-time
+          ARR_DRAUGHT:
+            type: string
+            description: The Draught (in metres x10) of the subject vessel, at the time of arrival, according to the AIS transmissions
+          ARR_LOAD_STATUS:
+            type: string
+            description: 'The load status of the subject vessel (0 : N/A, 1 : In Ballast, 2 : Partially Laden, 3 : Fully Laden) at the time of arrival'
+          DISTANCE_TRAVELLED:
+            type: string
+            description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
+          VOYAGE_SPEED_AVG:
+            type: string
+            description: Average Maintained Speed (in knots x10) since the last Port Call while steaming at speed > 5 knots - Updated upon Arrival
+          VOYAGE_SPEED_MAX:
+            type: string
+            description: Maximum Recorded Speed (in knots x10) since the last Port Call - Updated upon Arrival
+          VOYAGE_IDLE_TIME_MINS:
+            type: string
+            description: Total time in minutes since the previous Port Call while the vessel stopped or moving at speed < 3 knots - Updated upon Arrival
+          PREVIOUS_NOANCH_ID:
+            type: string
+            description: Identifier of the zone where the current voyage started, defined as either the last port call or any other zone (for example, an anchorage) where a substantial draught change was detected. This zone marks the origin of the current voyage.
+          PREVIOUS_NOANCH_TIMESTAMP:
+            type: string
+            description: The time of Departure from the zone that has been identified as an origin for the current voyage (in UTC)
+            format: date-time
+          PREVIOUS_NOANCH_NAME:
+            type: string
+            description: Name of the zone identified by PREVIOUS_NOANCH_ID, representing the starting zone of the current voyage.
+          ELAPSED_NOANCH:
+            type: string
+            description: Elapsed time in minutes between PREVIOUS_NOANCH_TIMESTAMP (start of current voyage) and the vessel arrival timestamp for this berth call. Updated upon arrival
+          DEP_TIMESTAMP_LT:
+            type: string
+            description: The Date and Time (in Local Time) the subject vessel departed from the port, after the undocking
+            format: date-time
+          DEP_TIMESTAMP_UTC:
+            type: string
+            description: The Date and Time (in UTC) the subject vessel departed from the port, after the undocking
+            format: date-time
+          DEP_DRAUGHT:
+            type: string
+            description: The Draught (in metres x10) of the subject vessel, at the time of departure, according to the AIS transmissions
+          DEP_LOAD_STATUS:
+            type: string
+            description: 'The load status of the subject vessel (0 : N/A, 1 : In Ballast, 2 : Partially Laden, 3 : Fully Laden) at the time of departure'
+          PORT_OPERATION:
+            type: string
+            description: 'Indicates LOAD/DISCHARGE operations in the subject Port Call event (0 : N/A, 1 : load, 2 : discharge, 3 : both, 4 : none)'
+          TIME_AT_BERTH:
+            type: string
+            description: The total time in minutes that the vessel stayed at berth
+          TIME_AT_PORT:
+            type: string
+            description: The total time in minutes that the vessel stayed at port
+          MARKET:
+            type: string
+            description: The commercial market segment the subject vessel belongs to
+          SHIPCLASS:
+            type: string
+            description: The class of the subject vessel based on vessel type and size
+      example:
+      - SHIP_ID: '5568705'
+        MMSI: '237710400'
+        IMO: '0'
+        DOCK_TIMESTAMP_LT: '2020-10-20 15:40:00'
+        DOCK_TIMESTAMP_UTC: '2020-10-20 12:40:00'
+        DOCK_TIMESTAMP_OFFSET: '3.000000'
+        UNDOCK_TIMESTAMP_LT: '2020-10-20 15:43:00'
+        UNDOCK_TIMESTAMP_UTC: '2020-10-20 12:43:00'
+        UNDOCK_TIMESTAMP_OFFSET: '3.000000'
+        SHIPNAME: PILOT BOAT PY55
+        TYPE_NAME: Pilot Vessel
+        DWT: null
+        GRT: null
+        FLAG: GR
+        YEAR_BUILT: null
+        BERTH_ID: '6'
+        BERTH_NAME: Container Terminal
+        TERMINAL_ID: '978'
+        TERMINAL_NAME: Container Terminal
+        PORT_ID: '1'
+        PORT_NAME: PIRAEUS
+        PORT_UNLOCODE: GRPIR
+        PORT_COUNTRY_CODE: GR
+        DESTINATION_ID: null
+        DESTINATION: null
+        ARR_TIMESTAMP_LT: '2020-10-20 15:25:00'
+        ARR_TIMESTAMP_UTC: '2020-10-20 12:25:00'
+        ARR_DRAUGHT: '0'
+        ARR_LOAD_STATUS: '0'
+        DISTANCE_TRAVELLED: '2'
+        VOYAGE_SPEED_AVG: '166'
+        VOYAGE_SPEED_MAX: '166'
+        VOYAGE_IDLE_TIME_MINS: '0'
+        PREVIOUS_NOANCH_ID: '1'
+        PREVIOUS_NOANCH_TIMESTAMP: '2020-10-20 12:22:00'
+        PREVIOUS_NOANCH_NAME: PIRAEUS
+        ELAPSED_NOANCH: '3'
+        DEP_TIMESTAMP_LT: null
+        DEP_TIMESTAMP_UTC: null
+        DEP_DRAUGHT: null
+        DEP_LOAD_STATUS: null
+        PORT_OPERATION: null
+        TIME_AT_BERTH: '3'
+        TIME_AT_PORT: null
+        MARKET: SUPPORTING VESSELS
+        SHIPCLASS: null
+      - SHIP_ID: '5568705'
+        MMSI: '237710400'
+        IMO: '0'
+        DOCK_TIMESTAMP_LT: '2020-10-20 15:49:00'
+        DOCK_TIMESTAMP_UTC: '2020-10-20 12:49:00'
+        DOCK_TIMESTAMP_OFFSET: '3.000000'
+        UNDOCK_TIMESTAMP_LT: null
+        UNDOCK_TIMESTAMP_UTC: null
+        UNDOCK_TIMESTAMP_OFFSET: null
+        SHIPNAME: PILOT BOAT PY55
+        TYPE_NAME: Pilot Vessel
+        DWT: null
+        GRT: null
+        FLAG: GR
+        YEAR_BUILT: null
+        BERTH_ID: '9'
+        BERTH_NAME: Cruise Terminal
+        TERMINAL_ID: '979'
+        TERMINAL_NAME: Passenger Terminal
+        PORT_ID: '1'
+        PORT_NAME: PIRAEUS
+        PORT_UNLOCODE: GRPIR
+        PORT_COUNTRY_CODE: GR
+        DESTINATION_ID: null
+        DESTINATION: null
+        ARR_TIMESTAMP_LT: '2020-10-20 15:25:00'
+        ARR_TIMESTAMP_UTC: '2020-10-20 12:25:00'
+        ARR_DRAUGHT: '0'
+        ARR_LOAD_STATUS: '0'
+        DISTANCE_TRAVELLED: '2'
+        VOYAGE_SPEED_AVG: '166'
+        VOYAGE_SPEED_MAX: '166'
+        VOYAGE_IDLE_TIME_MINS: '0'
+        PREVIOUS_NOANCH_ID: '1'
+        PREVIOUS_NOANCH_TIMESTAMP: '2020-10-20 12:22:00'
+        PREVIOUS_NOANCH_NAME: PIRAEUS
+        ELAPSED_NOANCH: '3'
+        DEP_TIMESTAMP_LT: null
+        DEP_TIMESTAMP_UTC: null
+        DEP_DRAUGHT: null
+        DEP_LOAD_STATUS: null
+        PORT_OPERATION: null
+        TIME_AT_BERTH: null
+        TIME_AT_PORT: null
+        MARKET: SUPPORTING VESSELS
+        SHIPCLASS: null
+    400_ev02_missing_ship_identifier:
+      title: Missing ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 2a
+          detail: VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE MISSING
+    200_ev03_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          DOCK_TIMESTAMP_LT:
+            type: string
+            description: The Date and Time (in Local Time) the subject vessel was Docked at the Berth
+            format: date-time
+          DOCK_TIMESTAMP_UTC:
+            type: string
+            description: The Date and Time (in UTC) the subject vessel was Docked at the Berth
+            format: date-time
+          DOCK_TIMESTAMP_OFFSET:
+            type: string
+            description: The time zone offset at the time of arrival/docking
+          UNDOCK_TIMESTAMP_LT:
+            type: string
+            description: The Date and Time (in Local Time) the subject vessel was Undocked from the Berth
+            format: date-time
+          UNDOCK_TIMESTAMP_UTC:
+            type: string
+            description: The Date and Time (in UTC) the subject vessel was Undocked from the Berth
+            format: date-time
+          UNDOCK_TIMESTAMP_OFFSET:
+            type: string
+            description: The time zone offset at the time of undocking/departure
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          TYPE_NAME:
+            type: string
+            description: The Type of the subject vessel.
+          DWT:
+            type: string
+            description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
+          GRT:
+            type: string
+            description: Gross Tonnage - unitless measure that calculates the moulded volume of all enclosed spaces of a ship
+          FLAG:
+            type: string
+            description: The flag of the subject vessel according to AIS transmissions
+          YEAR_BUILT:
+            type: string
+            description: The year that the subject vessel was built
+          BERTH_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Berth
+          BERTH_NAME:
+            type: string
+            description: The Name of the subject Berth
+          TERMINAL_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Terminal where the Berth belongs (if available)
+          TERMINAL_NAME:
+            type: string
+            description: The Name of the Terminal where the Berth belongs (if available)
+          PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Port
+          PORT_NAME:
+            type: string
+            description: The Name of the subject Port
+          PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the subject Port
+          PORT_COUNTRY_CODE:
+            type: string
+            description: The Country of the subject Port
+          DESTINATION_ID:
+            type: string
+            description: Api Rspfield Destination Id
+          DESTINATION:
+            type: string
+            description: The Destination of the subject vessel according to the AIS transmissions
+          MARKET:
+            type: string
+            description: The commercial market segment the subject vessel belongs to
+      example:
+      - SHIP_ID: '5567750'
+        MMSI: '237710500'
+        IMO: '0'
+        DOCK_TIMESTAMP_LT: '2020-10-20 06:22:00'
+        DOCK_TIMESTAMP_UTC: '2020-10-20 03:22:00'
+        DOCK_TIMESTAMP_OFFSET: '3.000000'
+        UNDOCK_TIMESTAMP_LT: '2020-10-20 06:45:00'
+        UNDOCK_TIMESTAMP_UTC: '2020-10-20 03:45:00'
+        UNDOCK_TIMESTAMP_OFFSET: '3.000000'
+        SHIPNAME: PILOT BOAT PY56
+        TYPE_NAME: Pilot Vessel
+        DWT: null
+        GRT: null
+        FLAG: GR
+        YEAR_BUILT: null
+        BERTH_ID: '6'
+        BERTH_NAME: Container Terminal
+        TERMINAL_ID: '978'
+        TERMINAL_NAME: Container Terminal
+        PORT_ID: '1'
+        PORT_NAME: PIRAEUS
+        PORT_UNLOCODE: GRPIR
+        PORT_COUNTRY_CODE: GR
+        DESTINATION_ID: '1'
+        DESTINATION: PIRAEUS
+        MARKET: null
+      - SHIP_ID: '213328'
+        MMSI: '240612000'
+        IMO: '8008254'
+        DOCK_TIMESTAMP_LT: '2020-10-20 06:24:00'
+        DOCK_TIMESTAMP_UTC: '2020-10-20 03:24:00'
+        DOCK_TIMESTAMP_OFFSET: '3.000000'
+        UNDOCK_TIMESTAMP_LT: '2020-10-20 06:49:00'
+        UNDOCK_TIMESTAMP_UTC: '2020-10-20 03:49:00'
+        UNDOCK_TIMESTAMP_OFFSET: '3.000000'
+        SHIPNAME: IFESTOS 3
+        TYPE_NAME: Tug
+        DWT: null
+        GRT: '191'
+        FLAG: GR
+        YEAR_BUILT: '1980'
+        BERTH_ID: '6'
+        BERTH_NAME: Container Terminal
+        TERMINAL_ID: '978'
+        TERMINAL_NAME: Container Terminal
+        PORT_ID: '1'
+        PORT_NAME: PIRAEUS
+        PORT_UNLOCODE: GRPIR
+        PORT_COUNTRY_CODE: GR
+        DESTINATION_ID: null
+        DESTINATION: null
+        MARKET: null
+    400_ev03_polling_range_out_of_limit:
+      title: Polling range out of limit
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1m
+          detail: POLLING RANGE EXCEEDED BY 15 DAYS
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    400_ev01_date_range_out_of_bounds:
+      title: Date range out of bounds
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1g
+          detail: DATE RANGE OUT OF BOUNDS
+    400_ev01_polling_range_out_of_limit:
+      title: Polling range out of limit
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1f
+          detail: POLLING RANGE MAXIMUM IS 190 DAYS
+    400_ev03_missing_ship_identifier:
+      title: Missing ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 2a8
+          detail: VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE OR BERTHID OR TERMINALID MISSING
+    400_ev01_missing_ship_identifier:
+      title: Missing ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 2a
+          detail: VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE MISSING
+    200_ev01_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          TIMESTAMP_LT:
+            type: string
+            description: The Date and Time (in Local Time) of the Port Call
+            format: date-time
+          TIMESTAMP_UTC:
+            type: string
+            description: The Date and Time (in UTC) of the Port Call
+            format: date-time
+          MOVE_TYPE:
+            type: string
+            description: 0 or 1 - specifies the Port Call type (0 = Arrival, 1 = Departure)
+          TYPE_NAME:
+            type: string
+            description: The Type of the subject vessel
+          PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Port
+          PORT_NAME:
+            type: string
+            description: The Name of the subject Port
+          PORT_COUNTRY_CODE:
+            type: string
+            description: The Country Code of the subject Port
+          PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the subject Port
+          MARKET:
+            type: string
+            description: The commercial market segment the subject vessel belongs to
+      example:
+      - SHIP_ID: '3351323'
+        IMO: '0'
+        MMSI: '244770588'
+        SHIPNAME: PIETERNELLA
+        TIMESTAMP_LT: '2020-10-20T12:15:00'
+        TIMESTAMP_UTC: '2020-10-20T10:15:00'
+        MOVE_TYPE: '0'
+        TYPE_NAME: Inland, Unknown
+        PORT_ID: '1766'
+        PORT_NAME: AMSTERDAM
+        PORT_COUNTRY_CODE: ''
+        PORT_UNLOCODE: NLAMS
+        MARKET: null
+      - SHIP_ID: '241767'
+        IMO: '0'
+        MMSI: '244690666'
+        SHIPNAME: BRABANT
+        TIMESTAMP_LT: '2020-10-20T12:14:00'
+        TIMESTAMP_UTC: '2020-10-20T10:14:00'
+        MOVE_TYPE: '1'
+        TYPE_NAME: Inland, Motor Freighter
+        PORT_ID: '1766'
+        PORT_NAME: AMSTERDAM
+        PORT_COUNTRY_CODE: ''
+        PORT_UNLOCODE: NLAMS
+        MARKET: null
+    400_ev02_polling_range_out_of_limit:
+      title: Polling range out of limit
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1f
+          detail: POLLING RANGE MAXIMUM IS 190 DAYS
+  parameters:
+    msgtype_EV01:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+      required: false
+      schema:
+        type: string
+        default: simple
+    market_EV01:
+      name: market
+      in: query
+      description: Define market(s) for which you would like to receive port calls (single or comma separated values) - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+      required: false
+      schema:
+        type: string
+    market_EV03:
+      name: market
+      in: query
+      description: "Define market for which you would like to receive berth calls - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all</li>\n  <li>if undefined and ship-class is defined, return based on ship-class</li>\n  <li>if defined and ship-class is undefined, return all ship-classes of the specific market</li>\n</ul>"
+      required: false
+      schema:
+        type: string
+    event_type_EV02:
+      name: event_type
+      in: query
+      description: You may use one or more event ids in comma separated format for the events you wish to receive
+      required: false
+      schema:
+        type: integer
+    gt_max_EV01:
+      name: gt_max
+      in: query
+      description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    mmsi_EV02:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    timespan_EV02:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned port calls. Maximum value is 2880
+      required: false
+      schema:
+        type: integer
+        default: 60
+    shipid_EV01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
+      required: true
+      schema:
+        type: integer
+    limit_events_EV02:
+      name: limit_events
+      in: query
+      description: Limit the number of results
+      required: false
+      schema:
+        type: integer
+    v_EV03:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 3 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    mmsi_EV01:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    timespan_EV03:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned port calls. Maximum value is 2880
+      required: false
+      schema:
+        type: integer
+        default: 2
+    todate_EV01:
+      name: todate
+      in: query
+      description: 'Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD HH:MM'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    movetype_EV01:
+      name: movetype
+      in: query
+      description: Use 0 to only receive arrivals or 1 to only receive departures. If not used, the response will include both
+      required: false
+      schema:
+        type: integer
+    timespan_EV01:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned port calls. Maximum value is 2880
+      required: false
+      schema:
+        type: integer
+        default: 2
+    exclude_intransit_EV01:
+      name: exclude_intransit
+      in: query
+      description: Use 1 to exclude vessels in transit
+      required: false
+      schema:
+        type: integer
+    gt_min_EV03:
+      name: gt_min
+      in: query
+      description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    dwt_max_EV01:
+      name: dwt_max
+      in: query
+      description: 'Data filter: maximum DWT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    msgtype_EV03:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+      required: false
+      schema:
+        type: string
+        default: simple
+    todate_EV02:
+      name: todate
+      in: query
+      description: 'Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    todate_EV03:
+      name: todate
+      in: query
+      description: 'Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or less than provided todate. Maximum period requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    v_EV02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 2 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    gt_max_EV03:
+      name: gt_max
+      in: query
+      description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    gt_min_EV01:
+      name: gt_min
+      in: query
+      description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    v_EV01:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 6 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    shipclass_EV03:
+      name: shipclass
+      in: query
+      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+      required: false
+      schema:
+        type: integer
+    fromdate_EV03:
+      name: fromdate
+      in: query
+      description: 'Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or greater than provided fromdate. Maximum period requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS.'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    imo_EV03:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    imo_EV02:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    shipid_EV02:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
+      required: true
+      schema:
+        type: integer
+    mmsi_EV03:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    imo_EV01:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    movetype_EV03:
+      name: movetype
+      in: query
+      description: Use 0 to include both, 1 to only receive dockings or 2 for only undockings within the defined period. If not used, only dockings are returned </br></br> <b>Available only from version 2 of the service</b>
+      required: false
+      schema:
+        type: integer
+    dwt_max_EV03:
+      name: dwt_max
+      in: query
+      description: 'Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8)'
+      required: false
+      schema:
+        type: integer
+    fromdate_EV02:
+      name: fromdate
+      in: query
+      description: 'Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    dwt_min_EV01:
+      name: dwt_min
+      in: query
+      description: 'Data filter: minimum DWT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    fromdate_EV01:
+      name: fromdate
+      in: query
+      description: 'Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD HH:MM'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    protocol_new:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    dwt_min_EV03:
+      name: dwt_min
+      in: query
+      description: 'Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8)'
+      required: false
+      schema:
+        type: integer
+    shipid_EV03:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
+      required: true
+      schema:
+        type: integer

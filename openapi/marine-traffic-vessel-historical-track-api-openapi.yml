@@ -1,0 +1,527 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Events AIS API Vessel Historical Track API
+  version: 1.0.0
+  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: Vessel Historical Track
+paths:
+  /exportvesseltrack/{api_key}:
+    get:
+      tags:
+      - Vessel Historical Track
+      summary: Single Vessel Historical Positions
+      description: "Get all historical positions of a single vessel for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>Default resolution for returned positions is up to 2 minutes. Use \"period\" parameter to limit the frequency of positions</li>\n    <li>Weather data is returned once within each hour's results</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>Historical positions are available since January 2015</li>\n    <li>**Hourly** and **daily** records are the first records received during the hour or the day respectively</li>\n    <li>When the **period** is **hourly**, the data field **HEADING** is not available for positions older than 2017-11-17</li>\n    <li>**Hourly** records are available for dates after 2014-08-28</li>\n    <li>Weather data for **winds** are available for dates after 2015-05-27</li>\n    <li>Weather data for **waves**, **swells** and **currents** are available for dates after 2021-01-21</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: exportvesseltrack
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_PS01'
+      - $ref: '#/components/parameters/shipid_PS01'
+      - $ref: '#/components/parameters/mmsi_PS01'
+      - $ref: '#/components/parameters/imo_PS01'
+      - $ref: '#/components/parameters/days_PS01'
+      - $ref: '#/components/parameters/fromdate_PS01'
+      - $ref: '#/components/parameters/todate_PS01'
+      - $ref: '#/components/parameters/period_PS01'
+      - $ref: '#/components/parameters/msgtype_PS01'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_ps01_default'
+                - $ref: '#/components/schemas/200_ps01_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_ps01_default'
+                - $ref: '#/components/schemas/200_ps01_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<VESSELTRACK>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"1\" LON=\"-71.702930\" LAT=\"-33.621820\" COURSE=\"16\" HEADING=\"217\" TIMESTAMP=\"2021-02-07T12:57:34\" SHIP_ID=\"372044\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"3\" LON=\"-71.703470\" LAT=\"-33.621660\" COURSE=\"174\" HEADING=\"204\" TIMESTAMP=\"2021-02-07T13:39:31\" SHIP_ID=\"372044\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"2\" LON=\"-71.703610\" LAT=\"-33.621490\" COURSE=\"243\" HEADING=\"199\" TIMESTAMP=\"2021-02-07T14:00:34\" SHIP_ID=\"372044\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"6\" LON=\"-71.703650\" LAT=\"-33.621570\" COURSE=\"179\" HEADING=\"195\" TIMESTAMP=\"2021-02-07T14:06:36\" SHIP_ID=\"372044\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"2\" LON=\"-71.703600\" LAT=\"-33.621640\" COURSE=\"73\" HEADING=\"199\" TIMESTAMP=\"2021-02-07T14:09:36\" SHIP_ID=\"372044\"/>\n</VESSELTRACK>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<VESSELTRACK>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"1\" LON=\"-71.702930\" LAT=\"-33.621820\" COURSE=\"16\" HEADING=\"217\" TIMESTAMP=\"2021-02-07T12:57:34\" SHIP_ID=\"372044\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"2\" LON=\"-71.703370\" LAT=\"-33.621650\" COURSE=\"282\" HEADING=\"209\" TIMESTAMP=\"2021-02-07T13:34:00\" SHIP_ID=\"372044\" WIND_ANGLE=\"280\" WIND_SPEED=\"7\" WIND_TEMP=\"15\" SIGNIFICANT_WAVE_HEIGHT=\"13\" WIND_WAVE_DIRECTION=\"251\" WIND_WAVE_HEIGHT=\"0\" WIND_WAVE_PERIOD=\"10\" SWELL_HEIGHT=\"13\" SWELL_PERIOD=\"109\" CURRENTS_ANGLE=\"236\" CURRENTS_SPEED=\"31\" SWELL_DIRECTION=\"251\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"3\" LON=\"-71.703470\" LAT=\"-33.621660\" COURSE=\"174\" HEADING=\"204\" TIMESTAMP=\"2021-02-07T13:39:31\" SHIP_ID=\"372044\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"2\" LON=\"-71.703610\" LAT=\"-33.621490\" COURSE=\"243\" HEADING=\"199\" TIMESTAMP=\"2021-02-07T14:00:34\" SHIP_ID=\"372044\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"6\" LON=\"-71.703650\" LAT=\"-33.621570\" COURSE=\"179\" HEADING=\"195\" TIMESTAMP=\"2021-02-07T14:06:36\" SHIP_ID=\"372044\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"2\" LON=\"-71.703600\" LAT=\"-33.621640\" COURSE=\"73\" HEADING=\"199\" TIMESTAMP=\"2021-02-07T14:09:36\" SHIP_ID=\"372044\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"1\" LON=\"-71.703830\" LAT=\"-33.621530\" COURSE=\"170\" HEADING=\"190\" TIMESTAMP=\"2021-02-07T14:34:00\" SHIP_ID=\"372044\" WIND_ANGLE=\"280\" WIND_SPEED=\"7\" WIND_TEMP=\"15\" SIGNIFICANT_WAVE_HEIGHT=\"13\" WIND_WAVE_DIRECTION=\"251\" WIND_WAVE_HEIGHT=\"0\" WIND_WAVE_PERIOD=\"10\" SWELL_HEIGHT=\"13\" SWELL_PERIOD=\"109\" CURRENTS_ANGLE=\"236\" CURRENTS_SPEED=\"31\" SWELL_DIRECTION=\"251\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"4\" LON=\"-71.703360\" LAT=\"-33.621710\" COURSE=\"177\" HEADING=\"205\" TIMESTAMP=\"2021-02-07T15:34:00\" SHIP_ID=\"372044\" WIND_ANGLE=\"280\" WIND_SPEED=\"7\" WIND_TEMP=\"15\" SIGNIFICANT_WAVE_HEIGHT=\"13\" WIND_WAVE_DIRECTION=\"251\" WIND_WAVE_HEIGHT=\"0\" WIND_WAVE_PERIOD=\"10\" SWELL_HEIGHT=\"13\" SWELL_PERIOD=\"109\" CURRENTS_ANGLE=\"236\" CURRENTS_SPEED=\"31\" SWELL_DIRECTION=\"251\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"1\" LON=\"-71.703290\" LAT=\"-33.621750\" COURSE=\"194\" HEADING=\"205\" TIMESTAMP=\"2021-02-07T16:34:00\" SHIP_ID=\"372044\" WIND_ANGLE=\"281\" WIND_SPEED=\"7\" WIND_TEMP=\"15\" SIGNIFICANT_WAVE_HEIGHT=\"12\" WIND_WAVE_DIRECTION=\"251\" WIND_WAVE_HEIGHT=\"0\" WIND_WAVE_PERIOD=\"10\" SWELL_HEIGHT=\"12\" SWELL_PERIOD=\"108\" CURRENTS_ANGLE=\"219\" CURRENTS_SPEED=\"40\" SWELL_DIRECTION=\"251\"/>\n    <POSITION MMSI=\"311000092\" IMO=\"9515228\" STATUS=\"1\" SPEED=\"3\" LON=\"-71.703300\" LAT=\"-33.621780\" COURSE=\"199\" HEADING=\"208\" TIMESTAMP=\"2021-02-07T17:34:00\" SHIP_ID=\"372044\" WIND_ANGLE=\"281\" WIND_SPEED=\"7\" WIND_TEMP=\"15\" SIGNIFICANT_WAVE_HEIGHT=\"12\" WIND_WAVE_DIRECTION=\"251\" WIND_WAVE_HEIGHT=\"0\" WIND_WAVE_PERIOD=\"10\" SWELL_HEIGHT=\"12\" SWELL_PERIOD=\"108\" CURRENTS_ANGLE=\"219\" CURRENTS_SPEED=\"40\" SWELL_DIRECTION=\"251\"/>\n</VESSELTRACK>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_ps01_days_out_of_limit'
+                - $ref: '#/components/schemas/400_ps01_missing_ship_identifier'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_ps01_days_out_of_limit'
+                - $ref: '#/components/schemas/400_ps01_missing_ship_identifier'
+              examples:
+                Days out of limit:
+                  summary: Days out of limit
+                  value: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"9c\" DESCRIPTION=\"DAYS ABOVE ALLOWED LIMIT\"/>\n    </STATUS>\n</RESPONSE>"
+                Missing ship identifier:
+                  summary: Missing ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2\" DESCRIPTION=\"VESSEL MMSI OR IMO OR SHIPID MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  '/exportvesseltrack/{api_key} ':
+    get:
+      tags:
+      - Vessel Historical Track
+      summary: Vessel Historical Positions in an Area
+      description: "Get vessel historical positions for a single or for all vessels inside an area of your preference for a specific period of time.\n    </br></br>\n<b>Notes</b> <ul>\n    <li>Default resolution for returned positions is up to 2 minutes. Use \"period\" parameter to limit the frequency of positions</li>\n    <li>Weather data is returned once within each hour's results</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>Historical positions are available since January 2015</li>\n    <li>**Hourly** and **daily** records are the first records received during the hour or the day respectively</li>\n    <li>When the **period** is **hourly**, the data field **HEADING** is not available for positions older than 2017-11-17</li>\n    <li>**Hourly** records are available for dates after 2014-08-28</li>\n    <li>Weather data for **winds** are available for dates after 2015-05-27</li>\n    <li>Weather data for **waves**, **swells** and **currents** are available for dates after 2021-01-21</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: exportvesseltrack_
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_PS01'
+      - $ref: '#/components/parameters/days_PS01'
+      - $ref: '#/components/parameters/fromdate_PS01'
+      - $ref: '#/components/parameters/todate_PS01'
+      - $ref: '#/components/parameters/MINLAT_PS01'
+      - $ref: '#/components/parameters/MAXLAT_PS01'
+      - $ref: '#/components/parameters/MINLON_PS01'
+      - $ref: '#/components/parameters/MAXLON_PS01'
+      - $ref: '#/components/parameters/shipid_PS01_2'
+      - $ref: '#/components/parameters/mmsi_PS01'
+      - $ref: '#/components/parameters/imo_PS01'
+      - $ref: '#/components/parameters/period_PS01'
+      - $ref: '#/components/parameters/msgtype_PS01'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_ps01_default'
+                - $ref: '#/components/schemas/200_ps01_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_ps01_default'
+                - $ref: '#/components/schemas/200_ps01_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<VESSELTRACK>\n    <POSITION MMSI=\"239982500\" IMO=\"8348678\" STATUS=\"5\" SPEED=\"0\" LON=\"23.726880\" LAT=\"37.878850\" COURSE=\"0\" HEADING=\"320\" TIMESTAMP=\"2021-02-08T12:57:01\" SHIP_ID=\"4317723\"/>\n    <POSITION MMSI=\"249032000\" IMO=\"9351098\" STATUS=\"15\" SPEED=\"2\" LON=\"23.548990\" LAT=\"37.903030\" COURSE=\"160\" HEADING=\"160\" TIMESTAMP=\"2021-02-08T12:57:05\" SHIP_ID=\"362849\"/>\n    <POSITION MMSI=\"240000500\" IMO=\"9822839\" STATUS=\"0\" SPEED=\"0\" LON=\"23.530200\" LAT=\"37.965420\" COURSE=\"51\" HEADING=\"511\" TIMESTAMP=\"2021-02-08T12:57:11\" SHIP_ID=\"4858425\"/>\n    <POSITION MMSI=\"636011396\" IMO=\"9216901\" STATUS=\"1\" SPEED=\"3\" LON=\"23.505830\" LAT=\"37.850330\" COURSE=\"186\" HEADING=\"186\" TIMESTAMP=\"2021-02-08T12:57:12\" SHIP_ID=\"753064\"/>\n    <POSITION MMSI=\"240612000\" IMO=\"8008254\" STATUS=\"15\" SPEED=\"11\" LON=\"23.601030\" LAT=\"37.957200\" COURSE=\"136\" HEADING=\"511\" TIMESTAMP=\"2021-02-08T12:57:13\" SHIP_ID=\"213328\"/>\n</VESSELTRACK>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<VESSELTRACK>\n    <POSITION MMSI=\"239982500\" IMO=\"8348678\" STATUS=\"5\" SPEED=\"0\" LON=\"23.726880\" LAT=\"37.878850\" COURSE=\"0\" HEADING=\"320\" TIMESTAMP=\"2021-02-08T12:57:01\" SHIP_ID=\"4317723\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"249032000\" IMO=\"9351098\" STATUS=\"15\" SPEED=\"2\" LON=\"23.548990\" LAT=\"37.903030\" COURSE=\"160\" HEADING=\"160\" TIMESTAMP=\"2021-02-08T12:57:05\" SHIP_ID=\"362849\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"240000500\" IMO=\"9822839\" STATUS=\"0\" SPEED=\"0\" LON=\"23.530200\" LAT=\"37.965420\" COURSE=\"51\" HEADING=\"511\" TIMESTAMP=\"2021-02-08T12:57:11\" SHIP_ID=\"4858425\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"636011396\" IMO=\"9216901\" STATUS=\"1\" SPEED=\"3\" LON=\"23.505830\" LAT=\"37.850330\" COURSE=\"186\" HEADING=\"186\" TIMESTAMP=\"2021-02-08T12:57:12\" SHIP_ID=\"753064\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"240612000\" IMO=\"8008254\" STATUS=\"15\" SPEED=\"11\" LON=\"23.601030\" LAT=\"37.957200\" COURSE=\"136\" HEADING=\"511\" TIMESTAMP=\"2021-02-08T12:57:13\" SHIP_ID=\"213328\" WIND_ANGLE=\"\" WIND_SPEED=\"\" WIND_TEMP=\"\" SIGNIFICANT_WAVE_HEIGHT=\"\" WIND_WAVE_DIRECTION=\"\" WIND_WAVE_HEIGHT=\"\" WIND_WAVE_PERIOD=\"\" SWELL_HEIGHT=\"\" SWELL_PERIOD=\"\" CURRENTS_ANGLE=\"\" CURRENTS_SPEED=\"\" SWELL_DIRECTION=\"\"/>\n    <POSITION MMSI=\"636009659\" IMO=\"1000588\" STATUS=\"0\" SPEED=\"0\" LON=\"23.680940\" LAT=\"37.930710\" COURSE=\"105\" HEADING=\"191\" TIMESTAMP=\"2021-02-08T12:58:00\" SHIP_ID=\"975029\" WIND_ANGLE=\"192\" WIND_SPEED=\"19\" WIND_TEMP=\"18\" SIGNIFICANT_WAVE_HEIGHT=\"11\" WIND_WAVE_DIRECTION=\"170\" WIND_WAVE_HEIGHT=\"4\" WIND_WAVE_PERIOD=\"29\" SWELL_HEIGHT=\"10\" SWELL_PERIOD=\"64\" CURRENTS_ANGLE=\"0\" CURRENTS_SPEED=\"0\" SWELL_DIRECTION=\"170\"/>\n    <POSITION MMSI=\"240605000\" IMO=\"1003059\" STATUS=\"5\" SPEED=\"0\" LON=\"23.683410\" LAT=\"37.930550\" COURSE=\"0\" HEADING=\"511\" TIMESTAMP=\"2021-02-08T12:58:00\" SHIP_ID=\"213300\" WIND_ANGLE=\"192\" WIND_SPEED=\"19\" WIND_TEMP=\"18\" SIGNIFICANT_WAVE_HEIGHT=\"11\" WIND_WAVE_DIRECTION=\"170\" WIND_WAVE_HEIGHT=\"4\" WIND_WAVE_PERIOD=\"29\" SWELL_HEIGHT=\"10\" SWELL_PERIOD=\"64\" CURRENTS_ANGLE=\"0\" CURRENTS_SPEED=\"0\" SWELL_DIRECTION=\"170\"/>\n    <POSITION MMSI=\"240247800\" IMO=\"0\" STATUS=\"99\" SPEED=\"0\" LON=\"23.728100\" LAT=\"37.878720\" COURSE=\"81\" HEADING=\"511\" TIMESTAMP=\"2021-02-08T12:58:00\" SHIP_ID=\"6280434\" WIND_ANGLE=\"196\" WIND_SPEED=\"21\" WIND_TEMP=\"19\" SIGNIFICANT_WAVE_HEIGHT=\"20\" WIND_WAVE_DIRECTION=\"172\" WIND_WAVE_HEIGHT=\"18\" WIND_WAVE_PERIOD=\"56\" SWELL_HEIGHT=\"8\" SWELL_PERIOD=\"72\" CURRENTS_ANGLE=\"0\" CURRENTS_SPEED=\"0\" SWELL_DIRECTION=\"115\"/>\n    <POSITION MMSI=\"240070200\" IMO=\"0\" STATUS=\"99\" SPEED=\"0\" LON=\"23.706390\" LAT=\"37.912190\" COURSE=\"47\" HEADING=\"511\" TIMESTAMP=\"2021-02-08T12:58:00\" SHIP_ID=\"5530757\" WIND_ANGLE=\"196\" WIND_SPEED=\"21\" WIND_TEMP=\"19\" SIGNIFICANT_WAVE_HEIGHT=\"16\" WIND_WAVE_DIRECTION=\"163\" WIND_WAVE_HEIGHT=\"8\" WIND_WAVE_PERIOD=\"41\" SWELL_HEIGHT=\"13\" SWELL_PERIOD=\"70\" CURRENTS_ANGLE=\"0\" CURRENTS_SPEED=\"0\" SWELL_DIRECTION=\"156\"/>\n    <POSITION MMSI=\"241113000\" IMO=\"9625499\" STATUS=\"5\" SPEED=\"0\" LON=\"23.649900\" LAT=\"37.931530\" COURSE=\"0\" HEADING=\"328\" TIMESTAMP=\"2021-02-08T12:58:00\" SHIP_ID=\"214507\" WIND_ANGLE=\"192\" WIND_SPEED=\"19\" WIND_TEMP=\"18\" SIGNIFICANT_WAVE_HEIGHT=\"11\" WIND_WAVE_DIRECTION=\"170\" WIND_WAVE_HEIGHT=\"4\" WIND_WAVE_PERIOD=\"29\" SWELL_HEIGHT=\"10\" SWELL_PERIOD=\"64\" CURRENTS_ANGLE=\"0\" CURRENTS_SPEED=\"0\" SWELL_DIRECTION=\"170\"/>\n</VESSELTRACK>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_ps01_area_out_of_bound'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_ps01_area_out_of_bound'
+              examples:
+                Area out of bound:
+                  summary: Area out of bound
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1k\" DESCRIPTION=\"BOX OUT OF BOUNDS\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+components:
+  schemas:
+    400_ps01_missing_ship_identifier:
+      title: Missing ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+    400_ps01_area_out_of_bound:
+      title: Area out of bound
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1k
+          detail: BOX OUT OF BOUNDS
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    200_ps01_extended:
+      title: Extended
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          STATUS:
+            type: string
+            description: The AIS Navigational Status of the subject vessel as input by the vessel's crew. There might be discrepancies with the vessel's detail page when vessel speed is near zero (0) knots
+          SPEED:
+            type: string
+            description: The speed (in knots x10) that the subject vessel is reporting according to AIS transmissions
+          LON:
+            type: string
+            description: Longitude - a geographic coordinate that specifies the east-west position of the vessel on the Earth's surface
+          LAT:
+            type: string
+            description: Latitude - a geographic coordinate that specifies the north-south position of the vessel on the Earth's surface
+          COURSE:
+            type: string
+            description: The course (in degrees) that the subject vessel is reporting according to AIS transmissions
+          HEADING:
+            type: string
+            description: The heading (in degrees) that the subject vessel is reporting according to AIS transmissions
+          TIMESTAMP:
+            type: string
+            description: The date and time (in UTC) that the subject vessel's position or event was recorded by MarineTraffic
+            format: date-time
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          WIND_ANGLE:
+            type: string
+            description: The current angle of the wind in the subject area (in degrees, compared to True North)
+          WIND_SPEED:
+            type: string
+            description: The current wind speed in the subject area (in knots)
+          WIND_TEMP:
+            type: string
+            description: The current temperature of the wind in the subject area (in Celsius degrees)
+          SIGNIFICANT_WAVE_HEIGHT:
+            type: string
+            description: The significant wave height in the subject area (in meters x10)
+          WIND_WAVE_HEIGHT:
+            type: string
+            description: The height of the wind waves in the subjects area (in meters x10)
+          WIND_WAVE_PERIOD:
+            type: string
+            description: The period of the wind waves in the subject area (in seconds)
+          WIND_WAVE_DIRECTION:
+            type: string
+            description: The direction of the wind waves in the subject area (in degrees, compared to True North)
+          SWELL_HEIGHT:
+            type: string
+            description: The height of the swells in the subject area (in meters x10)
+          SWELL_PERIOD:
+            type: string
+            description: The period of the swells in the subject area (in seconds)
+          SWELL_DIRECTION:
+            type: string
+            description: The direction of the swells in the subject area (in degrees, compared to True North)
+          CURRENTS_ANGLE:
+            type: string
+            description: The angle of the currents in the subject area (in degrees, compared to True North)
+          CURRENTS_SPEED:
+            type: string
+            description: The speed of the currents in the subject area (in knots x100)
+      example:
+      - MMSI: '239982500'
+        IMO: '8348678'
+        STATUS: '5'
+        SPEED: '0'
+        LON: '23.726880'
+        LAT: '37.878850'
+        COURSE: '0'
+        HEADING: '320'
+        TIMESTAMP: '2021-02-08T12:57:01.000Z'
+        SHIP_ID: '4317723'
+        WIND_ANGLE: '326'
+        WIND_SPEED: '10'
+        WIND_TEMP: '23'
+        SIGNIFICANT_WAVE_HEIGHT: '2'
+        WIND_WAVE_DIRECTION: '314'
+        WIND_WAVE_HEIGHT: '1'
+        WIND_WAVE_PERIOD: '16'
+        SWELL_HEIGHT: '1'
+        SWELL_PERIOD: '26'
+        CURRENTS_ANGLE: '308'
+        CURRENTS_SPEED: '20'
+        SWELL_DIRECTION: '317'
+      - MMSI: '249032000'
+        IMO: '9351098'
+        STATUS: '15'
+        SPEED: '2'
+        LON: '23.548990'
+        LAT: '37.903030'
+        COURSE: '160'
+        HEADING: '160'
+        TIMESTAMP: '2021-02-08T12:57:05.000Z'
+        SHIP_ID: '362849'
+        WIND_ANGLE: '333'
+        WIND_SPEED: '12'
+        WIND_TEMP: '23'
+        SIGNIFICANT_WAVE_HEIGHT: '3'
+        WIND_WAVE_DIRECTION: '320'
+        WIND_WAVE_HEIGHT: '3'
+        WIND_WAVE_PERIOD: '24'
+        SWELL_HEIGHT: '0'
+        SWELL_PERIOD: '31'
+        CURRENTS_ANGLE: '21'
+        CURRENTS_SPEED: '20'
+        SWELL_DIRECTION: '303'
+    400_ps01_days_out_of_limit:
+      title: Days out of limit
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 9c
+          detail: DAYS ABOVE ALLOWED LIMIT
+    200_ps01_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          STATUS:
+            type: string
+            description: The AIS Navigational Status of the subject vessel as input by the vessel's crew. There might be discrepancies with the vessel's detail page when vessel speed is near zero (0) knots
+          SPEED:
+            type: string
+            description: The speed (in knots x10) that the subject vessel is reporting according to AIS transmissions
+          LON:
+            type: string
+            description: Longitude - a geographic coordinate that specifies the east-west position of the vessel on the Earth's surface
+          LAT:
+            type: string
+            description: Latitude - a geographic coordinate that specifies the north-south position of the vessel on the Earth's surface
+          COURSE:
+            type: string
+            description: The course (in degrees) that the subject vessel is reporting according to AIS transmissions
+          HEADING:
+            type: string
+            description: The heading (in degrees) that the subject vessel is reporting according to AIS transmissions
+          TIMESTAMP:
+            type: string
+            description: The date and time (in UTC) that the subject vessel's position or event was recorded by MarineTraffic
+            format: date-time
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      example:
+      - MMSI: '239982500'
+        IMO: '8348678'
+        STATUS: '5'
+        SPEED: '0'
+        LON: '23.726880'
+        LAT: '37.878850'
+        COURSE: '0'
+        HEADING: '320'
+        TIMESTAMP: '2021-02-08T12:57:01.000Z'
+        SHIP_ID: '4317723'
+      - MMSI: '249032000'
+        IMO: '9351098'
+        STATUS: '15'
+        SPEED: '2'
+        LON: '23.548990'
+        LAT: '37.903030'
+        COURSE: '160'
+        HEADING: '160'
+        TIMESTAMP: '2021-02-08T12:57:05.000Z'
+        SHIP_ID: '362849'
+  parameters:
+    shipid_PS01_2:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
+      required: false
+      schema:
+        type: integer
+    MAXLON_PS01:
+      name: MAXLON
+      in: query
+      description: Use with MINLAT, MAXLAT, MINLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    MINLAT_PS01:
+      name: MINLAT
+      in: query
+      description: Use with MAXLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    todate_PS01:
+      name: todate
+      in: query
+      description: Use with fromdate <b>instead</b> of days to get data for a date period
+      required: false
+      schema:
+        type: string
+        format: date-time
+    period_PS01:
+      name: period
+      in: query
+      description: "Limit position per vessel. Omit to get all the available positions </br></br> Values are: <ul>\n  <li>hourly: get one position per hour</li>\n  <li>daily: get one position per day</li>\n</ul>"
+      required: false
+      schema:
+        type: string
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    MINLON_PS01:
+      name: MINLON
+      in: query
+      description: Use with MINLAT, MAXLAT, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    mmsi_PS01:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    fromdate_PS01:
+      name: fromdate
+      in: query
+      description: Use with todate <b>instead</b> of days to get data for a date period
+      required: false
+      schema:
+        type: string
+        format: date-time
+    v_PS01:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 3 to get the latest
+      schema:
+        type: integer
+        default: 1
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    imo_PS01:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    MAXLAT_PS01:
+      name: MAXLAT
+      in: query
+      description: Use with MINLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    msgtype_PS01:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes also weather data"
+      required: false
+      schema:
+        type: string
+        default: simple
+    days_PS01:
+      name: days
+      in: query
+      description: The number of days, starting from the time of request and going backwards, for which the response should look for position data </br></br> Maximum value is 190 (days)
+      required: true
+      schema:
+        type: integer
+    shipid_PS01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
+      required: true
+      schema:
+        type: integer

@@ -1,0 +1,220 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Events AIS API Reverse Geocoding API
+  version: 1.0.0
+  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: Reverse Geocoding
+paths:
+  /reversegeocode/{api_key}:
+    get:
+      tags:
+      - Reverse Geocoding
+      summary: Reverse Geocoding of a Single Point
+      description: "Get a list of geometries that a given point of coordinates intersects with.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: reversegeocode
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/coordinates_GI01'
+      - $ref: '#/components/parameters/radius_GI01'
+      - $ref: '#/components/parameters/exclude_ports_GI01'
+      - $ref: '#/components/parameters/exclude_berths_GI01'
+      - $ref: '#/components/parameters/exclude_terminals_GI01'
+      - $ref: '#/components/parameters/exclude_standard_areas_GI01'
+      - $ref: '#/components/parameters/exclude_custom_areas_GI01'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_gi01_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_gi01_default'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <ITEM ID=\"1\" NAME=\"PIRAEUS\" TYPE=\"Port\" SUBTYPE=\"P\" COUNTRY=\"GR\" UNLOCODE=\"GRPIR\" GEOMETRY_CENTER=\"37.1111,23.222\" DISTANCE=\"0\" TERMINAL=\"\" URL=\"https://marinetraffic.com/en/ais/details/ports/1\" />\n    <ITEM ID=\"13\" NAME=\"Piraeus Area\" TYPE=\"Standard Area\" SUBTYPE=\"Geographical Area\" COUNTRY=\"\" UNLOCODE=\"\" GEOMETRY_CENTER=\"37.1111,23.222\" DISTANCE=\"0\" TERMINAL=\"\" URL=\"https://marinetraffic.com/en/ais/details/areas/areaId:13\" />\n    <ITEM ID=\"12345\" NAME=\"Pier III East\" TYPE=\"Berth\" SUBTYPE=\"\" COUNTRY=\"GR\" UNLOCODE=\"GRPIR\" GEOMETRY_CENTER=\"37.1111,23.222\" DISTANCE=\"0\" TERMINAL=\"12\" URL=\"\" />\n    <ITEM ID=\"12\" NAME=\"Container Terminal\" TYPE=\"Terminal\" SUBTYPE=\"\" COUNTRY=\"GR\" UNLOCODE=\"GRPIR\" GEOMETRY_CENTER=\"\" DISTANCE=\"0\" TERMINAL=\"\" URL=\"\" />\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+components:
+  parameters:
+    exclude_custom_areas_GI01:
+      name: exclude_custom_areas
+      in: query
+      description: Flag that indicates if Custom Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_berths_GI01:
+      name: exclude_berths
+      in: query
+      description: Flag that indicates if Berths information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_terminals_GI01:
+      name: exclude_terminals
+      in: query
+      description: Flag that indicates if Terminals information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    radius_GI01:
+      name: radius
+      in: query
+      description: Maximum distance (in NM) from the given point that should be searched for nearby areas/assets </br></br> Cannot be greater than 10NM
+      required: false
+      schema:
+        type: number
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    coordinates_GI01:
+      name: coordinates
+      in: query
+      description: A latitude/longitude pair that you wish to receive the MarineTraffic areas/assets that intersects with
+      required: true
+      schema:
+        type: string
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    exclude_standard_areas_GI01:
+      name: exclude_standard_areas
+      in: query
+      description: Flag that indicates if Standard Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_ports_GI01:
+      name: exclude_ports
+      in: query
+      description: Flag that indicates if Ports information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+  schemas:
+    200_gi01_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the returned area/asset
+          NAME:
+            type: string
+            description: Name of the returned area/asset
+          TYPE:
+            type: string
+            description: Type of the returned area/asset
+          SUBTYPE:
+            type: string
+            description: Subtype of the returned area/asset
+          COUNTRY:
+            type: string
+            description: Country of the returned area/asset. Not applicable for Standard Areas and Custom Areas
+          UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for a Port . Only applicable for Ports, Berths and Terminals
+          GEOMETRY_CENTER:
+            type: string
+            description: Geometry center of the returned area
+          DISTANCE:
+            type: string
+            description: Distance of the returned area/asset from the given point (in NM)
+          TERMINAL:
+            type: string
+            description: ID of the Terminal the returned Berth belongs to . Only applicable for Berths
+          URL:
+            type: string
+            description: URL of MarineTraffic page with area/asset details (if exists)
+      example:
+      - ID: '1'
+        NAME: PIRAEUS
+        TYPE: Port
+        SUBTYPE: P
+        COUNTRY: GR
+        UNLOCODE: GRPIR
+        GEOMETRY_CENTER: 37.1111,23.222
+        DISTANCE: '0'
+        TERMINAL: null
+        URL: https://marinetraffic.com/en/ais/details/ports/1
+      - ID: '13'
+        NAME: Piraeus Area
+        TYPE: Standard Area
+        SUBTYPE: Geographical Area
+        COUNTRY: null
+        UNLOCODE: null
+        GEOMETRY_CENTER: 37.1111,23.222
+        DISTANCE: '0'
+        TERMINAL: null
+        URL: https://marinetraffic.com/en/ais/details/areas/areaId:13
+      - ID: '12345'
+        NAME: Pier III East
+        TYPE: Berth
+        SUBTYPE: null
+        COUNTRY: GR
+        UNLOCODE: GRPIR
+        GEOMETRY_CENTER: 37.1111,23.222
+        DISTANCE: '0'
+        TERMINAL: '12'
+        URL: null
+      - ID: '12'
+        NAME: Container Terminal
+        TYPE: Terminal
+        SUBTYPE: null
+        COUNTRY: GR
+        UNLOCODE: GRPIR
+        GEOMETRY_CENTER: null
+        DISTANCE: '0'
+        TERMINAL: null
+        URL: null
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS

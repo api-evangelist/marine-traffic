@@ -1,0 +1,685 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Events AIS API API
+  version: 1.0.0
+  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: AIS API
+paths:
+  '/exportvessels/{api_key}     ':
+    get:
+      tags:
+      - AIS API
+      summary: Vessel Positions
+      description: "<strong>The latest version of this API endpoint, including significant improvements, is available <a href=\"https://developers.kpler.com/spec/dfdcdd47-ed9d-4fe1-bcc1-1f736a0a0266\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.</br></br>Please contact your Customer Success Manager to request access to the new endpoint.</strong></br></br></br></br>\nTrack vessels of interest anywhere in the world.</br></br><b>Notes</b><ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**SPEED** and **COURSE** values for base stations are represented by zero (0)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>**HEADING** true heading in degrees (0-359) (values -1 or 511 indicate lack of data)</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**DSRC** describes whether the transmitted AIS message was received by a terrestrial (TER), satellite (SAT) or roaming (ROAM) AIS antenna. </li>\n    <li>The <b>timespan</b> parameter lets you specify how far back in time the API should look for the latest available vessel positions. Default value is set to 5 minutes and can be adjusted to a maximum of 1,440 minutes (24 hours).</li>\n    <li>More information about response parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552867-what-is-the-significance-of-the-ais-navigational-status-values\">STATUS</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">SHIPTYPE</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: exportvessels______
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_MTA030AD_1'
+      - $ref: '#/components/parameters/timespan_MTA030AD'
+      - $ref: '#/components/parameters/vessel_type'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/protocol_mandatory'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_MTA030AD'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+  '/exportvessels-custom-area/{api_key} ':
+    get:
+      tags:
+      - AIS API
+      summary: Vessel Positions in an Area of Interest
+      description: "<strong>The latest version of this API endpoint, including significant improvements, is available <a href=\"https://developers.kpler.com/spec/dfdcdd47-ed9d-4fe1-bcc1-1f736a0a0266\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.</br></br>Please contact your Customer Success Manager to request access to the new endpoint.</strong></br></br></br></br>\nTrack Vessels of interest in a predefined area of interest.</br></br><b>Notes</b><ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**SPEED** and **COURSE** values for base stations are represented by zero (0)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>**HEADING** true heading in degrees (0-359) (values -1 or 511 indicate lack of data)</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**DSRC** describes whether the transmitted AIS message was received by a terrestrial (TER), satellite (SAT) or roaming (ROAM) AIS antenna. </li>\n    <li>The <b>timespan</b> parameter lets you specify how far back in time the API should look for the latest available vessel positions. Default value is set to 5 minutes and can be adjusted to a maximum of 1,440 minutes (24 hours).</li>\n    <li>More information about response parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552867-what-is-the-significance-of-the-ais-navigational-status-values\">STATUS</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">SHIPTYPE</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: exportvessels-custom-area_
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_MTA030AD_2'
+      - $ref: '#/components/parameters/timespan_MTA030AD'
+      - $ref: '#/components/parameters/vessel_type'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/protocol_mandatory'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_MTA030AD'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+  '/exportvessel/{api_key} ':
+    get:
+      tags:
+      - AIS API
+      summary: Single Vessel Positions
+      description: "<strong>The latest version of this API endpoint, including significant improvements, is available <a href=\"https://developers.kpler.com/spec/dfdcdd47-ed9d-4fe1-bcc1-1f736a0a0266\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.</br></br>Please contact your Customer Success Manager to request access to the new endpoint.</strong></br></br></br></br>\nGet the latest available position and voyage information for a single vessel.</br></br><b>Notes</b><ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**SPEED** and **COURSE** values for base stations are represented by zero (0)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>**HEADING** true heading in degrees (0-359) (values -1 or 511 indicate lack of data)</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**DSRC** describes whether the transmitted AIS message was received by a terrestrial (TER), satellite (SAT) or roaming (ROAM) AIS antenna. </li>\n    <li>The <b>timespan</b> parameter lets you specify how far back in time the API should look for the latest available vessel positions. Default value is set to 5 minutes and can be adjusted to a maximum of 1,440 minutes (24 hours).</li>\n    <li>More information about response parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552867-what-is-the-significance-of-the-ais-navigational-status-values\">STATUS</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">SHIPTYPE</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: exportvessel_
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_MTA030AD_3'
+      - $ref: '#/components/parameters/shipid_PS07'
+      - $ref: '#/components/parameters/imo_PS07'
+      - $ref: '#/components/parameters/mmsi_PS07'
+      - $ref: '#/components/parameters/timespan_MTA030AD'
+      - $ref: '#/components/parameters/protocol_mandatory'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_MTA030AD_single'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_ps07__missing_ship_identifier'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+components:
+  parameters:
+    mmsi_PS07:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    v_MTA030AD_2:
+      name: v
+      in: query
+      description: Use latest version **2**
+      required: true
+      schema:
+        type: integer
+    timespan_MTA030AD:
+      name: timespan
+      in: query
+      description: Overrides the default timespan
+      required: false
+      schema:
+        type: integer
+        default: 5
+    limit:
+      name: limit
+      in: query
+      description: The limit of vessels per page (min=1000, max=5000)
+      required: false
+      schema:
+        type: integer
+        default: 2000
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    imo_PS07:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    v_MTA030AD_3:
+      name: v
+      in: query
+      description: Use latest version **6**
+      required: true
+      schema:
+        type: integer
+    shipid_PS07:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
+      required: true
+      schema:
+        type: integer
+    cursor:
+      name: cursor
+      in: query
+      description: The pagination cursor provided in the metadata section of the previous response
+      required: false
+      schema:
+        type: string
+    vessel_type:
+      name: vesseltypeid
+      in: query
+      description: Filter vessels based on vessel types, comma separated ids supported </br></br><a href="https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types" target='_blank'>more</a>
+      required: false
+      schema:
+        type: integer
+    v_MTA030AD_1:
+      name: v
+      in: query
+      description: Use latest version **9**
+      required: true
+      schema:
+        type: integer
+    protocol_mandatory:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>jsono</li>\n  <li>csv</li>"
+      required: false
+      schema:
+        type: string
+        default: jsono
+  schemas:
+    200_MTA030AD:
+      title: Default
+      type: object
+      properties:
+        DATA:
+          type: array
+          items:
+            type: object
+            properties:
+              MMSI:
+                type: string
+                description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+              IMO:
+                type: string
+                description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+              SHIP_ID:
+                type: string
+                description: A uniquely assigned ID by MarineTraffic for the subject vessel
+              LAT:
+                type: string
+                description: Latitude - a geographic coordinate that specifies the north-south position of the vessel on the Earth's surface
+              LON:
+                type: string
+                description: Longitude - a geographic coordinate that specifies the east-west position of the vessel on the Earth's surface
+              SPEED:
+                type: string
+                description: The speed (in knots x10) that the subject vessel is reporting according to AIS transmissions
+              HEADING:
+                type: string
+                description: The heading (in degrees) that the subject vessel is reporting according to AIS transmissions
+              COURSE:
+                type: string
+                description: The course (in degrees) that the subject vessel is reporting according to AIS transmissions
+              STATUS:
+                type: string
+                description: The AIS Navigational Status of the subject vessel as input by the vessel's crew. There might be discrepancies with the vessel's detail page when vessel speed is near zero (0) knots
+              TIMESTAMP:
+                type: string
+                description: The date and time (in UTC) that the subject vessel's position or event was recorded by MarineTraffic
+                format: date-time
+              DSRC:
+                type: string
+                description: Describes whether the transmitted AIS message was received by a terrestrial (TER), satellite (SAT) or roaming (ROAM) AIS antenna.
+              UTC_SECONDS:
+                type: string
+                description: The time slot that the subject vessel uses to transmit information
+              MARKET:
+                type: string
+                description: Vessel's commercial market
+              SHIPNAME:
+                type: string
+                description: The Shipname of the subject vessel
+              SHIPTYPE:
+                type: string
+                description: The Shiptype of the subject vessel according to AIS transmissions
+              CALLSIGN:
+                type: string
+                description: A uniquely designated identifier for the vessel's transmitter station
+              FLAG:
+                type: string
+                description: The flag of the subject vessel according to AIS transmissions
+              LENGTH:
+                type: string
+                description: The overall Length (in metres) of the subject vessel
+              WIDTH:
+                type: string
+                description: The Breadth (in metres) of the subject vessel
+              GRT:
+                type: string
+                description: Gross Tonnage - unitless measure that calculates the moulded volume of all enclosed spaces of a ship
+              DWT:
+                type: string
+                description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
+              DRAUGHT:
+                type: string
+                description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
+              YEAR_BUILT:
+                type: string
+                description: The year that the subject vessel was built
+              SHIP_COUNTRY:
+                type: string
+                description: The vessel's country
+              SHIP_CLASS:
+                type: string
+                description: Vessel's class based on commercial market, capacity and/or dimensions
+              ROT:
+                type: string
+                description: Rate of Turn
+              TYPE_NAME:
+                type: string
+                description: The MarineTraffic ship type of the vessel
+              AIS_TYPE_SUMMARY:
+                type: string
+                description: Further explanation of the SHIPTYPE ID
+              DESTINATION:
+                type: string
+                description: The Destination of the subject vessel according to the AIS transmissions
+              ETA:
+                type: string
+                description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
+                format: date-time
+              L_FORE:
+                type: string
+                description: The relative distance from the AIS station of the vessel to the foremost of it (front / bow)
+              W_LEFT:
+                type: string
+                description: The relative distance from the AIS station of the vessel to the leftmost of it (left side / port)
+              LAST_PORT:
+                type: string
+                description: The Name of the Last Port the vessel has visited
+              LAST_PORT_TIME:
+                type: string
+                description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+                format: date-time
+              LAST_PORT_ID:
+                type: string
+                description: A uniquely assigned ID by MarineTraffic for the Last Port
+              LAST_PORT_UNLOCODE:
+                type: string
+                description: A uniquely assigned ID by United Nations for the Last Port
+              LAST_PORT_COUNTRY:
+                type: string
+                description: The Country that the Last Port is located at
+              CURRENT_PORT:
+                type: string
+                description: The name of the Port the subject vessel is currently in (NULL if the vessel is underway)
+              CURRENT_PORT_ID:
+                type: string
+                description: A uniquely assigned ID by MarineTraffic for the Current Port
+              CURRENT_PORT_UNLOCODE:
+                type: string
+                description: A uniquely assigned ID by United Nations for the Current Port
+              CURRENT_PORT_COUNTRY:
+                type: string
+                description: The Country that the Current Port is located at
+              NEXT_PORT_ID:
+                type: string
+                description: A uniquely assigned ID by MarineTraffic for the Next Port
+              NEXT_PORT_UNLOCODE:
+                type: string
+                description: A uniquely assigned ID by United Nations for the Next Port
+              NEXT_PORT_NAME:
+                type: string
+                description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+              NEXT_PORT_COUNTRY:
+                type: string
+                description: The Country that the Next Port is located at
+              ETA_CALC:
+                type: string
+                description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
+                format: date-time
+              ETA_UPDATED:
+                type: string
+                description: The date and time (in UTC) that the ETA was calculated by MarineTraffic
+                format: date-time
+              DISTANCE_TO_GO:
+                type: string
+                description: The Remaining Distance (in NM) for the subject vessel to reach the reported Destination
+              DISTANCE_TRAVELLED:
+                type: string
+                description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
+              AVG_SPEED:
+                type: string
+                description: The average speed of the vessel (in knots) during the current voyage (since last port departure), calculated using AIS position readings from the last 24 hours where speed exceeds 5 knots.
+              MAX_SPEED:
+                type: string
+                description: The maximum speed (in knots) recorded during the current voyage (since last port departure). This value updates gradually and may lag behind the current speed following a sudden acceleration or shortly after port departure.
+        METADATA:
+          type: object
+          properties:
+            CURSOR:
+              type: string
+              description: The pagination cursor that should be provided in the next request
+            DATE_FROM:
+              type: string
+              description: The starting date of the returned positions
+              format: date-time
+            DATE_TO:
+              type: string
+              description: The ending date of the returned positions
+              format: date-time
+      example:
+        DATA:
+        - MMSI: '538003913'
+          IMO: '9470959'
+          SHIP_ID: '713139'
+          LAT: '37.388430'
+          LON: '23.871230'
+          SPEED: '6'
+          HEADING: '104'
+          COURSE: '41'
+          STATUS: '0'
+          TIMESTAMP: '2020-10-15T12:21:44.000Z'
+          DSRC: TER
+          UTC_SECONDS: '45'
+          MARKET: SUPPORTING VESSELS
+          SHIPNAME: SUNNY STAR
+          SHIPTYPE: '89'
+          CALLSIGN: V7TZ6
+          FLAG: MH
+          LENGTH: '184'
+          WIDTH: '27.43'
+          GRT: '23313'
+          DWT: '37857'
+          DRAUGHT: '95'
+          YEAR_BUILT: '2010'
+          SHIP_COUNTRY: Marshall Is
+          SHIP_CLASS: HANDYSIZE
+          ROT: '0'
+          TYPE_NAME: Oil/Chemical Tanker
+          AIS_TYPE_SUMMARY: Tanker
+          DESTINATION: FOR ORDERS
+          ETA: '2020-10-14T12:00:00.000Z'
+          L_FORE: '5'
+          W_LEFT: '5'
+          CURRENT_PORT: ''
+          LAST_PORT: AGIOI THEODOROI
+          LAST_PORT_TIME: '2020-10-13T23:39:00.000Z'
+          CURRENT_PORT_ID: ''
+          CURRENT_PORT_UNLOCODE: ''
+          CURRENT_PORT_COUNTRY: ''
+          LAST_PORT_ID: '29'
+          LAST_PORT_UNLOCODE: GRAGT
+          LAST_PORT_COUNTRY: GR
+          NEXT_PORT_ID: ''
+          NEXT_PORT_UNLOCODE: ''
+          NEXT_PORT_NAME: ''
+          NEXT_PORT_COUNTRY: ''
+          ETA_CALC: ''
+          ETA_UPDATED: ''
+          DISTANCE_TO_GO: '0'
+          DISTANCE_TRAVELLED: '74'
+          AVG_SPEED: '12.6'
+          MAX_SPEED: '13.2'
+        METADATA:
+          CURSOR: abcdef
+          DATE_FROM: '2023-11-20 15:57:00'
+          DATE_TO: '2023-11-20 16:57:00'
+    200_MTA030AD_single:
+      title: Default
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          LAT:
+            type: string
+            description: Latitude - a geographic coordinate that specifies the north-south position of the vessel on the Earth's surface
+          LON:
+            type: string
+            description: Longitude - a geographic coordinate that specifies the east-west position of the vessel on the Earth's surface
+          SPEED:
+            type: string
+            description: The speed (in knots x10) that the subject vessel is reporting according to AIS transmissions
+          HEADING:
+            type: string
+            description: The heading (in degrees) that the subject vessel is reporting according to AIS transmissions
+          COURSE:
+            type: string
+            description: The course (in degrees) that the subject vessel is reporting according to AIS transmissions
+          STATUS:
+            type: string
+            description: The AIS Navigational Status of the subject vessel as input by the vessel's crew. There might be discrepancies with the vessel's detail page when vessel speed is near zero (0) knots
+          TIMESTAMP:
+            type: string
+            description: The date and time (in UTC) that the subject vessel's position or event was recorded by MarineTraffic
+            format: date-time
+          DSRC:
+            type: string
+            description: Describes whether the transmitted AIS message was received by a terrestrial, satellite or roaming AIS antenna
+          UTC_SECONDS:
+            type: string
+            description: The time slot that the subject vessel uses to transmit information
+          MARKET:
+            type: string
+            description: Vessel's commercial market
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          SHIPTYPE:
+            type: string
+            description: The Shiptype of the subject vessel according to AIS transmissions
+          CALLSIGN:
+            type: string
+            description: A uniquely designated identifier for the vessel's transmitter station
+          FLAG:
+            type: string
+            description: The flag of the subject vessel according to AIS transmissions
+          LENGTH:
+            type: string
+            description: The overall Length (in metres) of the subject vessel
+          WIDTH:
+            type: string
+            description: The Breadth (in metres) of the subject vessel
+          GRT:
+            type: string
+            description: Gross Tonnage - unitless measure that calculates the moulded volume of all enclosed spaces of a ship
+          DWT:
+            type: string
+            description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
+          DRAUGHT:
+            type: string
+            description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
+          YEAR_BUILT:
+            type: string
+            description: The year that the subject vessel was built
+          SHIP_COUNTRY:
+            type: string
+            description: The vessel's country
+          SHIP_CLASS:
+            type: string
+            description: Vessel's class based on commercial market, capacity and/or dimensions
+          ROT:
+            type: string
+            description: Rate of Turn
+          TYPE_NAME:
+            type: string
+            description: The MarineTraffic ship type of the vessel
+          AIS_TYPE_SUMMARY:
+            type: string
+            description: Further explanation of the SHIPTYPE ID
+          DESTINATION:
+            type: string
+            description: The Destination of the subject vessel according to the AIS transmissions
+          ETA:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
+            format: date-time
+          L_FORE:
+            type: string
+            description: The relative distance from the AIS station of the vessel to the foremost of it (front / bow)
+          W_LEFT:
+            type: string
+            description: The relative distance from the AIS station of the vessel to the leftmost of it (left side / port)
+          LAST_PORT:
+            type: string
+            description: The Name of the Last Port the vessel has visited
+          LAST_PORT_TIME:
+            type: string
+            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+            format: date-time
+          LAST_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Last Port
+          LAST_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Last Port
+          LAST_PORT_COUNTRY:
+            type: string
+            description: The Country that the Last Port is located at
+          CURRENT_PORT:
+            type: string
+            description: The name of the Port the subject vessel is currently in (NULL if the vessel is underway)
+          CURRENT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Port
+          CURRENT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Current Port
+          CURRENT_PORT_COUNTRY:
+            type: string
+            description: The Country that the Current Port is located at
+          NEXT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Next Port
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_COUNTRY:
+            type: string
+            description: The Country that the Next Port is located at
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
+            format: date-time
+          ETA_UPDATED:
+            type: string
+            description: The date and time (in UTC) that the ETA was calculated by MarineTraffic
+            format: date-time
+          DISTANCE_TO_GO:
+            type: string
+            description: The Remaining Distance (in NM) for the subject vessel to reach the reported Destination
+          DISTANCE_TRAVELLED:
+            type: string
+            description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
+          AVG_SPEED:
+            type: string
+            description: The average speed of the vessel (in knots) during the current voyage (since last port departure), calculated using AIS position readings from the last 24 hours where speed exceeds 5 knots.
+          MAX_SPEED:
+            type: string
+            description: The maximum speed (in knots) recorded during the current voyage (since last port departure). This value updates gradually and may lag behind the current speed following a sudden acceleration or shortly after port departure.
+      example:
+      - MMSI: '538003913'
+        IMO: '9470959'
+        SHIP_ID: '713139'
+        LAT: '37.388430'
+        LON: '23.871230'
+        SPEED: '6'
+        HEADING: '104'
+        COURSE: '41'
+        STATUS: '0'
+        TIMESTAMP: '2020-10-15T12:21:44.000Z'
+        DSRC: TER
+        UTC_SECONDS: '45'
+        MARKET: SUPPORTING VESSELS
+        SHIPNAME: SUNNY STAR
+        SHIPTYPE: '89'
+        CALLSIGN: V7TZ6
+        FLAG: MH
+        LENGTH: '184'
+        WIDTH: '27.43'
+        GRT: '23313'
+        DWT: '37857'
+        DRAUGHT: '95'
+        YEAR_BUILT: '2010'
+        SHIP_COUNTRY: Marshall Is
+        SHIP_CLASS: HANDYSIZE
+        ROT: '0'
+        TYPE_NAME: Oil/Chemical Tanker
+        AIS_TYPE_SUMMARY: Tanker
+        DESTINATION: FOR ORDERS
+        ETA: '2020-10-14T12:00:00.000Z'
+        L_FORE: '5'
+        W_LEFT: '5'
+        CURRENT_PORT: ''
+        LAST_PORT: AGIOI THEODOROI
+        LAST_PORT_TIME: '2020-10-13T23:39:00.000Z'
+        CURRENT_PORT_ID: ''
+        CURRENT_PORT_UNLOCODE: ''
+        CURRENT_PORT_COUNTRY: ''
+        LAST_PORT_ID: '29'
+        LAST_PORT_UNLOCODE: GRAGT
+        LAST_PORT_COUNTRY: GR
+        NEXT_PORT_ID: ''
+        NEXT_PORT_UNLOCODE: ''
+        NEXT_PORT_NAME: ''
+        NEXT_PORT_COUNTRY: ''
+        ETA_CALC: ''
+        ETA_UPDATED: ''
+        DISTANCE_TO_GO: '0'
+        DISTANCE_TRAVELLED: '74'
+        AVG_SPEED: '12.6'
+        MAX_SPEED: '13.2'
+    400_ps07__missing_ship_identifier:
+      title: ' Missing ship identifier'
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS

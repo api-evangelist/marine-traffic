@@ -1,0 +1,562 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Events AIS API Fleets API
+  version: 1.0.0
+  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: Fleets
+paths:
+  /setfleet/{api_key}:
+    get:
+      tags:
+      - Fleets
+      summary: Modify Fleet
+      description: "Manage your MarineTraffic fleet. </br></br> To **create a new item** in a fleet, use the active parameter. If the item already exists, it will **update** item's status. </br></br> The active parameter can have values of 0, 1, 2 which corresponds to the three states of the fleet items (inactive, active, sat enabled) </br></br> The **delete** parameter must have a value of 1 and it **removes** the entry from the fleet. </br></br> If MMSI, IMO and SHIP ID are passed, the MMSI takes precedence and the IMO and SHIP ID will be ignored. </br></br> When you add vessels to a Fleet of Interest using the setfleet API endpoint: \n<ul>\n  <li>If you provide an IMO or MMSI that matches multiple vessels in the MarineTraffic database, the system will automatically select the vessel with the most recent AIS timestamp and add it to your fleet.</li>\n  <li>If you provide a shipid, the system will add that exact vessel — no duplicate resolution is performed.</li>\n  <li>To avoid any ambiguity, we recommend using shipid when you want precise control over which vessel is added.</li>\n</ul> \nResponse is always an XML structure indicating success or failure with failure description message.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: setfleet
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/mmsi_PU01'
+      - $ref: '#/components/parameters/imo_PU01'
+      - $ref: '#/components/parameters/shipid_PU01'
+      - $ref: '#/components/parameters/fleet_id_PU01'
+      - $ref: '#/components/parameters/active_PU01'
+      - $ref: '#/components/parameters/delete_PU01'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_pu01_update'
+              examples:
+                Update fleet:
+                  summary: Update fleet
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <SUCCESS CODE=\"7\" DESCRIPTION=\"FLEET ITEM UPDATED\" />\n    </STATUS>\n</RESPONSE>"
+        '400':
+          description: Bad Request
+          content:
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_pu01_invalid_ship_identifier'
+                - $ref: '#/components/schemas/400_pu01_missing_ship_identifier'
+              examples:
+                Invalid ship identifier:
+                  summary: Invalid ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1\" DESCRIPTION=\"INCORRECT CALL-CHECK PARAMETERS\"/>\n    </STATUS>\n</RESPONSE>"
+                Missing ship identifier:
+                  summary: Missing ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2\" DESCRIPTION=\"VESSEL MMSI OR IMO OR SHIPID MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+        '404':
+          description: Not Found
+          content:
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/404_pu01_invalid_fleet_identifier'
+              examples:
+                Invalid fleet identifier:
+                  summary: Invalid fleet identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"6b\" DESCRIPTION=\"FLEET NOT FOUND\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /getfleet/{api_key}:
+    get:
+      tags:
+      - Fleets
+      summary: Vessels in Fleet
+      description: "Get a detailed listing of vessels included in one of your MarineTraffic fleets.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: getfleet
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_PU02'
+      - $ref: '#/components/parameters/fleet_id_PU02'
+      - $ref: '#/components/parameters/page_PU02'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_pu02_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_pu02_default'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<FLEET INACTIVE=\"0\" TERRESTRIAL=\"4\" SATELLITE=\"0\">\n    <VESSEL SHIP_ID=\"211325\" MMSI=\"239710000\" IMO=\"9197105\" SHIPNAME=\"BLUE STAR 1\" ACTIVE=\"1\"/>\n    <VESSEL SHIP_ID=\"212537\" MMSI=\"240389000\" IMO=\"9208679\" SHIPNAME=\"BLUE STAR MYCONOS\" ACTIVE=\"1\"/>\n    <VESSEL SHIP_ID=\"214617\" MMSI=\"241159000\" IMO=\"9565041\" SHIPNAME=\"BLUE STAR PATMOS\" ACTIVE=\"1\"/>\n    <VESSEL SHIP_ID=\"371681\" MMSI=\"310627000\" IMO=\"9241061\" SHIPNAME=\"QUEEN MARY 2\" ACTIVE=\"1\"/>\n</FLEET>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_pu02_empty_fleet'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_pu02_empty_fleet'
+              examples:
+                Empty fleet:
+                  summary: Empty fleet
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?><RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"7\" DESCRIPTION=\"FLEET IS EMPTY\"/>\n    </STATUS>\n</RESPONSE>"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403_pu02_invalid_fleet_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/403_pu02_invalid_fleet_identifier'
+              examples:
+                Invalid fleet identifier:
+                  summary: Invalid fleet identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"6a\" DESCRIPTION=\"USER DOES NOT OWN FLEET\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /getfleets/{api_key}:
+    get:
+      tags:
+      - Fleets
+      summary: List Fleets
+      description: "Get an overview list of all your MarineTraffic fleets.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: getfleets
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_pu03_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_pu03_default'
+              examples:
+                Default:
+                  summary: Default
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<FLEETS>\n    <FLEET ID=\"1696822\" NAME=\"Demo fleet\" ACTIVE=\"1\" CREATED=\"2020-09-22 06:51:00\" DEFAULT=\"1\"/>\n</FLEETS>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /clearfleet/{api_key}:
+    get:
+      tags:
+      - Fleets
+      summary: Clear Fleet
+      description: "Clear your MarineTraffic fleet from all vessels.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: clearfleet
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/fleet_id_PU05'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_pu05_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_pu05_default'
+              examples:
+                Default:
+                  summary: Default
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<FLEETS>\n    <FLEET FLEET_ID=\"1716163\" DELETE=\"1\"/>\n</FLEETS>"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_pu05_missing_or_invalid_fleet_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/404_pu05_missing_or_invalid_fleet_identifier'
+              examples:
+                Missing or invalid fleet identifier:
+                  summary: Missing or invalid fleet identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"6b\" DESCRIPTION=\"FLEET NOT FOUND\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+components:
+  schemas:
+    200_pu01_update:
+      title: Update Fleet
+      type: object
+      properties:
+        status:
+          type: array
+          items:
+            type: object
+            properties:
+              success:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Success code
+                    description:
+                      type: string
+                      description: Success message
+    200_pu02_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          ACTIVE:
+            type: string
+            description: The Status of the subject vessel (Off = 0, Terrestrial = 1, Satellite = 2 )
+      example:
+      - SHIP_ID: '319'
+        MMSI: '228316700'
+        IMO: '9387542'
+        SHIPNAME: KAOMBO NORTE
+        ACTIVE: '1'
+      - SHIP_ID: '326'
+        MMSI: '256609000'
+        IMO: '9409156'
+        SHIPNAME: LAPEROUSE
+        ACTIVE: '1'
+      - SHIP_ID: '487'
+        MMSI: '228333700'
+        IMO: '9320075'
+        SHIPNAME: GASELYS
+        ACTIVE: '1'
+      - SHIP_ID: '510'
+        MMSI: '228337700'
+        IMO: '9306495'
+        SHIPNAME: PROVALYS
+        ACTIVE: '1'
+      - SHIP_ID: '1595'
+        MMSI: '229036000'
+        IMO: '9529475'
+        SHIPNAME: PETALIDI
+        ACTIVE: '1'
+    200_pu05_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          FLEET_ID:
+            type: string
+            description: The fleet_id you wish to clear
+          DELETE:
+            type: string
+            description: Indicates whether the vessels were successfully deleted from a fleet (0:no, 1:yes)
+      example:
+      - FLEET_ID: '1716163'
+        DELETE: '1'
+    400_pu01_invalid_ship_identifier:
+      title: Invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '1'
+          detail: INCORRECT CALL-CHECK PARAMETERS
+    400_pu02_empty_fleet:
+      title: Empty fleet
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '7'
+          detail: FLEET IS EMPTY
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    400_pu01_missing_ship_identifier:
+      title: Missing ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+    200_pu03_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject Fleet
+          NAME:
+            type: string
+            description: The Name of the subject Fleet
+          ACTIVE:
+            type: string
+            description: The Status of the subject Fleet (1 = Active )
+          CREATED:
+            type: string
+            description: The Date and Time (in UTC) that the subject Fleet was created
+          DEFAULT:
+            type: string
+            description: 1 = Default Fleet
+      example:
+      - ID: '1696822'
+        NAME: Demo fleet
+        ACTIVE: '1'
+        CREATED: '2020-09-22T06:51:00.000Z'
+        DEFAULT: '1'
+    404_pu05_missing_or_invalid_fleet_identifier:
+      title: Missing or invalid fleet identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 6b
+          detail: FLEET NOT FOUND
+    403_pu02_invalid_fleet_identifier:
+      title: Invalid fleet identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 6a
+          detail: USER DOES NOT OWN FLEET
+    404_pu01_invalid_fleet_identifier:
+      title: Invalid fleet identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 6b
+          detail: FLEET NOT FOUND
+  parameters:
+    mmsi_PU01:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to handle, comma separated values supported </br></br> You can <b>instead</b> use imo or shipid
+      required: true
+      schema:
+        type: integer
+    fleet_id_PU01:
+      name: fleet_id
+      in: query
+      description: If used, vessel will be added to the specific fleet, otherwise default fleet is used
+      required: false
+      schema:
+        type: integer
+    delete_PU01:
+      name: delete
+      in: query
+      description: Set this parameter to 1 to delete a vessel from your fleet
+      required: false
+      schema:
+        type: integer
+    v_PU02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 2 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    active_PU01:
+      name: active
+      in: query
+      description: "Possible values are:  <ul>\n  <li>0 to set to inactive</li>\n  <li>1 to activate</li>\n  <li>2 to enable satellite coverage</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    fleet_id_PU02:
+      name: fleet_id
+      in: query
+      description: If used, will return specific fleet otherwise default fleet is used
+      required: false
+      schema:
+        type: integer
+    page_PU02:
+      name: page
+      in: query
+      description: Specifies the number of the results page to return. Use this parameter to navigate through paginated results (with version 2) when the fleet contains more than 100 vessels.
+      required: false
+      schema:
+        type: integer
+    shipid_PU01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel, comma separated values supported
+      required: false
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    fleet_id_PU05:
+      name: fleet_id
+      in: query
+      description: The fleet id you wish to clear
+      required: true
+      schema:
+        type: integer
+    imo_PU01:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to handle, comma separated values supported
+      required: false
+      schema:
+        type: integer

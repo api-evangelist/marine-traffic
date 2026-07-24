@@ -1,0 +1,336 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Events AIS API Routing Information API
+  version: 1.0.0
+  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: Routing Information
+paths:
+  /exportroutes/{api_key}:
+    get:
+      tags:
+      - Routing Information
+      summary: Vessel Route to Port
+      description: "<b>A newer version of this endpoint is available here: https://developers.kpler.com/spec/c78f79cf-4169-4a59-987d-e5970ea170f9</b></br></br>\nReceive a list of available routes and distances from a vessel to a port.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: exportroutes
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/mmsi_VI03'
+      - $ref: '#/components/parameters/imo_VI03'
+      - $ref: '#/components/parameters/shipid_VI03'
+      - $ref: '#/components/parameters/port_target_id_VI03'
+      - $ref: '#/components/parameters/includealternatives_VI03'
+      - $ref: '#/components/parameters/includeinland_VI03'
+      - $ref: '#/components/parameters/msgtype_VI03'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi03_default'
+                - $ref: '#/components/schemas/200_vi03_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi03_default'
+                - $ref: '#/components/schemas/200_vi03_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ROUTES>\n    <route DISTANCE=\"805\" PANAMA=\"0\" SUEZ=\"0\"/>\n</ROUTES>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ROUTES>\n    <route DISTANCE=\"805\" PANAMA=\"0\" SUEZ=\"0\" FINAL_PATH=\"LINESTRING (23.6107 37.894, 23.6096 37.3631, 23.6088 37.3566, 23.499 36.9011, 23.4958 36.8932, 23.2212 36.4084, 23.2122 36.398, 23.198 36.3904, 23.1812 36.3877, 23.1763 36.3879, 23.0774 36.3967, 23.0753 36.397, 22.9465 36.4138, 22.9395 36.4142, 22.9285 36.4142, 22.9211 36.4137, 22.4744 36.3528, 22.467 36.3523, 22.4502 36.355, 22.4457 36.3568, 21.7536 36.6658, 21.7463 36.6699, 21.6694 36.7227, 21.6638 36.7273, 20.5872 37.7853, 20.5847 37.788, 18.5047 40.2326, 18.503 40.2344, 18.2613 40.4772, 18.2613 40.4772, 13.7529 44.8308, 13.7497 44.8342, 13.5739 45.0519, 13.5702 45.0579, 13.4989 45.2161)\"/>\n</ROUTES>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_vi03_invalid_ship_identifier'
+                - $ref: '#/components/schemas/400_vi03_missing_or_invalid_port_identifier'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_vi03_invalid_ship_identifier'
+                - $ref: '#/components/schemas/400_vi03_missing_or_invalid_port_identifier'
+              examples:
+                Invalid ship identifier:
+                  summary: Invalid ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2\" DESCRIPTION=\"VESSEL MMSI OR IMO OR SHIPID MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+                Missing or invalid port identifier:
+                  summary: Missing or invalid port identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a6\" DESCRIPTION=\"PORT IS MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  '/exportroutes/{api_key} ':
+    get:
+      tags:
+      - Routing Information
+      summary: Distance to Port
+      description: "<b>A newer version of this endpoint is available here: https://developers.kpler.com/spec/c78f79cf-4169-4a59-987d-e5970ea170f9</b></br></br>\nReceive a list of available routes and distances from point or port to a specific port.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: exportroutes_
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/port_start_id_VI03'
+      - $ref: '#/components/parameters/LAT_VI03'
+      - $ref: '#/components/parameters/LON_VI03'
+      - $ref: '#/components/parameters/port_target_id_VI03'
+      - $ref: '#/components/parameters/includealternatives_VI03'
+      - $ref: '#/components/parameters/includeinland_VI03'
+      - $ref: '#/components/parameters/msgtype_VI03'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi03_default'
+                - $ref: '#/components/schemas/200_vi03_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi03_default'
+                - $ref: '#/components/schemas/200_vi03_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ROUTES>\n    <route DISTANCE=\"2938\" PANAMA=\"0\" SUEZ=\"0\"/>\n</ROUTES>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ROUTES>\n    <route DISTANCE=\"2938\" PANAMA=\"0\" SUEZ=\"0\" FINAL_PATH=\"LINESTRING (23.6031 37.9345, 23.6022 37.8302, 23.7127 37.6496, 23.7056 37.6035, 23.6234 37.3639, 23.4216 36.9451, 23.229 36.4224, 23.1209 36.4007, 22.9908 36.4161, 22.8799 36.4056, 22.5453 36.3436, 22.0771 36.3505, 19.8853 36.3859, 17.0453 36.4213, 16.0126 36.4389, 14.5459 36.461, 12.2835 37.0352, 11.0962 37.4966, 10.2338 37.6534, 9.5746 37.6577, 8.8824 37.6447, 7.8552 37.5924, 6.2292 37.4225, 4.3781 37.2391, 3.5815 37.1472, 2.2467 37.0245, 0.1648 36.7609, -1.9391 36.4655, -2.9718 36.3328, -4.021 36.2132, -5.3448 36.0269, -5.5563 35.9713, -5.8612 35.9625, -6.1963 35.9558, -9.0088 36.6948, -9.1681 36.7609, -9.3109 36.884, -9.3713 37.1341, -9.657 38.1043, -9.8602 38.7455, -9.8492 39.0491, -9.8492 39.6818, -9.8383 40.1873, -9.7998 42.3829, -9.7943 42.9444, -9.7778 43.2091, -6.861 47.1486, -5.9876 48.3051, -5.6195 48.7562, -5.1691 48.9442, -4.5428 49.1781, -3.3893 49.6214, -2.9169 49.8026, -2.439 49.8911, -1.5491 50.0501, -0.3571 50.2612, 0.9668 50.4889, 1.3528 50.7125, 1.4177 50.8727, 1.4687 50.906, 1.7071 51.0776, 2.0596 51.2246, 2.2412 51.4745, 3.1406 52.1546, 3.5788 52.4091, 4.1803 52.4844, 4.5456 52.4644, 4.6609 52.4627, 4.6788 52.4526, 4.7173 52.4351, 4.7392 52.4301, 4.7763 52.4251, 4.7955 52.4234, 4.8225 52.4197, 4.8581 52.4147, 4.8793 52.4083, 4.8985 52.389)\"/>\n</ROUTES>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_vi03_missing_or_invalid_port_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_vi03_missing_or_invalid_port_identifier'
+              examples:
+                Missing or invalid port identifier:
+                  summary: Missing or invalid port identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a6\" DESCRIPTION=\"PORT IS MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+components:
+  parameters:
+    mmsi_VI03:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid
+      required: true
+      schema:
+        type: integer
+    LAT_VI03:
+      name: LAT
+      in: query
+      description: The latitude of the starting point </br></br> It can be used together with LON <b>instead</b> of port_start_id
+      required: false
+      schema:
+        type: number
+    shipid_VI03:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      required: false
+      schema:
+        type: integer
+    msgtype_VI03:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes also route/waypoints as Linestring Geometry in WKT - Well-Known Text"
+      required: false
+      schema:
+        type: string
+        default: simple
+    includealternatives_VI03:
+      name: includealternatives
+      in: query
+      description: Use 1 to search for all available routes regarding the specific journey or 0 to not include alternative routes
+      required: false
+      schema:
+        type: integer
+    includeinland_VI03:
+      name: includeinland
+      in: query
+      description: Use 1 in order to receive routes which include inland waterways or 0 to not include alternative routes
+      required: false
+      schema:
+        type: integer
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    port_target_id_VI03:
+      name: port_target_id
+      in: query
+      description: The MarineTraffic ID of the port you wish to put as target port (found on the URL of the respective Port page) or port UN/LOCODE
+      required: true
+      schema:
+        type: integer
+    imo_VI03:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    LON_VI03:
+      name: LON
+      in: query
+      description: The longitude of the starting point </br></br> It can be used together with LAT <b>instead</b> of port_start_id
+      required: false
+      schema:
+        type: integer
+    port_start_id_VI03:
+      name: port_start_id
+      in: query
+      description: The MarineTraffic ID of the port you wish to put as starting point (found on the URL of the respective Port page) or port UN/LOCODE
+      required: true
+      schema:
+        type: integer
+  schemas:
+    200_vi03_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          DISTANCE:
+            type: string
+            description: The Distance (in NM) between the specified point or port to the destination port
+          PANAMA:
+            type: string
+            description: Flag to indicate whether the vessel route passes via the Panama canal (0:no, 1:yes)
+          SUEZ:
+            type: string
+            description: Flag to indicate whether the vessel route passes via the Suez canal (0:no, 1:yes)
+      example:
+      - DISTANCE: '2938'
+        PANAMA: '0'
+        SUEZ: '0'
+    400_vi03_invalid_ship_identifier:
+      title: Invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+    400_vi03_missing_or_invalid_port_identifier:
+      title: Missing or invalid port identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 2a6
+          detail: PORT IS MISSING
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    200_vi03_extended:
+      title: Extended
+      type: array
+      items:
+        type: object
+        properties:
+          DISTANCE:
+            type: string
+            description: The Distance (in NM) between the specified point or port to the destination port
+          PANAMA:
+            type: string
+            description: Flag to indicate whether the vessel route passes via the Panama canal (0:no, 1:yes)
+          SUEZ:
+            type: string
+            description: Flag to indicate whether the vessel route passes via the Suez canal (0:no, 1:yes)
+          FINAL_PATH:
+            type: string
+            description: Route/Waypoints as Linestring Geometry in WKT - Well-Known Text
+      example:
+      - DISTANCE: '2938'
+        PANAMA: '0'
+        SUEZ: '0'
+        FINAL_PATH: LINESTRING (23.6031 37.9345, 23.6022 37.8302, 23.7127 37.6496, 23.7056 37.6035, 23.6234 37.3639, 23.4216 36.9451, 23.229 36.4224, 23.1209 36.4007, 22.9908 36.4161, 22.8799 36.4056, 22.5453 36.3436, 22.0771 36.3505, 19.8853 36.3859, 17.0453 36.4213, 16.0126 36.4389, 14.5459 36.461, 12.2835 37.0352, 11.0962 37.4966, 10.2338 37.6534, 9.5746 37.6577, 8.8824 37.6447, 7.8552 37.5924, 6.2292 37.4225, 4.3781 37.2391, 3.5815 37.1472, 2.2467 37.0245, 0.1648 36.7609, -1.9391 36.4655, -2.9718 36.3328, -4.021 36.2132, -5.3448 36.0269, -5.5563 35.9713, -5.8612 35.9625, -6.1963 35.9558, -9.0088 36.6948, -9.1681 36.7609, -9.3109 36.884, -9.3713 37.1341, -9.657 38.1043, -9.8602 38.7455, -9.8492 39.0491, -9.8492 39.6818, -9.8383 40.1873, -9.7998 42.3829, -9.7943 42.9444, -9.7778 43.2091, -6.861 47.1486, -5.9876 48.3051, -5.6195 48.7562, -5.1691 48.9442, -4.5428 49.1781, -3.3893 49.6214, -2.9169 49.8026, -2.439 49.8911, -1.5491 50.0501, -0.3571 50.2612, 0.9668 50.4889, 1.3528 50.7125, 1.4177 50.8727, 1.4687 50.906, 1.7071 51.0776, 2.0596 51.2246, 2.2412 51.4745, 3.1406 52.1546, 3.5788 52.4091, 4.1803 52.4844, 4.5456 52.4644, 4.6609 52.4627, 4.6788 52.4526, 4.7173 52.4351, 4.7392 52.4301, 4.7763 52.4251, 4.7955 52.4234, 4.8225 52.4197, 4.8581 52.4147, 4.8793 52.4083, 4.8985 52.389)

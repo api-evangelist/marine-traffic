@@ -1,0 +1,1086 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Events AIS API Ports Information API
+  version: 1.0.0
+  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: Ports Information
+paths:
+  /expectedarrivals/{api_key}:
+    get:
+      tags:
+      - Ports Information
+      summary: Expected Port Arrivals
+      description: "Get expected arrivals to a specific port. </br></br> <b>Notes</b> <ul>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>Use either **TIMESPAN** or **FROMDATE/TODATE** in order to look for expected arrivals in a specific date range</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: expectedarrivals
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_VI02'
+      - $ref: '#/components/parameters/portid_VI02'
+      - $ref: '#/components/parameters/timespan_VI02'
+      - $ref: '#/components/parameters/days_last_signal_VI02'
+      - $ref: '#/components/parameters/fromdate_VI02'
+      - $ref: '#/components/parameters/todate_VI02'
+      - $ref: '#/components/parameters/fromportid_VI02'
+      - $ref: '#/components/parameters/shiptype_VI02'
+      - $ref: '#/components/parameters/dwt_min_VI02'
+      - $ref: '#/components/parameters/dwt_max_VI02'
+      - $ref: '#/components/parameters/gt_min_VI02'
+      - $ref: '#/components/parameters/gt_max_VI02'
+      - $ref: '#/components/parameters/msgtype_VI02'
+      - $ref: '#/components/parameters/protocol_new'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi02_default'
+                - $ref: '#/components/schemas/200_vi02_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi02_default'
+                - $ref: '#/components/schemas/200_vi02_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ETA>\n    <VESSEL_ETA MMSI=\"229001000\" IMO=\"7827213\" SHIP_ID=\"\" SHIPNAME=\"\" LAT=\"37.938690\" LON=\"23.634480\" SPEED=\"0\" COURSE=\"129\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" ETA=\"2021-03-14T05:40:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T08:58:08\"/>\n    <VESSEL_ETA MMSI=\"201100129\" IMO=\"\" SHIP_ID=\"\" SHIPNAME=\"\" LAT=\"37.943630\" LON=\"23.631900\" SPEED=\"0\" COURSE=\"0\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"\" NEXT_PORT_UNLOCODE=\"\" NEXT_PORT_NAME=\"\" NEXT_PORT_COUNTRY=\"\" ETA=\"2020-10-26T08:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T08:57:24\"/>\n    <VESSEL_ETA MMSI=\"636092659\" IMO=\"\" SHIP_ID=\"\" SHIPNAME=\"\" LAT=\"37.949450\" LON=\"23.601120\" SPEED=\"0\" COURSE=\"0\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" ETA=\"2020-10-18T10:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T08:55:08\"/>\n    <VESSEL_ETA MMSI=\"241683000\" IMO=\"\" SHIP_ID=\"\" SHIPNAME=\"\" LAT=\"37.949330\" LON=\"23.599670\" SPEED=\"0\" COURSE=\"333\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" ETA=\"2020-09-08T12:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T09:00:03\"/>\n    <VESSEL_ETA MMSI=\"241654000\" IMO=\"\" SHIP_ID=\"\" SHIPNAME=\"\" LAT=\"37.952920\" LON=\"23.581480\" SPEED=\"0\" COURSE=\"106\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" ETA=\"2020-05-07T11:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T08:57:57\"/>\n</ETA>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ETA>\n    <VESSEL_ETA IMO=\"7827213\" MMSI=\"229001000\" SHIPNAME=\"CELESTYAL CRYSTAL\" SHIP_ID=\"\" TYPE_NAME=\"Passenger Ship\" SHIPTYPE=\"36\" CALLSIGN=\"9HA2978\" FLAG=\"MT\" LENGTH=\"162\" WIDTH=\"24\" DRAUGHT=\"61\" GRT=\"25611\" DWT=\"1703\" YEAR_BUILT=\"1980\" LAT=\"37.938690\" LON=\"23.634480\" SPEED=\"0\" COURSE=\"129\" STATUS=\"5\" ETA=\"2021-03-14T05:40:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"17208\" LAST_PORT=\"KUSADASI\" LAST_PORT_UNLOCODE=\"TRKUS\" LAST_PORT_COUNTRY=\"TR\" LAST_PORT_TIME=\"2020-03-13T17:38:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" TIMESTAMP=\"2020-10-30T08:58:08\"/>\n    <VESSEL_ETA IMO=\"8843886\" MMSI=\"201100129\" SHIPNAME=\"EDRO IV\" SHIP_ID=\"\" TYPE_NAME=\"General Cargo\" SHIPTYPE=\"0\" CALLSIGN=\"ZADL2\" FLAG=\"AL\" LENGTH=\"89.97\" WIDTH=\"12.37\" DRAUGHT=\"34\" GRT=\"2138\" DWT=\"2850\" YEAR_BUILT=\"1983\" LAT=\"37.943630\" LON=\"23.631900\" SPEED=\"0\" COURSE=\"0\" STATUS=\"5\" ETA=\"2020-10-26T08:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"118\" LAST_PORT=\"VALLETTA\" LAST_PORT_UNLOCODE=\"MTMLA\" LAST_PORT_COUNTRY=\"MT\" LAST_PORT_TIME=\"2020-10-21T16:41:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"\" NEXT_PORT_UNLOCODE=\"\" NEXT_PORT_NAME=\"\" NEXT_PORT_COUNTRY=\"\" TIMESTAMP=\"2020-10-30T08:57:24\"/>\n    <VESSEL_ETA IMO=\"9394040\" MMSI=\"636092659\" SHIPNAME=\"NORIENT SATURN\" SHIP_ID=\"\" TYPE_NAME=\"Oil/Chemical Tanker\" SHIPTYPE=\"80\" CALLSIGN=\"D5JP2\" FLAG=\"LR\" LENGTH=\"180\" WIDTH=\"32.24\" DRAUGHT=\"68\" GRT=\"25864\" DWT=\"40435\" YEAR_BUILT=\"2007\" LAT=\"37.949450\" LON=\"23.601120\" SPEED=\"0\" COURSE=\"0\" STATUS=\"5\" ETA=\"2020-10-18T10:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"1351\" LAST_PORT=\"ALGER\" LAST_PORT_UNLOCODE=\"DZALG\" LAST_PORT_COUNTRY=\"DZ\" LAST_PORT_TIME=\"2020-10-14T11:28:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" TIMESTAMP=\"2020-10-30T08:55:08\"/>\n    <VESSEL_ETA IMO=\"9087867\" MMSI=\"241683000\" SHIPNAME=\"AITENS\" SHIP_ID=\"\" TYPE_NAME=\"Oil Products Tanker\" SHIPTYPE=\"80\" CALLSIGN=\"SVCU7\" FLAG=\"GR\" LENGTH=\"104.7\" WIDTH=\"15.4\" DRAUGHT=\"50\" GRT=\"3586\" DWT=\"5196\" YEAR_BUILT=\"1993\" LAT=\"37.949330\" LON=\"23.599670\" SPEED=\"0\" COURSE=\"333\" STATUS=\"5\" ETA=\"2020-09-08T12:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"23935\" LAST_PORT=\"KALI LIMENES ANCH\" LAST_PORT_UNLOCODE=\"\" LAST_PORT_COUNTRY=\"GR\" LAST_PORT_TIME=\"2020-09-07T15:11:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" TIMESTAMP=\"2020-10-30T09:00:03\"/>\n    <VESSEL_ETA IMO=\"9036868\" MMSI=\"241654000\" SHIPNAME=\"APTERA\" SHIP_ID=\"\" TYPE_NAME=\"Oil Products Tanker\" SHIPTYPE=\"80\" CALLSIGN=\"SVDE7\" FLAG=\"GR\" LENGTH=\"105.02\" WIDTH=\"15.5\" DRAUGHT=\"58\" GRT=\"2975\" DWT=\"5260\" YEAR_BUILT=\"1991\" LAT=\"37.952920\" LON=\"23.581480\" SPEED=\"0\" COURSE=\"106\" STATUS=\"5\" ETA=\"2020-05-07T11:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"1\" LAST_PORT=\"PIRAEUS\" LAST_PORT_UNLOCODE=\"GRPIR\" LAST_PORT_COUNTRY=\"GR\" LAST_PORT_TIME=\"2020-10-27T18:36:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" TIMESTAMP=\"2020-10-30T08:57:57\"/>\n</ETA>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_vi02_missing_or_invalid_port_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_vi02_missing_or_invalid_port_identifier'
+              examples:
+                Missing or invalid port identifier:
+                  summary: Missing or invalid port identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a5\" DESCRIPTION=\"PORT OR COUNTRY MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  '/expectedarrivals/{api_key} ':
+    get:
+      tags:
+      - Ports Information
+      summary: Expected Country Arrivals
+      description: "Get expected arrivals to a specific country. </br></br> <b>Notes</b> <ul>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>Use either **TIMESPAN** or **FROMDATE/TODATE** in order to look for expected arrivals in a specific date range</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: expectedarrivals_
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_VI02'
+      - $ref: '#/components/parameters/country_VI02'
+      - $ref: '#/components/parameters/timespan_VI02'
+      - $ref: '#/components/parameters/days_last_signal_VI02'
+      - $ref: '#/components/parameters/fromdate_VI02'
+      - $ref: '#/components/parameters/todate_VI02'
+      - $ref: '#/components/parameters/fromportid_VI02'
+      - $ref: '#/components/parameters/shiptype_VI02'
+      - $ref: '#/components/parameters/dwt_min_VI02'
+      - $ref: '#/components/parameters/dwt_max_VI02'
+      - $ref: '#/components/parameters/gt_min_VI02'
+      - $ref: '#/components/parameters/gt_max_VI02'
+      - $ref: '#/components/parameters/msgtype_VI02'
+      - $ref: '#/components/parameters/protocol_new'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi02_default'
+                - $ref: '#/components/schemas/200_vi02_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi02_default'
+                - $ref: '#/components/schemas/200_vi02_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ETA>\n    <VESSEL_ETA MMSI=\"229001000\" IMO=\"\" SHIP_ID=\"\" SHIPNAME=\"\" LAT=\"37.938690\" LON=\"23.634480\" SPEED=\"0\" COURSE=\"129\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" ETA=\"2021-03-14T05:40:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T08:58:08\"/>\n    <VESSEL_ETA MMSI=\"201100129\" IMO=\"\" SHIP_ID=\"\" SHIPNAME=\"\" LAT=\"37.943630\" LON=\"23.631900\" SPEED=\"0\" COURSE=\"0\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"\" NEXT_PORT_UNLOCODE=\"\" NEXT_PORT_NAME=\"\" NEXT_PORT_COUNTRY=\"\" ETA=\"2020-10-26T08:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T08:57:24\"/>\n    <VESSEL_ETA MMSI=\"636092659\" IMO=\"\" SHIP_ID=\"\" SHIPNAME=\"\" LAT=\"37.949450\" LON=\"23.601120\" SPEED=\"0\" COURSE=\"0\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" ETA=\"2020-10-18T10:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T08:55:08\"/>\n    <VESSEL_ETA MMSI=\"241683000\" IMO=\"\" SHIP_ID=\"\" SHIPNAME=\"\" =\"37.949330\" LON=\"23.599670\" SPEED=\"0\" COURSE=\"333\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" ETA=\"2020-09-08T12:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T09:00:03\"/>\n    <VESSEL_ETA MMSI=\"241654000\" IMO=\"\" SHIP_ID=\"\" SHIPNAME=\"\" LAT=\"37.952920\" LON=\"23.581480\" SPEED=\"0\" COURSE=\"106\" STATUS=\"5\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" ETA=\"2020-05-07T11:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" TIMESTAMP=\"2020-10-30T08:57:57\"/>\n</ETA>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ETA>\n    <VESSEL_ETA IMO=\"7827213\" MMSI=\"229001000\" SHIPNAME=\"CELESTYAL CRYSTAL\" SHIP_ID=\"\" TYPE_NAME=\"Passenger Ship\" SHIPTYPE=\"36\" CALLSIGN=\"9HA2978\" FLAG=\"MT\" LENGTH=\"162\" WIDTH=\"24\" DRAUGHT=\"61\" GRT=\"25611\" DWT=\"1703\" YEAR_BUILT=\"1980\" LAT=\"37.938690\" LON=\"23.634480\" SPEED=\"0\" COURSE=\"129\" STATUS=\"5\" ETA=\"2021-03-14T05:40:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"17208\" LAST_PORT=\"KUSADASI\" LAST_PORT_UNLOCODE=\"TRKUS\" LAST_PORT_COUNTRY=\"TR\" LAST_PORT_TIME=\"2020-03-13T17:38:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" TIMESTAMP=\"2020-10-30T08:58:08\"/>\n    <VESSEL_ETA IMO=\"8843886\" MMSI=\"201100129\" SHIPNAME=\"EDRO IV\" SHIP_ID=\"\" TYPE_NAME=\"General Cargo\" SHIPTYPE=\"0\" CALLSIGN=\"ZADL2\" FLAG=\"AL\" LENGTH=\"89.97\" WIDTH=\"12.37\" DRAUGHT=\"34\" GRT=\"2138\" DWT=\"2850\" YEAR_BUILT=\"1983\" LAT=\"37.943630\" LON=\"23.631900\" SPEED=\"0\" COURSE=\"0\" STATUS=\"5\" ETA=\"2020-10-26T08:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"118\" LAST_PORT=\"VALLETTA\" LAST_PORT_UNLOCODE=\"MTMLA\" LAST_PORT_COUNTRY=\"MT\" LAST_PORT_TIME=\"2020-10-21T16:41:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"\" NEXT_PORT_UNLOCODE=\"\" NEXT_PORT_NAME=\"\" NEXT_PORT_COUNTRY=\"\" TIMESTAMP=\"2020-10-30T08:57:24\"/>\n    <VESSEL_ETA IMO=\"9394040\" MMSI=\"636092659\" SHIPNAME=\"NORIENT SATURN\" SHIP_ID=\"\" TYPE_NAME=\"Oil/Chemical Tanker\" SHIPTYPE=\"80\" CALLSIGN=\"D5JP2\" FLAG=\"LR\" LENGTH=\"180\" WIDTH=\"32.24\" DRAUGHT=\"68\" GRT=\"25864\" DWT=\"40435\" YEAR_BUILT=\"2007\" LAT=\"37.949450\" LON=\"23.601120\" SPEED=\"0\" COURSE=\"0\" STATUS=\"5\" ETA=\"2020-10-18T10:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"1351\" LAST_PORT=\"ALGER\" LAST_PORT_UNLOCODE=\"DZALG\" LAST_PORT_COUNTRY=\"DZ\" LAST_PORT_TIME=\"2020-10-14T11:28:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" TIMESTAMP=\"2020-10-30T08:55:08\"/>\n    <VESSEL_ETA IMO=\"9087867\" MMSI=\"241683000\" SHIPNAME=\"AITENS\" SHIP_ID=\"\" =\"Oil Products Tanker\" SHIPTYPE=\"80\" CALLSIGN=\"SVCU7\" FLAG=\"GR\" LENGTH=\"104.7\" WIDTH=\"15.4\" DRAUGHT=\"50\" GRT=\"3586\" DWT=\"5196\" YEAR_BUILT=\"1993\" LAT=\"37.949330\" LON=\"23.599670\" SPEED=\"0\" COURSE=\"333\" STATUS=\"5\" ETA=\"2020-09-08T12:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"23935\" LAST_PORT=\"KALI LIMENES ANCH\" LAST_PORT_UNLOCODE=\"\" LAST_PORT_COUNTRY=\"GR\" LAST_PORT_TIME=\"2020-09-07T15:11:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" TIMESTAMP=\"2020-10-30T09:00:03\"/>\n    <VESSEL_ETA IMO=\"9036868\" MMSI=\"241654000\" SHIPNAME=\"APTERA\" SHIP_ID=\"\" TYPE_NAME=\"Oil Products Tanker\" SHIPTYPE=\"80\" CALLSIGN=\"SVDE7\" FLAG=\"GR\" LENGTH=\"105.02\" WIDTH=\"15.5\" DRAUGHT=\"58\" GRT=\"2975\" DWT=\"5260\" YEAR_BUILT=\"1991\" LAT=\"37.952920\" LON=\"23.581480\" SPEED=\"0\" COURSE=\"106\" STATUS=\"5\" ETA=\"2020-05-07T11:00:00\" ETA_CALC=\"\" ETA_UPDATED=\"\" LAST_PORT_ID=\"1\" LAST_PORT=\"PIRAEUS\" LAST_PORT_UNLOCODE=\"GRPIR\" LAST_PORT_COUNTRY=\"GR\" LAST_PORT_TIME=\"2020-10-27T18:36:00\" PORT_ID=\"1\" PORT_UNLOCODE=\"GRPIR\" CURRENT_PORT=\"PIRAEUS\" CURRENT_PORT_COUNTRY=\"GR\" NEXT_PORT_ID=\"1\" NEXT_PORT_UNLOCODE=\"GRPIR\" NEXT_PORT_NAME=\"PIRAEUS\" NEXT_PORT_COUNTRY=\"GR\" TIMESTAMP=\"2020-10-30T08:57:57\"/>\n</ETA>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_vi02_missing_or_invalid_port_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_vi02_missing_or_invalid_port_identifier'
+              examples:
+                Missing or invalid port identifier:
+                  summary: Missing or invalid port identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a5\" DESCRIPTION=\"PORT OR COUNTRY MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /predictive-arrivals/{api_key}:
+    get:
+      tags:
+      - Ports Information
+      summary: Predictive Port Arrivals
+      description: "Receive a prediction of the vessels likely to arrive to a specific port. </br></br> <b>Notes</b> <ul>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">MARKET</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">SHIPCLASS</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: predictive-arrivals
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/portid_VI05'
+      - $ref: '#/components/parameters/market_VI05'
+      - $ref: '#/components/parameters/shipclass_VI05'
+      - $ref: '#/components/parameters/probability_VI05'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_vi05_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_vi05_default'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<PredictiveArrivals>\n    <PredictiveArrival IMO=\"9020340\" SHIP_ID=\"337987\" MMSI=\"271041000\" SHIPNAME=\"MARTINE A\" MARKET=\"CONTAINER SHIPS\" SHIPCLASS=\"FEEDER\" FROM_PORT_ID=\"1379\" FROM_PORT=\"BIZERTE\" NEXT_PORT_ID=\"1\" NEXT_PORT=\"PIRAEUS\" NEXT_AREA=\"EMED\" NEXT_PORT_PROB=\"1.000\" NEXT_AREA_PROB=\"1.000\"/>\n    <PredictiveArrival IMO=\"9357810\" SHIP_ID=\"712465\" MMSI=\"538003142\" SHIPNAME=\"EF EMIRA\" MARKET=\"CONTAINER SHIPS\" SHIPCLASS=\"FEEDER\" FROM_PORT_ID=\"528\" FROM_PORT=\"ANCONA\" NEXT_PORT_ID=\"1\" NEXT_PORT=\"PIRAEUS\" NEXT_AREA=\"EMED\" NEXT_PORT_PROB=\"1.000\" NEXT_AREA_PROB=\"1.000\"/>\n    <PredictiveArrival IMO=\"9213595\" SHIP_ID=\"362664\" MMSI=\"304927000\" SHIPNAME=\"LUHNAU\" MARKET=\"DRY BREAKBULK\" SHIPCLASS=\"HANDYSIZE\" FROM_PORT_ID=\"34\" FROM_PORT=\"CORINTH\" NEXT_PORT_ID=\"1\" NEXT_PORT=\"PIRAEUS\" NEXT_AREA=\"EMED\" NEXT_PORT_PROB=\"1.000\" NEXT_AREA_PROB=\"1.000\"/>\n    <PredictiveArrival IMO=\"9321902\" SHIP_ID=\"124854\" MMSI=\"255806318\" SHIPNAME=\"NORDSUMMER\" MARKET=\"CONTAINER SHIPS\" SHIPCLASS=\"PANAMAX\" FROM_PORT_ID=\"119\" FROM_PORT=\"MARSAXLOKK\" NEXT_PORT_ID=\"1\" NEXT_PORT=\"PIRAEUS\" NEXT_AREA=\"EMED\" NEXT_PORT_PROB=\"1.000\" NEXT_AREA_PROB=\"1.000\"/>\n    <PredictiveArrival IMO=\"9004487\" SHIP_ID=\"348156\" MMSI=\"374732000\" SHIPNAME=\"STARRY M\" MARKET=\"DRY BREAKBULK\" SHIPCLASS=\"HANDYSIZE\" FROM_PORT_ID=\"3321\" FROM_PORT=\"ANTALYA\" NEXT_PORT_ID=\"1\" NEXT_PORT=\"PIRAEUS\" NEXT_AREA=\"EMED\" NEXT_PORT_PROB=\"1.000\" NEXT_AREA_PROB=\"1.000\"/>\n</PredictiveArrivals>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_vi05_missing_or_invalid_port_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_vi05_missing_or_invalid_port_identifier'
+              examples:
+                Missing or invalid port identifier:
+                  summary: Missing or invalid port identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1\" DESCRIPTION=\"INCORRECT CALL-CHECK PARAMETERS\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /port-congestion/{api_key}:
+    get:
+      tags:
+      - Ports Information
+      summary: Port Congestion
+      description: "Receive the Port Congestion for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">MARKET</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">SHIPCLASS</a></li>\n    <li>**NOT ALLOWED** combinations in request</li>\n      <ul>\n        <li>agg_market:1 **and** agg_shipclass:0</li>\n        <li>agg_market:1 **and** agg_port:1</li>\n        <li>agg_shipclass:1 **and** agg_port:1</li>\n        <li>agg_market:1 **and** shipclass (specific value in shipclass e.g. POST PANAMAX)</li>\n      </ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: port-congestion
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/portid_VI06'
+      - $ref: '#/components/parameters/year_VI06'
+      - $ref: '#/components/parameters/week_VI06'
+      - $ref: '#/components/parameters/market_VI06'
+      - $ref: '#/components/parameters/shipclass_VI06'
+      - $ref: '#/components/parameters/agg_port_VI06'
+      - $ref: '#/components/parameters/agg_market_VI06'
+      - $ref: '#/components/parameters/agg_shipclass_VI06'
+      - $ref: '#/components/parameters/time_anch_VI06'
+      - $ref: '#/components/parameters/time_port_VI06'
+      - $ref: '#/components/parameters/vessels_VI06'
+      - $ref: '#/components/parameters/calls_VI06'
+      - $ref: '#/components/parameters/time_anch_stdev_VI06'
+      - $ref: '#/components/parameters/time_anch_diff_VI06'
+      - $ref: '#/components/parameters/time_anch_diff_perc_VI06'
+      - $ref: '#/components/parameters/time_port_stdev_VI06'
+      - $ref: '#/components/parameters/time_port_diff_VI06'
+      - $ref: '#/components/parameters/time_port_diff_perc_VI06'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_vi06_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_vi06_default'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<PORTCONGESTION>\n    <PORT PORT_ID=\"1766\" YEAR=\"2020\" WEEK=\"8\" MARKET=\"DRY BULK\" SHIPCLASS=\"HANDYSIZE\" TIME_ANCH=\"\" TIME_PORT=\"3.4\" VESSELS=\"2\" CALLS=\"2\" TIME_ANCH_STDEV=\"\" TIME_ANCH_DIFF=\"\" TIME_ANCH_DIFF_PERC=\"\" TIME_PORT_STDEV=\"3.5\" TIME_PORT_DIFF=\"-9.9\" TIME_PORT_DIFF_PERC=\"-74.4\"/>\n</PORTCONGESTION>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_vi06_mandatory_field_missing'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_vi06_mandatory_field_missing'
+              examples:
+                Mandatory field missing:
+                  summary: Mandatory field missing
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a9\" DESCRIPTION=\"MANDATORY FIELD MISSING portid\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+components:
+  parameters:
+    gt_min_VI02:
+      name: gt_min
+      in: query
+      description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_max parameter'
+      required: false
+      schema:
+        type: integer
+    market_VI05:
+      name: market
+      in: query
+      description: "Define market for which you would like to receive probable visits - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all </li>\n  <li>if undefined and ship-class is defined, return based on ship-class</li>\n  <li>If defined and ship-class is undefined, return all ship-classes of the specific market</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    shipclass_VI05:
+      name: shipclass
+      in: query
+      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+      required: false
+      schema:
+        type: integer
+    week_VI06:
+      name: week
+      in: query
+      description: Week of Year that is of interest (e.g. for week 18/2018 input 18). For range of weeks use comma e.g. for weeks 30 to 35 (30,35)
+      required: true
+      schema:
+        type: integer
+    time_anch_VI06:
+      name: time_anch
+      in: query
+      description: 'The median number of days spent at anchorage by the selected market/shipclass.
+
+        Values indicate in between set to be returned </br></br> Comma separated float
+
+        numbers (one decimal)
+
+        </br></br><b>Available only if extended version of the API is used</b>'
+      required: false
+      schema:
+        type: string
+    shiptype_VI02:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    msgtype_VI02:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, apart from the ETA information, the response includes main vessel particulars. If omitted, the returned records include only position and ETA reports"
+      required: false
+      schema:
+        type: string
+        default: simple
+    gt_max_VI02:
+      name: gt_max
+      in: query
+      description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_min parameter'
+      required: false
+      schema:
+        type: integer
+    market_VI06:
+      name: market
+      in: query
+      description: "Define market for which you would like to receive port congestion - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then figures for ALL markets/ship-class</li>\n  <li>if undefined and ship-class is defined, returns based on ship-class for ALL applicable to size class markets</li>\n  <li>if defined and ship-class is undefined, returns figures for the specific market (no size class breakdown)</li>\n</ul> </br></br> If you wish to retrieve congestion metrics for all markets, instead of <b>market</b> use <b>agg_market</b> query parameter (=0 or =1)"
+      required: true
+      schema:
+        type: integer
+    days_last_signal_VI02:
+      name: days_last_signal
+      in: query
+      description: Include vessels currently in port that have transmitted a position within the last x days (based on their last signal timestamp). </br></br> This parameter only works when no other timeframe is defined.
+      required: false
+      schema:
+        type: integer
+    agg_port_VI06:
+      name: agg_port
+      in: query
+      description: "**If used, portid should not be in request** <ul>\n  <li>when agg_port = 1 is used, aggregation result of all ports are returned</li>\n  <li>when agg_port = 1 is used, agg_market cannot be 1</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    time_port_diff_perc_VI06:
+      name: time_port_diff_perc
+      in: query
+      description: The week-to-week difference of number of days spent at port as a percentage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    time_anch_stdev_VI06:
+      name: time_anch_stdev
+      in: query
+      description: The standard deviation of days spent at anchorage the previous week. Values indicate in between set to be returned (time_anch_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    vessels_VI06:
+      name: vessels
+      in: query
+      description: Number of vessels that were used in the median calculations. Value of parameter indicates greater than relation </br></br><b>Available only if extended version of the API is used</b>
+      required: false
+      schema:
+        type: integer
+    time_port_stdev_VI06:
+      name: time_port_stdev
+      in: query
+      description: The standard deviation of days spent at port the previous week. Values indicate in between set to be returned (time_port_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    agg_shipclass_VI06:
+      name: agg_shipclass
+      in: query
+      description: "**If used, shipclass should not be in request** <ul>\n  <li>if agg_shipclass = 1, aggregation result of all classes will be returned</li>\n  <li>if 0, a breakdown of classes will be returned</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    time_anch_diff_perc_VI06:
+      name: time_anch_diff_perc
+      in: query
+      description: The week-to-week difference of number of days spent at anchorage as a percentage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    fromportid_VI02:
+      name: fromportid
+      in: query
+      description: The MarineTraffic ID of the previous port (found on the URL of the respective Port page) or previous port UNLOCODE
+      required: false
+      schema:
+        type: integer
+    time_anch_diff_VI06:
+      name: time_anch_diff
+      in: query
+      description: The week-to-week difference of number of days spent at anchorage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    fromdate_VI02:
+      name: fromdate
+      in: query
+      description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define the todate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    v_VI02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 4 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    probability_VI05:
+      name: probability
+      in: query
+      description: Define probability over which you would like to receive probable visits (accepted > 0.3)
+      required: false
+      schema:
+        type: integer
+    country_VI02:
+      name: country
+      in: query
+      description: The Country code of interest. Response includes all ports within the Country
+      required: true
+      schema:
+        type: integer
+    portid_VI02:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port (found on the URL of the respective Port page)
+      required: true
+      schema:
+        type: integer
+    portid_VI06:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port for which you wish to retrieve congestion metrics (found on the URL of the respective Port page). </br></br> If you wish to retrieve congestion metrics for all ports, instead of <b>portid</b> use <b>agg_port=1</b>
+      required: true
+      schema:
+        type: integer
+    agg_market_VI06:
+      name: agg_market
+      in: query
+      description: "**If used, market should not be in request** <ul>\n  <li>if agg_market = 1, aggregation result of all markets will be returned</li>\n  <li>if 0, a breakdown of markets will be returned</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    shipclass_VI06:
+      name: shipclass
+      in: query
+      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a> </br></br> If you wish to retrieve congestion metrics for all ship classes, instead of <b>shipclass</b> use <b>agg_shipclass</b> query parameter (=0 or =1)
+      required: true
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    portid_VI05:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port you wish to receive probable visits (found on the URL of the respective Port page)
+      required: true
+      schema:
+        type: integer
+    dwt_max_VI02:
+      name: dwt_max
+      in: query
+      description: 'Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_min parameter'
+      required: false
+      schema:
+        type: integer
+    todate_VI02:
+      name: todate
+      in: query
+      description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define the fromdate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    year_VI06:
+      name: year
+      in: query
+      description: Year of interest (data available back to 1 year). Information further back can be requested ad-hoc
+      required: true
+      schema:
+        type: integer
+    time_port_VI06:
+      name: time_port
+      in: query
+      description: The median number of days spent at port by the selected market/shipclass. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if extended version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    time_port_diff_VI06:
+      name: time_port_diff
+      in: query
+      description: The week-to-week difference of number of days spent at port. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    calls_VI06:
+      name: calls
+      in: query
+      description: Number of individual calls that were used in the median calculations (e.g. if the same vessel has called twice within the same week, it will count twice in calls and once in vessels. Value of parameter indicates greater than relation </br></br><b>Available only if extended version of the API is used</b>
+      required: false
+      schema:
+        type: integer
+    protocol_new:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    dwt_min_VI02:
+      name: dwt_min
+      in: query
+      description: 'Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_max parameter'
+      required: false
+      schema:
+        type: integer
+    timespan_VI02:
+      name: timespan
+      in: query
+      description: Number of days in the future to look for expected arrivals, starting from the time the API call is requested </br></br> Maximum value is 40 days </br></br> If neither this nor the fromdate/todate parameters are used, the response only includes vessels currently in port (or the country’s ports) and the last vessel's signal is received during the last 2 days
+      required: false
+      schema:
+        type: integer
+  schemas:
+    400_vi02_missing_or_invalid_port_identifier:
+      title: Missing or invalid port identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 2a5
+          detail: PORT OR COUNTRY MISSING
+    200_vi02_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          LAT:
+            type: string
+            description: Latitude - a geographic coordinate that specifies the north-south position of the vessel on the Earth's surface
+          LON:
+            type: string
+            description: Longitude - a geographic coordinate that specifies the east-west position of the vessel on the Earth's surface
+          SPEED:
+            type: string
+            description: The speed (in knots x10) that the subject vessel is reporting according to AIS transmissions
+          COURSE:
+            type: string
+            description: The course (in degrees) that the subject vessel is reporting according to AIS transmissions
+          STATUS:
+            type: string
+            description: The AIS Navigational Status of the subject vessel as input by the vessel's crew. There might be discrepancies with the vessel's detail page when vessel speed is near zero (0) knots
+          PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Port
+          PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Current Port
+          CURRENT_PORT:
+            type: string
+            description: The name of the Port the subject vessel is currently in (NULL if the vessel is underway)
+          CURRENT_PORT_COUNTRY:
+            type: string
+            description: The Country that the Current Port is located at
+          NEXT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Next Port
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_COUNTRY:
+            type: string
+            description: The Country that the Next Port is located at
+          ETA:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
+            format: date-time
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
+            format: date-time
+          ETA_UPDATED:
+            type: string
+            description: The date and time (in UTC) that the ETA was calculated by MarineTraffic
+            format: date-time
+          TIMESTAMP:
+            type: string
+            description: The date and time (in UTC) that the subject vessel's position or event was recorded by MarineTraffic
+            format: date-time
+      example:
+      - MMSI: '229001000'
+        IMO: ''
+        SHIP_ID: ''
+        SHIPNAME: ''
+        LAT: '37.938690'
+        LON: '23.634480'
+        SPEED: '0'
+        COURSE: '129'
+        STATUS: '5'
+        PORT_ID: '1'
+        PORT_UNLOCODE: GRPIR
+        CURRENT_PORT: PIRAEUS
+        CURRENT_PORT_COUNTRY: GR
+        NEXT_PORT_ID: '1'
+        NEXT_PORT_UNLOCODE: GRPIR
+        NEXT_PORT_NAME: PIRAEUS
+        NEXT_PORT_COUNTRY: GR
+        ETA: '2021-03-14T05:40:00.000Z'
+        ETA_CALC: ''
+        ETA_UPDATED: ''
+        TIMESTAMP: '2020-10-30T08:58:08.000Z'
+      - MMSI: '201100129'
+        IMO: ''
+        SHIP_ID: ''
+        SHIPNAME: ''
+        LAT: '37.943630'
+        LON: '23.631900'
+        SPEED: '0'
+        COURSE: '0'
+        STATUS: '5'
+        PORT_ID: '1'
+        PORT_UNLOCODE: GRPIR
+        CURRENT_PORT: PIRAEUS
+        CURRENT_PORT_COUNTRY: GR
+        NEXT_PORT_ID: ''
+        NEXT_PORT_UNLOCODE: ''
+        NEXT_PORT_NAME: ''
+        NEXT_PORT_COUNTRY: ''
+        ETA: '2020-10-26T08:00:00.000Z'
+        ETA_CALC: ''
+        ETA_UPDATED: ''
+        TIMESTAMP: '2020-10-30T08:57:24.000Z'
+    400_vi05_missing_or_invalid_port_identifier:
+      title: Missing or invalid port identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '1'
+          detail: INCORRECT CALL-CHECK PARAMETERS
+    400_vi06_mandatory_field_missing:
+      title: Mandatory field missing
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 2a9
+          detail: MANDATORY FIELD MISSING portid
+    200_vi05_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          MARKET:
+            type: string
+            description: The commercial market segment the subject vessel belongs to
+          SHIPCLASS:
+            type: string
+            description: The class of the subject vessel based on vessel type and size
+          FROM_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the port that was used as origin to retrieve possible destinations
+          FROM_PORT:
+            type: string
+            description: The port that was used as origin to retrieve possible destinations
+          NEXT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Next Port
+          NEXT_PORT:
+            type: string
+            description: The target port used to predict arrivals of vessels
+          NEXT_AREA:
+            type: string
+            description: The area where the target port belongs to
+          NEXT_PORT_PROB:
+            type: string
+            description: The probability of visiting the target port
+          NEXT_AREA_PROB:
+            type: string
+            description: The probability of visiting the area where the target port is
+      example:
+      - IMO: '9020340'
+        SHIP_ID: '337987'
+        MMSI: '271041000'
+        SHIPNAME: MARTINE A
+        MARKET: CONTAINER SHIPS
+        SHIPCLASS: FEEDER
+        FROM_PORT_ID: '1379'
+        FROM_PORT: BIZERTE
+        NEXT_PORT_ID: '1'
+        NEXT_PORT: PIRAEUS
+        NEXT_AREA: EMED
+        NEXT_PORT_PROB: '1.000'
+        NEXT_AREA_PROB: '1.000'
+      - IMO: '9357810'
+        SHIP_ID: '712465'
+        MMSI: '538003142'
+        SHIPNAME: EF EMIRA
+        MARKET: CONTAINER SHIPS
+        SHIPCLASS: FEEDER
+        FROM_PORT_ID: '528'
+        FROM_PORT: ANCONA
+        NEXT_PORT_ID: '1'
+        NEXT_PORT: PIRAEUS
+        NEXT_AREA: EMED
+        NEXT_PORT_PROB: '1.000'
+        NEXT_AREA_PROB: '1.000'
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    200_vi06_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Port
+          YEAR:
+            type: string
+            description: Year of week the data are referring to
+          WEEK:
+            type: string
+            description: Week of year the data are referring to
+          MARKET:
+            type: string
+            description: The commercial market segment the subject vessel belongs to
+          SHIPCLASS:
+            type: string
+            description: The class of the subject vessel based on vessel type and size
+          TIME_ANCH:
+            type: string
+            description: The median number of days spent at anchorage the previous week
+          TIME_PORT:
+            type: string
+            description: The median number of days spent at port by the selected market/shipclass
+          VESSELS:
+            type: string
+            description: Number of vessels that were used in the median calculations
+          CALLS:
+            type: string
+            description: Number of individual calls that were used in the median calculations (e.g. if the same vessel has called twice within the same week, it will count twice in CALLS and once in VESSELS
+          TIME_ANCH_STDEV:
+            type: string
+            description: The week-to-week standard deviation in days spent at anchorage
+          TIME_ANCH_DIFF:
+            type: string
+            description: The week-to-week difference of number of days spent at anchorage
+          TIME_ANCH_DIFF_PERC:
+            type: string
+            description: The week-to-week difference of number of days spent at anchorage as a percentage
+          TIME_PORT_STDEV:
+            type: string
+            description: The week-to-week standard deviation in days spent at port
+          TIME_PORT_DIFF:
+            type: string
+            description: The week-to-week difference of number of days spent at port
+          TIME_PORT_DIFF_PERC:
+            type: string
+            description: The week-to-week difference of number of days spent at port as a percentage
+      example:
+      - PORT_ID: '1766'
+        YEAR: '2020'
+        WEEK: '8'
+        MARKET: DRY BULK
+        SHIPCLASS: HANDYSIZE
+        TIME_ANCH: ''
+        TIME_PORT: '3.4'
+        VESSELS: '2'
+        CALLS: '2'
+        TIME_ANCH_STDEV: ''
+        TIME_ANCH_DIFF: ''
+        TIME_ANCH_DIFF_PERC: ''
+        TIME_PORT_STDEV: '3.5'
+        TIME_PORT_DIFF: '-9.9'
+        TIME_PORT_DIFF_PERC: '-74.4'
+    200_vi02_extended:
+      title: Extended
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          TYPE_NAME:
+            type: string
+            description: The Type of the subject vessel
+          SHIPTYPE:
+            type: string
+            description: The Shiptype of the subject vessel according to AIS transmissions
+          CALLSIGN:
+            type: string
+            description: A uniquely designated identifier for the vessel's transmitter station
+          FLAG:
+            type: string
+            description: The flag of the subject vessel according to AIS transmissions
+          LENGTH:
+            type: string
+            description: The overall Length (in metres) of the subject vessel
+          WIDTH:
+            type: string
+            description: The Breadth (in metres) of the subject vessel
+          DRAUGHT:
+            type: string
+            description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
+          GRT:
+            type: string
+            description: Gross Tonnage - unitless measure that calculates the moulded volume of all enclosed spaces of a ship
+          DWT:
+            type: string
+            description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
+          YEAR_BUILT:
+            type: string
+            description: The year that the subject vessel was built
+          LAT:
+            type: string
+            description: Latitude - a geographic coordinate that specifies the north-south position of the vessel on the Earth's surface
+          LON:
+            type: string
+            description: Longitude - a geographic coordinate that specifies the east-west position of the vessel on the Earth's surface
+          SPEED:
+            type: string
+            description: The speed (in knots x10) that the subject vessel is reporting according to AIS transmissions
+          COURSE:
+            type: string
+            description: The course (in degrees) that the subject vessel is reporting according to AIS transmissions
+          STATUS:
+            type: string
+            description: The AIS Navigational Status of the subject vessel as input by the vessel's crew. There might be discrepancies with the vessel's detail page when vessel speed is near zero (0) knots
+          ETA:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
+            format: date-time
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
+            format: date-time
+          ETA_UPDATED:
+            type: string
+            description: The date and time (in UTC) that the ETA was calculated by MarineTraffic
+            format: date-time
+          LAST_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Last Port
+          LAST_PORT:
+            type: string
+            description: The Name of the Last Port the vessel has visited
+          LAST_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Last Port
+          LAST_PORT_COUNTRY:
+            type: string
+            description: The Country that the Last Port is located at
+          LAST_PORT_TIME:
+            type: string
+            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+            format: date-time
+          PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Port
+          PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Current Port
+          CURRENT_PORT:
+            type: string
+            description: The name of the Port the subject vessel is currently in (NULL if the vessel is underway)
+          CURRENT_PORT_COUNTRY:
+            type: string
+            description: The Country that the Current Port is located at
+          NEXT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Next Port
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_COUNTRY:
+            type: string
+            description: The Country that the Next Port is located at
+          TIMESTAMP:
+            type: string
+            description: The date and time (in UTC) that the subject vessel's position or event was recorded by MarineTraffic
+            format: date-time
+      example:
+      - IMO: '7827213'
+        MMSI: '229001000'
+        SHIP_ID: ''
+        SHIPNAME: CELESTYAL CRYSTAL
+        TYPE_NAME: Passenger Ship
+        SHIPTYPE: '36'
+        CALLSIGN: 9HA2978
+        FLAG: MT
+        LENGTH: '162'
+        WIDTH: '24'
+        DRAUGHT: '61'
+        GRT: '25611'
+        DWT: '1703'
+        YEAR_BUILT: '1980'
+        LAT: '37.938690'
+        LON: '23.634480'
+        SPEED: '0'
+        COURSE: '129'
+        STATUS: '5'
+        ETA: '2021-03-14T05:40:00.000Z'
+        ETA_CALC: ''
+        ETA_UPDATED: ''
+        LAST_PORT_ID: '17208'
+        LAST_PORT: KUSADASI
+        LAST_PORT_UNLOCODE: TRKUS
+        LAST_PORT_COUNTRY: TR
+        LAST_PORT_TIME: '2020-03-13T17:38:00.000Z'
+        PORT_ID: '1'
+        PORT_UNLOCODE: GRPIR
+        CURRENT_PORT: PIRAEUS
+        CURRENT_PORT_COUNTRY: GR
+        NEXT_PORT_ID: '1'
+        NEXT_PORT_UNLOCODE: GRPIR
+        NEXT_PORT_NAME: PIRAEUS
+        NEXT_PORT_COUNTRY: GR
+        TIMESTAMP: '2020-10-30T08:58:08.000Z'
+      - IMO: '8843886'
+        MMSI: '201100129'
+        SHIP_ID: ''
+        SHIPNAME: EDRO IV
+        TYPE_NAME: General Cargo
+        SHIPTYPE: '0'
+        CALLSIGN: ZADL2
+        FLAG: AL
+        LENGTH: '89.97'
+        WIDTH: '12.37'
+        DRAUGHT: '34'
+        GRT: '2138'
+        DWT: '2850'
+        YEAR_BUILT: '1983'
+        LAT: '37.943630'
+        LON: '23.631900'
+        SPEED: '0'
+        COURSE: '0'
+        STATUS: '5'
+        ETA: '2020-10-26T08:00:00.000Z'
+        ETA_CALC: ''
+        ETA_UPDATED: ''
+        LAST_PORT_ID: '118'
+        LAST_PORT: VALLETTA
+        LAST_PORT_UNLOCODE: MTMLA
+        LAST_PORT_COUNTRY: MT
+        LAST_PORT_TIME: '2020-10-21T16:41:00.000Z'
+        PORT_ID: '1'
+        PORT_UNLOCODE: GRPIR
+        CURRENT_PORT: PIRAEUS
+        CURRENT_PORT_COUNTRY: GR
+        NEXT_PORT_ID: ''
+        NEXT_PORT_UNLOCODE: ''
+        NEXT_PORT_NAME: ''
+        NEXT_PORT_COUNTRY: ''
+        TIMESTAMP: '2020-10-30T08:57:24.000Z'

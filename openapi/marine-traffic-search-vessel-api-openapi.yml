@@ -1,0 +1,326 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Events AIS API Search Vessel API
+  version: 1.0.0
+  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: Search Vessel
+paths:
+  /shipsearch/{api_key}:
+    get:
+      tags:
+      - Search Vessel
+      summary: Search Vessel by Identifier
+      description: "Search for a vessel by unique identifier.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: shipsearch
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/shipid_VD03'
+      - $ref: '#/components/parameters/mmsi_VD03'
+      - $ref: '#/components/parameters/imo_VD03'
+      - $ref: '#/components/parameters/shiptype_VD03'
+      - $ref: '#/components/parameters/type_name_id_VD03'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_vd03_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_vd03_default'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<VESSELS>\n    <vessel SHIPNAME=\"QUEEN MARY 2\" MMSI=\"310627000\" IMO=\"9241061\" SHIP_ID=\"371681\" CALLSIGN=\"ZCEF6\" TYPE_NAME=\"Passenger Ship\" DWT=\"19189\" FLAG=\"BM\" COUNTRY=\"Bermuda\" YEAR_BUILT=\"2003\" MT_URL=\"http://www.marinetraffic.com/en/ais/details/ships/shipid:371681/mmsi:310627000/vessel:371681\"/>\n</VESSELS>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_vd03_missing_search_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_vd03_missing_search_identifier'
+              examples:
+                Missing search identifier:
+                  summary: Missing search identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"54\" DESCRIPTION=\"NO SEARCH TERM SUPPLIED\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  '/shipsearch/{api_key} ':
+    get:
+      tags:
+      - Search Vessel
+      summary: Search Vessel by Name
+      description: "Search for vessels by vessel name. </br></br> <b>Notes</b> </br> In case of multiple results:\n  <ul>\n    <li>the first 100 matches will be fetched</li>\n    <li>exact matches are always first on the returned list</li>\n  </ul>\n  </br>\n  <ul>\n    <li>Only active vessels are returned</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n  </ul>"
+      operationId: shipsearch_
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/shipname_VD03'
+      - $ref: '#/components/parameters/shiptype_VD03'
+      - $ref: '#/components/parameters/type_name_id_VD03'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_vd03_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_vd03_default'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n    <VESSELS>\n        <vessel SHIPNAME=\"THE QUEEN JACQUELINE\" MMSI=\"244740452\" IMO=\"0\" SHIP_ID=\"639\" CALLSIGN=\"PE6545\" TYPE_NAME=\"Inland, Ferry\" DWT=\"\" FLAG=\"NL\" COUNTRY=\"Netherlands\" YEAR_BUILT=\"\" MT_URL=\"http://www.marinetraffic.com/en/ais/details/ships/shipid:639/mmsi:244740452/vessel:639\"/>\n        <vessel SHIPNAME=\"BACHATA QUEEN\" MMSI=\"229540000\" IMO=\"0\" SHIP_ID=\"2771\" CALLSIGN=\"9HB3419\" TYPE_NAME=\"Pleasure Craft\" DWT=\"\" FLAG=\"MT\" COUNTRY=\"Malta\" YEAR_BUILT=\"\" MT_URL=\"http://www.marinetraffic.com/en/ais/details/ships/shipid:2771/mmsi:229540000/vessel:2771\"/>\n        <vessel SHIPNAME=\"QUEEN R\" MMSI=\"230071310\" IMO=\"0\" SHIP_ID=\"6102\" CALLSIGN=\"OG9917\" TYPE_NAME=\"Passenger\" DWT=\"\" FLAG=\"FI\" COUNTRY=\"Finland\" YEAR_BUILT=\"\" MT_URL=\"http://www.marinetraffic.com/en/ais/details/ships/shipid:6102/mmsi:230071310/vessel:6102\"/>\n        <vessel SHIPNAME=\"QUEEN OF HEARTS\" MMSI=\"366715730\" IMO=\"0\" SHIP_ID=\"39824\" CALLSIGN=\"WDJ7357\" TYPE_NAME=\"Other\" DWT=\"\" FLAG=\"US\" COUNTRY=\"USA\" YEAR_BUILT=\"\" MT_URL=\"http://www.marinetraffic.com/en/ais/details/ships/shipid:39824/mmsi:366715730/vessel:39824\"/>\n        <vessel SHIPNAME=\"POLAR QUEEN\" MMSI=\"209070000\" IMO=\"9523378\" SHIP_ID=\"121444\" CALLSIGN=\"5BDG3\" TYPE_NAME=\"Offshore Supply Ship\" DWT=\"6300\" FLAG=\"CY\" COUNTRY=\"Cyprus\" YEAR_BUILT=\"2011\" MT_URL=\"http://www.marinetraffic.com/en/ais/details/ships/shipid:121444/mmsi:209070000/vessel:121444\"/>\n        <vessel SHIPNAME=\"QUEEN OF THE NETHERLANDS\" MMSI=\"210138000\" IMO=\"9164031\" SHIP_ID=\"124049\" CALLSIGN=\"5BGT2\" TYPE_NAME=\"Suction Dredger\" DWT=\"24000\" FLAG=\"CY\" COUNTRY=\"Cyprus\" YEAR_BUILT=\"1998\" MT_URL=\"http://www.marinetraffic.com/en/ais/details/ships/shipid:124049/mmsi:210138000/vessel:124049\"/>\n        <vessel SHIPNAME=\"QUEEN B II\" MMSI=\"210296000\" IMO=\"9430090\" SHIP_ID=\"124385\" CALLSIGN=\"5BWD2\" TYPE_NAME=\"Container Ship\" DWT=\"8512\" FLAG=\"CY\" COUNTRY=\"Cyprus\" YEAR_BUILT=\"2009\" MT_URL=\"http://www.marinetraffic.com/en/ais/details/ships/shipid:124385/mmsi:210296000/vessel:124385\"/>\n    </VESSELS>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_vd03_invalid_search_string_length'
+                - $ref: '#/components/schemas/400_vd03_missing_search_term'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_vd03_invalid_search_string_length'
+                - $ref: '#/components/schemas/400_vd03_missing_search_term'
+              examples:
+                Invalid search string length:
+                  summary: Invalid search string length
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"11\" DESCRIPTION=\"KEYWORD SHOULD BE AT LEAST 3 CHARACTERS\"/>\n    </STATUS>\n</RESPONSE>"
+                Missing search term:
+                  summary: Missing search term
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"54\" DESCRIPTION=\"NO SEARCH TERM SUPPLIED\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+components:
+  parameters:
+    shipid_VD03:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use  mmsi or imo
+      required: true
+      schema:
+        type: integer
+    shipname_VD03:
+      name: shipname
+      in: query
+      description: The vessel name. The results will contain all vessels whose name is like the given words
+      required: true
+      schema:
+        type: string
+    type_name_id_VD03:
+      name: type_name_id
+      in: query
+      description: 'Data filter: AIS Shiptype </br></br> Find more information <a href="https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number">here</a>'
+      required: false
+      schema:
+        type: integer
+    shiptype_VD03:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    imo_VD03:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track </br></br> <b>NOTE:</b> Using IMO may potentially return multiple records as multiple vessels might have transponded the same IMO
+      required: false
+      schema:
+        type: integer
+    mmsi_VD03:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> <b>NOTE:</b> Using MMSI may potentially return multiple records as multiple vessels might have transponded the same MMSI
+      required: false
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+  schemas:
+    400_vd03_missing_search_identifier:
+      title: Missing search identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '54'
+          detail: NO SEARCH TERM SUPPLIED
+    400_vd03_missing_search_term:
+      title: Missing search term
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '54'
+          detail: NO SEARCH TERM SUPPLIED
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    200_vd03_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          CALLSIGN:
+            type: string
+            description: A uniquely designated identifier for the vessel's transmitter station
+          TYPE_NAME:
+            type: string
+            description: The Type of the subject vessel
+          DWT:
+            type: string
+            description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
+          FLAG:
+            type: string
+            description: The flag of the subject vessel according to AIS transmissions
+          COUNTRY:
+            type: string
+            description: The country of the subject vessel according to AIS transmissions
+          YEAR_BUILT:
+            type: string
+            description: The year that the subject vessel was built
+          MT_URL:
+            type: string
+            description: URL to the Details page of the subject vessel at MarineTraffic
+      example:
+      - SHIPNAME: THE QUEEN JACQUELINE
+        MMSI: '244740452'
+        IMO: '0'
+        SHIP_ID: '639'
+        CALLSIGN: PE6545
+        TYPE_NAME: Inland, Ferry
+        DWT: ''
+        FLAG: NL
+        COUNTRY: Netherlands
+        YEAR_BUILT: ''
+        MT_URL: http://www.marinetraffic.com/en/ais/details/ships/shipid:639/mmsi:244740452/vessel:639
+      - SHIPNAME: BACHATA QUEEN
+        MMSI: '229540000'
+        IMO: '0'
+        SHIP_ID: '2771'
+        CALLSIGN: 9HB3419
+        TYPE_NAME: Pleasure Craft
+        DWT: ''
+        FLAG: MT
+        COUNTRY: Malta
+        YEAR_BUILT: ''
+        MT_URL: http://www.marinetraffic.com/en/ais/details/ships/shipid:2771/mmsi:229540000/vessel:2771
+    400_vd03_invalid_search_string_length:
+      title: Invalid search string length
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '11'
+          detail: KEYWORD SHOULD BE AT LEAST 3 CHARACTERS
