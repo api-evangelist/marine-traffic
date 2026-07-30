@@ -1,171 +1,416 @@
 aid: marine-traffic
 url: https://raw.githubusercontent.com/api-evangelist/marine-traffic/refs/heads/main/apis.yml
 apis:
-  - aid: marine-traffic:marine-traffic-vessel-positions-api
-    name: MarineTraffic Vessel Positions API
-    tags:
-      - AIS
-      - Maritime
-      - Vessel Tracking
-      - Vessel Positions
-    humanURL: https://servicedocs.marinetraffic.com/
-    properties:
-      - url: https://servicedocs.marinetraffic.com/
-        type: Documentation
-      - url: openapi/marine-traffic-vessel-positions-openapi.yml
-        type: OpenAPI
-      - url: json-schema/marine-traffic-vessel-position-schema.json
-        type: JSONSchema
-      - url: json-ld/marine-traffic-context.jsonld
-        type: JSONLD
-      - url: examples/marine-traffic-vessel-position-example.json
-        type: Examples
-    description: >-
-      Real-time and historical AIS vessel positions sourced from 13,000+ terrestrial AIS receivers and satellite AIS
-      feeds. Query by single vessel (MMSI / IMO / SHIP_ID), by fleet, by predefined area of interest, by port, or by a
-      custom bounding box. Includes both the modern AIS API (`/exportvessels`, `/exportvessel`,
-      `/exportvessels-custom-area` — MTA030AD-family with cursor pagination) and the legacy PS01–PS08 surface, plus the
-      Vessel Historical Track endpoint (`/exportvesseltrack`) for replaying a vessel's track over a defined window.
-  - aid: marine-traffic:marine-traffic-events-api
-    name: MarineTraffic Events API
-    tags:
-      - AIS
-      - Maritime
-      - Port Calls
-      - Berth Calls
-      - Events
-    humanURL: https://servicedocs.marinetraffic.com/
-    properties:
-      - url: https://servicedocs.marinetraffic.com/
-        type: Documentation
-      - url: openapi/marine-traffic-events-openapi.yml
-        type: OpenAPI
-      - url: json-schema/marine-traffic-port-call-schema.json
-        type: JSONSchema
-      - url: examples/marine-traffic-port-call-example.json
-        type: Examples
-    description: >-
-      Port calls, berth calls, and event timelines — surfaces every arrival, departure, and berth touch detected by the
-      MarineTraffic AIS network. Scope by vessel (`/portcalls`, `/vesselevents`, `/berth-calls` with MMSI/IMO/SHIP_ID)
-      or by port (same endpoints scoped with port_id / UNLOCODE / berth_id / terminal_id). Returns voyage duration,
-      time-in-port, draught, market segment, and full vessel/port keys for downstream joining.
-  - aid: marine-traffic:marine-traffic-vessels-data-api
-    name: MarineTraffic Vessels Data API
-    tags:
-      - AIS
-      - Maritime
-      - Vessel Database
-      - Search
-    humanURL: https://servicedocs.marinetraffic.com/
-    properties:
-      - url: https://servicedocs.marinetraffic.com/
-        type: Documentation
-      - url: openapi/marine-traffic-vessels-data-openapi.yml
-        type: OpenAPI
-      - url: json-schema/marine-traffic-vessel-master-schema.json
-        type: JSONSchema
-    description: >-
-      Vessel master data (`/vesselmasterdata`), vessel photographs (`/exportvesselphoto`), and the ship-database search
-      surface (`/shipsearch` by identifier or by name). Returns the full static AIS record plus MarineTraffic
-      enrichments — owner, manager, builder, classification society, build year, dimensions, deadweight, gross tonnage,
-      and current operational status.
-  - aid: marine-traffic:marine-traffic-voyage-information-api
-    name: MarineTraffic Voyage Information API
-    tags:
-      - AIS
-      - Maritime
-      - Voyage Forecasting
-      - Predictive Intelligence
-      - ETA
-    humanURL: https://servicedocs.marinetraffic.com/
-    properties:
-      - url: https://servicedocs.marinetraffic.com/
-        type: Documentation
-      - url: openapi/marine-traffic-voyage-info-openapi.yml
-        type: OpenAPI
-      - url: json-schema/marine-traffic-voyage-forecast-schema.json
-        type: JSONSchema
-      - url: examples/marine-traffic-voyage-forecast-example.json
-        type: Examples
-    description: >-
-      Machine-learning–powered voyage intelligence: voyage forecast (`/voyageforecast`), predictive destination areas
-      (`/predictive-destination-areas`), and ETA-to-port (`/etatoport`). Combines live AIS positions, port-call history,
-      and predictive routing to deliver destination predictions with probability scores, ranked alternative destination
-      ports, and predictive ETAs that outperform raw AIS-broadcast ETAs.
-  - aid: marine-traffic:marine-traffic-ports-information-api
-    name: MarineTraffic Ports Information API
-    tags:
-      - AIS
-      - Maritime
-      - Ports
-      - Port Congestion
-      - Predictive Arrivals
-    humanURL: https://servicedocs.marinetraffic.com/
-    properties:
-      - url: https://servicedocs.marinetraffic.com/
-        type: Documentation
-      - url: openapi/marine-traffic-ports-info-openapi.yml
-        type: OpenAPI
-      - url: json-schema/marine-traffic-port-schema.json
-        type: JSONSchema
-    description: >-
-      Port-centric analytics: expected port arrivals (`/expectedarrivals`), predictive arrivals using MarineTraffic's
-      destination model (`/predictive-arrivals`), and port-congestion intelligence (`/port-congestion`) with
-      anchorage-time, in-port-time, vessels-in-port, and call-count metrics aggregated by market or ship class for a
-      given port and ISO week.
-  - aid: marine-traffic:marine-traffic-routing-api
-    name: MarineTraffic Routing Information API
-    tags:
-      - AIS
-      - Maritime
-      - Routing
-      - Distance
-    humanURL: https://servicedocs.marinetraffic.com/
-    properties:
-      - url: https://servicedocs.marinetraffic.com/
-        type: Documentation
-      - url: openapi/marine-traffic-routing-openapi.yml
-        type: OpenAPI
-    description: >-
-      Maritime route generation and distance calculation across global sea lanes via `/exportroutes`. Compute the
-      great-circle or sea-lane-aware route from a vessel's current position (MMSI/IMO/SHIP_ID) — or an arbitrary origin
-      port / LAT-LON pair — to a target port, with optional inland-waterway and alternative-route inclusion.
-  - aid: marine-traffic:marine-traffic-reverse-geocoding-api
-    name: MarineTraffic Reverse Geocoding API
-    tags:
-      - AIS
-      - Maritime
-      - Geocoding
-      - Geographic
-    humanURL: https://servicedocs.marinetraffic.com/
-    properties:
-      - url: https://servicedocs.marinetraffic.com/
-        type: Documentation
-      - url: openapi/marine-traffic-reverse-geocoding-openapi.yml
-        type: OpenAPI
-    description: >-
-      Maritime-aware reverse geocoding (`/reversegeocode`) — resolves a single coordinate pair to the nearest port,
-      anchorage, terminal, berth, or standard / custom area within a configurable radius. The single geographic
-      primitive in the API; useful for tagging AIS positions with port and berth context.
-  - aid: marine-traffic:marine-traffic-power-user-api
-    name: MarineTraffic Power User API
-    tags:
-      - AIS
-      - Maritime
-      - Fleet Management
-      - Account
-      - Passage Plans
-    humanURL: https://servicedocs.marinetraffic.com/
-    properties:
-      - url: https://servicedocs.marinetraffic.com/
-        type: Documentation
-      - url: openapi/marine-traffic-power-user-openapi.yml
-        type: OpenAPI
-    description: >-
-      Power-user administration surface: fleet CRUD (`/setfleet`, `/getfleet`, `/getfleets`, `/clearfleet`), API
-      credit-balance inspection (`/exportcredits` — free), and passage-plan import (`/import-passage-plan`, POST). Used
-      to maintain customer fleet definitions, monitor credit burn, and push voyage plans into the MarineTraffic
-      platform.
+- aid: marine-traffic:marine-traffic-ais-api-api
+  name: MarineTraffic AIS API API
+  description: The AIS API API from MarineTraffic — 3 operation(s) for ais api.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - AIS API
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-ais-api-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-balances-api
+  name: MarineTraffic Balances API
+  description: The Balances API from MarineTraffic — 1 operation(s) for balances.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Balances
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-balances-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-fleets-api
+  name: MarineTraffic Fleets API
+  description: The Fleets API from MarineTraffic — 4 operation(s) for fleets.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Fleets
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-fleets-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-passage-plans-api
+  name: MarineTraffic Passage Plans API
+  description: The Passage Plans API from MarineTraffic — 1 operation(s) for passage plans.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Passage Plans
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-passage-plans-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-port-events-api
+  name: MarineTraffic Port Events API
+  description: The Port Events API from MarineTraffic — 2 operation(s) for port events.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Port Events
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-port-events-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-ports-information-api
+  name: MarineTraffic Ports Information API
+  description: The Ports Information API from MarineTraffic — 4 operation(s) for ports information.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Ports Information
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-ports-information-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-reverse-geocoding-api
+  name: MarineTraffic Reverse Geocoding API
+  description: The Reverse Geocoding API from MarineTraffic — 1 operation(s) for reverse geocoding.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Reverse Geocoding
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-reverse-geocoding-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-routing-information-api
+  name: MarineTraffic Routing Information API
+  description: The Routing Information API from MarineTraffic — 2 operation(s) for routing information.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Routing Information
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-routing-information-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-search-vessel-api
+  name: MarineTraffic Search Vessel API
+  description: The Search Vessel API from MarineTraffic — 2 operation(s) for search vessel.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Search Vessel
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-search-vessel-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-single-vessel-events-api
+  name: MarineTraffic Single Vessel Events API
+  description: >-
+    The Single Vessel Events API from MarineTraffic — 3 operation(s) for single vessel events.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Single Vessel Events
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-single-vessel-events-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-vessel-historical-track-api
+  name: MarineTraffic Vessel Historical Track API
+  description: >-
+    The Vessel Historical Track API from MarineTraffic — 2 operation(s) for vessel historical track.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Vessel Historical Track
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-vessel-historical-track-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-vessel-information-api
+  name: MarineTraffic Vessel Information API
+  description: The Vessel Information API from MarineTraffic — 2 operation(s) for vessel information.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Vessel Information
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-vessel-information-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-vessel-positions-legacy-api-api
+  name: MarineTraffic Vessel Positions (Legacy API) API
+  description: >-
+    The Vessel Positions (Legacy API) API from MarineTraffic — 7 operation(s) for vessel positions (legacy
+    api).
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Vessel Positions (Legacy API)
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-vessel-positions-legacy-api-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
+- aid: marine-traffic:marine-traffic-voyage-information-api
+  name: MarineTraffic Voyage Information API
+  description: The Voyage Information API from MarineTraffic — 5 operation(s) for voyage information.
+  humanURL: https://servicedocs.marinetraffic.com/
+  tags:
+  - Voyage Information
+  properties:
+  - type: OpenAPI
+    url: openapi/marine-traffic-voyage-information-api-openapi.yml
+  - type: Documentation
+    url: https://servicedocs.marinetraffic.com/
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-position-schema.json
+  - type: JSONLD
+    url: json-ld/marine-traffic-context.jsonld
+  - type: Examples
+    url: examples/marine-traffic-vessel-position-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-call-schema.json
+  - type: Examples
+    url: examples/marine-traffic-port-call-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-vessel-master-schema.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-voyage-forecast-schema.json
+  - type: Examples
+    url: examples/marine-traffic-voyage-forecast-example.json
+  - type: JSONSchema
+    url: json-schema/marine-traffic-port-schema.json
 name: MarineTraffic
 tags:
   - AIS
@@ -177,7 +422,19 @@ tags:
   - Geospatial
   - Kpler
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/marine-traffic.png
 access: 3rd-Party
 common:
   - type: AgenticAccess
