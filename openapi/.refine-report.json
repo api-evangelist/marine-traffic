@@ -1,0 +1,40 @@
+{
+  "provider": "marine-traffic",
+  "sources": [
+    "marine-traffic-ais-api-api-openapi.yml",
+    "marine-traffic-balances-api-openapi.yml",
+    "marine-traffic-fleets-api-openapi.yml",
+    "marine-traffic-passage-plans-api-openapi.yml",
+    "marine-traffic-port-events-api-openapi.yml",
+    "marine-traffic-ports-information-api-openapi.yml",
+    "marine-traffic-reverse-geocoding-api-openapi.yml",
+    "marine-traffic-routing-information-api-openapi.yml",
+    "marine-traffic-search-vessel-api-openapi.yml",
+    "marine-traffic-single-vessel-events-api-openapi.yml",
+    "marine-traffic-vessel-historical-track-api-openapi.yml",
+    "marine-traffic-vessel-information-api-openapi.yml",
+    "marine-traffic-vessel-positions-legacy-api-api-openapi.yml",
+    "marine-traffic-voyage-information-api-openapi.yml"
+  ],
+  "outputs": [
+    "marine-traffic-ais-api-api-openapi.yml",
+    "marine-traffic-balances-api-openapi.yml",
+    "marine-traffic-fleets-api-openapi.yml",
+    "marine-traffic-passage-plans-api-openapi.yml",
+    "marine-traffic-port-events-api-openapi.yml",
+    "marine-traffic-ports-information-api-openapi.yml",
+    "marine-traffic-reverse-geocoding-api-openapi.yml",
+    "marine-traffic-routing-information-api-openapi.yml",
+    "marine-traffic-search-vessel-api-openapi.yml",
+    "marine-traffic-single-vessel-events-api-openapi.yml",
+    "marine-traffic-vessel-historical-track-api-openapi.yml",
+    "marine-traffic-vessel-information-api-openapi.yml",
+    "marine-traffic-vessel-positions-legacy-api-api-openapi.yml",
+    "marine-traffic-voyage-information-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

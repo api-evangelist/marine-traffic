@@ -1,0 +1,2686 @@
+openapi: 3.0.2
+info:
+  title: MarineTraffic Voyage Information API
+  version: 1.0.0
+  description: Voyage forecasts, predictive destination areas, and vessel ETA to port — combining live AIS positions with
+    machine-learning–driven predictive intelligence.
+  contact:
+    name: MarineTraffic
+    url: https://www.marinetraffic.com/
+servers:
+- url: https://services.marinetraffic.com/api
+tags:
+- name: Voyage Information
+paths:
+  '/voyageforecast/{api_key} ':
+    get:
+      tags:
+      - Voyage Information
+      summary: Single Vessel Voyage Forecast
+      description: "Get voyage information for a single vessel. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a\
+        \ href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted\
+        \ data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>The <b>frequency\
+        \ of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful\
+        \ calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically\
+        \ restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system\
+        \ stability.</li>\n</ul>"
+      operationId: voyageforecast_
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_VI01'
+      - $ref: '#/components/parameters/mmsi_VI01'
+      - $ref: '#/components/parameters/imo_VI01'
+      - $ref: '#/components/parameters/shipid_VI01'
+      - $ref: '#/components/parameters/msgtype_VI01'
+      - $ref: '#/components/parameters/protocol_new'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi01_default'
+                - $ref: '#/components/schemas/200_vi01_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi01_default'
+                - $ref: '#/components/schemas/200_vi01_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<FORECASTS>\n    <FORECAST MMSI=\"\
+                    310627000\" IMO=\"9241061\" SHIP_ID=\"371681\" SHIPNAME=\"QUEEN MARY 2\" DESTINATION=\"TORQUAY\" LAST_PORT_ID=\"\
+                    106\" LAST_PORT=\"SOUTHAMPTON\" LAST_PORT_UNLOCODE=\"GBSOU\" LAST_PORT_TIME=\"2020-10-14T17:00:00\" NEXT_PORT_ID=\"\
+                    10379\" NEXT_PORT_NAME=\"TORQUAY\" NEXT_PORT_UNLOCODE=\"GBTOR\" ETA=\"2020-10-14T13:00:00\" ETA_CALC=\"\
+                    \"/>\n</FORECASTS>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<FORECASTS>\n    <FORECAST MMSI=\"\
+                    310627000\" IMO=\"9241061\" SHIP_ID=\"371681\" SHIPNAME=\"QUEEN MARY 2\" DESTINATION=\"TORQUAY\" LAST_PORT_ID=\"\
+                    106\" LAST_PORT=\"SOUTHAMPTON\" LAST_PORT_UNLOCODE=\"GBSOU\" LAST_PORT_TIME=\"2020-10-14T17:00:00\" NEXT_PORT_ID=\"\
+                    10379\" NEXT_PORT_NAME=\"TORQUAY\" NEXT_PORT_UNLOCODE=\"GBTOR\" ETA=\"2020-10-14T13:00:00\" ETA_CALC=\"\
+                    \" DISTANCE_TRAVELLED=\"201\" DISTANCE_TO_GO=\"0\" SPEED_CALC=\"\" DRAUGHT=\"101\" DRAUGHT_MAX=\"105\"\
+                    \ LOAD_STATUS_NAME=\"N/A\" ROUTE=\"\"/>\n</FORECASTS>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_vi01_missing_or_invalid_ship_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_vi01_missing_or_invalid_ship_identifier'
+              examples:
+                Missing or invalid ship identifier:
+                  summary: Missing or invalid ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"2a\" DESCRIPTION=\"VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE MISSING\"/>\n  \
+                    \  </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /voyageforecast/{api_key}:
+    get:
+      tags:
+      - Voyage Information
+      summary: Fleet Voyage Forecast
+      description: "Get voyage information for one for your MarineTraffic Fleets. </br></br> <b>Notes</b> <ul>\n    <li>Information\
+        \ about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\"\
+        >AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>The\
+        \ <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of\
+        \ successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API\
+        \ key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute\
+        \ to ensure system stability.</li>\n</ul>"
+      operationId: voyageforecast
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_VI01'
+      - $ref: '#/components/parameters/fleet_id_VI01'
+      - $ref: '#/components/parameters/msgtype_VI01'
+      - $ref: '#/components/parameters/protocol_new'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi01_default'
+                - $ref: '#/components/schemas/200_vi01_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi01_default'
+                - $ref: '#/components/schemas/200_vi01_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<FORECASTS>\n    <FORECAST MMSI=\"\
+                    310627000\" IMO=\"9241061\" SHIP_ID=\"371681\" SHIPNAME=\"QUEEN MARY 2\" DESTINATION=\"TORQUAY\" LAST_PORT_ID=\"\
+                    106\" LAST_PORT=\"SOUTHAMPTON\" LAST_PORT_UNLOCODE=\"GBSOU\" LAST_PORT_TIME=\"2020-10-14T17:00:00\" NEXT_PORT_ID=\"\
+                    10379\" NEXT_PORT_NAME=\"TORQUAY\" NEXT_PORT_UNLOCODE=\"GBTOR\" ETA=\"2020-10-14T13:00:00\" ETA_CALC=\"\
+                    \"/>\n</FORECASTS>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<FORECASTS>\n    <FORECAST MMSI=\"\
+                    310627000\" IMO=\"9241061\" SHIP_ID=\"371681\" SHIPNAME=\"QUEEN MARY 2\" DESTINATION=\"TORQUAY\" LAST_PORT_ID=\"\
+                    106\" LAST_PORT=\"SOUTHAMPTON\" LAST_PORT_UNLOCODE=\"GBSOU\" LAST_PORT_TIME=\"2020-10-14T17:00:00\" NEXT_PORT_ID=\"\
+                    10379\" NEXT_PORT_NAME=\"TORQUAY\" NEXT_PORT_UNLOCODE=\"GBTOR\" ETA=\"2020-10-14T13:00:00\" ETA_CALC=\"\
+                    \" DISTANCE_TRAVELLED=\"201\" DISTANCE_TO_GO=\"0\" SPEED_CALC=\"\" DRAUGHT=\"101\" DRAUGHT_MAX=\"105\"\
+                    \ LOAD_STATUS_NAME=\"N/A\" ROUTE=\"\"/>\n</FORECASTS>"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_vi01_invalid_fleet_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/404_vi01_invalid_fleet_identifier'
+              examples:
+                Invalid fleet identifier:
+                  summary: Invalid fleet identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"6b\" DESCRIPTION=\"FLEET NOT FOUND\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /predictive-destination-areas/{api_key}:
+    get:
+      tags:
+      - Voyage Information
+      summary: Single Vessel Predictive Destinations
+      description: "Receive a prediction of the likely destination of a single vessel.</br></br> <b>Notes</b> <ul>\n    <li>The\
+        \ <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of\
+        \ successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API\
+        \ key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute\
+        \ to ensure system stability.</li>\n</ul>"
+      operationId: predictive-destination-areas
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/mmsi_VI04'
+      - $ref: '#/components/parameters/imo_VI04'
+      - $ref: '#/components/parameters/shipid_VI04'
+      - $ref: '#/components/parameters/fromportid_VI04'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_vi04_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_vi04_default'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<PredictiveDestinationAreas>\n   \
+                    \ <PredictiveDestinationArea IMO=\"9450832\" SHIP_ID=\"4615400\" MMSI=\"538003690\" SHIPNAME=\"APHRODITE\
+                    \ M\" SHIPCLASS=\"HANDYSIZE\" MARKET=\"DRY BULK\" MANAGER=\"EMPIRE BULKERS\" OWNER=\"BANK OF AMERICA LEASING\
+                    \ AND CAPITAL\" FROM_PORT_ID=\"257\" FROM_PORT=\"ARATU\" NEXT_PRED_PORT_1_ID=\"5018\" NEXT_PRED_PORT_1=\"\
+                    FORTALEZA\" NEXT_PRED_PORT_1_PROB=\"0.400\" NEXT_PRED_AREA_1=\"ECSA\" NEXT_PRED_AREA_1_PROB=\"1.000\"\
+                    \ NEXT_PRED_PORT_2_ID=\"5026\" NEXT_PRED_PORT_2=\"RECIFE\" NEXT_PRED_PORT_2_PROB=\"0.200\" NEXT_PRED_AREA_2=\"\
+                    ECSA\" NEXT_PRED_AREA_2_PROB=\"1.000\" NEXT_PRED_PORT_3_ID=\"645\" NEXT_PRED_PORT_3=\"VITORIA\" NEXT_PRED_PORT_3_PROB=\"\
+                    0.200\" NEXT_PRED_AREA_3=\"ECSA\" NEXT_PRED_AREA_3_PROB=\"1.000\" NEXT_PRED_PORT_4_ID=\"2479\" NEXT_PRED_PORT_4=\"\
+                    CABEDELO\" NEXT_PRED_PORT_4_PROB=\"0.200\" NEXT_PRED_AREA_4=\"ECSA\" NEXT_PRED_AREA_4_PROB=\"1.000\" NEXT_PRED_PORT_5_ID=\"\
+                    \" NEXT_PRED_PORT_5=\"\" NEXT_PRED_PORT_5_PROB=\"\" NEXT_PRED_AREA_5=\"\" NEXT_PRED_AREA_5_PROB=\"\"/>\n\
+                    </PredictiveDestinationAreas>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_vi04_missing_or_invalid_ship_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_vi04_missing_or_invalid_ship_identifier'
+              examples:
+                Missing or invalid ship identifier:
+                  summary: Missing or invalid ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"1\" DESCRIPTION=\"INCORRECT CALL-CHECK PARAMETERS\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  '/predictive-destination-areas/{api_key} ':
+    get:
+      tags:
+      - Voyage Information
+      summary: Fleet Predictive Destinations
+      description: "Receive a prediction of the likely destination for one of your MarineTraffic fleets.</br></br> <b>Notes</b>\
+        \ <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract\
+        \ as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed\
+        \ limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful)\
+        \ requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: predictive-destination-areas_
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/fleet_id_VI04'
+      - $ref: '#/components/parameters/fromportid_VI04'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200_vi04_default'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/200_vi04_default'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<PredictiveDestinationAreas>\n   \
+                    \ <PredictiveDestinationArea IMO=\"9450832\" SHIP_ID=\"4615400\" MMSI=\"538003690\" SHIPNAME=\"APHRODITE\
+                    \ M\" SHIPCLASS=\"HANDYSIZE\" MARKET=\"DRY BULK\" MANAGER=\"EMPIRE BULKERS\" OWNER=\"BANK OF AMERICA LEASING\
+                    \ AND CAPITAL\" FROM_PORT_ID=\"257\" FROM_PORT=\"ARATU\" NEXT_PRED_PORT_1_ID=\"5018\" NEXT_PRED_PORT_1=\"\
+                    FORTALEZA\" NEXT_PRED_PORT_1_PROB=\"0.400\" NEXT_PRED_AREA_1=\"ECSA\" NEXT_PRED_AREA_1_PROB=\"1.000\"\
+                    \ NEXT_PRED_PORT_2_ID=\"5026\" NEXT_PRED_PORT_2=\"RECIFE\" NEXT_PRED_PORT_2_PROB=\"0.200\" NEXT_PRED_AREA_2=\"\
+                    ECSA\" NEXT_PRED_AREA_2_PROB=\"1.000\" NEXT_PRED_PORT_3_ID=\"645\" NEXT_PRED_PORT_3=\"VITORIA\" NEXT_PRED_PORT_3_PROB=\"\
+                    0.200\" NEXT_PRED_AREA_3=\"ECSA\" NEXT_PRED_AREA_3_PROB=\"1.000\" NEXT_PRED_PORT_4_ID=\"2479\" NEXT_PRED_PORT_4=\"\
+                    CABEDELO\" NEXT_PRED_PORT_4_PROB=\"0.200\" NEXT_PRED_AREA_4=\"ECSA\" NEXT_PRED_AREA_4_PROB=\"1.000\" NEXT_PRED_PORT_5_ID=\"\
+                    \" NEXT_PRED_PORT_5=\"\" NEXT_PRED_PORT_5_PROB=\"\" NEXT_PRED_AREA_5=\"\" NEXT_PRED_AREA_5_PROB=\"\"/>\n\
+                    </PredictiveDestinationAreas>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_vi04_invalid_fleet_identifier'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/400_vi04_invalid_fleet_identifier'
+              examples:
+                Invalid fleet identifier:
+                  summary: Invalid fleet identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"1\" DESCRIPTION=\"INCORRECT CALL-CHECK PARAMETERS\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+  /etatoport/{api_key}:
+    get:
+      tags:
+      - Voyage Information
+      summary: Vessel ETA to Port
+      description: "Get ETA and voyage information for a vessel of your choice, to any port you define.</br></br> <b>Notes</b>\
+        \ <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract\
+        \ as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed\
+        \ limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful)\
+        \ requests per minute to ensure system stability.</li>\n</ul>"
+      operationId: etatoport
+      parameters:
+      - $ref: '#/components/parameters/api_key'
+      - $ref: '#/components/parameters/v_VI07'
+      - $ref: '#/components/parameters/portid_VI07'
+      - $ref: '#/components/parameters/unlocode_VI07'
+      - $ref: '#/components/parameters/mmsi_VI07'
+      - $ref: '#/components/parameters/imo_VI07'
+      - $ref: '#/components/parameters/shipid_VI07'
+      - $ref: '#/components/parameters/speed_calc_VI07'
+      - $ref: '#/components/parameters/msgtype_VI07'
+      - $ref: '#/components/parameters/protocol'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi07_default'
+                - $ref: '#/components/schemas/200_vi07_extended'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/200_vi07_default'
+                - $ref: '#/components/schemas/200_vi07_extended'
+              examples:
+                Default:
+                  summary: Simple
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ETATOPORT>\n    <ETATOPORT_ROW SHIP_ID=\"\
+                    4615400\" MMSI=\"538003690\" IMO=\"9450832\" LAST_PORT_ID=\"133\" LAST_PORT=\"TERNEUZEN\" LAST_PORT_UNLOCODE=\"\
+                    NLTNZ\" LAST_PORT_TIME=\"2020-10-23 07:20:00\" NEXT_PORT_NAME=\"ARATU\" NEXT_PORT_UNLOCODE=\"BRARB\" ETA_CALC=\"\
+                    2020-11-17 04:18:35\"/>\n</ETATOPORT>"
+                Extended:
+                  summary: Extended
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<ETATOPORT>\n    <ETATOPORT_ROW SHIP_ID=\"\
+                    4615400\" MMSI=\"538003690\" IMO=\"9450832\" LAST_PORT_ID=\"133\" LAST_PORT=\"TERNEUZEN\" LAST_PORT_UNLOCODE=\"\
+                    NLTNZ\" LAST_PORT_TIME=\"2020-10-23 07:20:00\" NEXT_PORT_NAME=\"ARATU\" NEXT_PORT_UNLOCODE=\"BRARB\" ETA_CALC=\"\
+                    2020-11-17 04:20:14\" DISTANCE_TRAVELLED=\"519\" DISTANCE_TO_GO=\"2629\" SPEED_CALC=\"58\" DRAUGHT=\"\
+                    93\" DRAUGHT_MAX=\"104\" LOAD_STATUS_NAME=\"LADEN\" ROUTE=\"LINESTRING (-3.25721 50.5102, -3.36854 50.4274,\
+                    \ -3.43517 50.4228, -3.43879 50.4169, -3.43297 50.4142, -3.42169 50.4115, -3.41547 50.407, -3.41412 50.4007,\
+                    \ -3.41569 50.395, -3.4188 50.3885, -3.56497 50.1962, -4.6912 49.5453, -5.17703 49.2673, -5.78868 48.8526,\
+                    \ -6.98989 47.5559, -7.2535 47.316, -7.2102 47.0939, -7.2935 46.9586, -8.33592 45.8395, -9.09363 44.8248,\
+                    \ -9.5244 44.2492, -9.70133 44.0603, -10.0427 43.6447, -10.1111 43.4934, -10.2361 43.3193, -10.2123 42.2985,\
+                    \ -10.1906 41.2322, -10.1462 40.1117, -10.1056 39.0589, -10.0989 38.6851, -10.0265 38.4306, -10.0125 38.3022,\
+                    \ -9.69923 37.261, -9.57864 36.8751, -9.52376 36.7973, -9.25278 36.5721, -9.19231 36.5391, -8.15901 36.2992,\
+                    \ -7.0206 36.0401, -6.48534 35.9174, -5.82036 35.9016, -5.63979 35.9169, -5.26123 35.984, -4.97929 36.0055,\
+                    \ -4.90942 36.0021, -3.80999 36.1162, -2.70866 36.1953, -1.70453 36.3222, -0.620848 36.4784, 0.607268\
+                    \ 36.6633, 1.71278 36.8284, 2.7549 36.9733, 3.87165 37.1261, 4.69295 37.2316, 5.74852 37.2387, 6.90585\
+                    \ 37.2472, 8.02881 37.2582, 8.64414 37.2678, 9.70149 37.5087, 10.0471 37.569, 10.1756 37.5695, 10.9414\
+                    \ 37.4179, 11.4793 37.2768, 11.9401 37.095, 12.4415 36.9732, 13.4569 36.7885, 13.5064 36.7736, 14.5303\
+                    \ 36.6101, 15.1167 36.5096, 16.1937 36.477, 17.4477 36.4471, 18.371 36.4181, 18.7263 36.3965, 20.799 36.3638,\
+                    \ 21.7999 36.3351, 22.0905 36.3339, 22.2645 36.3226, 22.7168 36.356, 22.9405 36.4011, 23.1341 36.3843,\
+                    \ 23.1449 36.3864, 23.1681 36.3932, 23.176 36.3965, 23.2887 36.4584, 23.2941 36.4631, 23.2984 36.4683,\
+                    \ 23.3022 36.4743, 23.3053 36.4812, 23.4143 36.9312, 23.6949 37.4873, 23.7461 37.6468, 23.75 37.6672,\
+                    \ 23.749 37.6724, 23.6701 37.8133, 23.5845 37.8766, 23.5848 37.8872)\" ETD_CALC=\"2020-11-26 16:20:14\"\
+                    \ TIME_ANCH=\"3.4\" TIME_PORT=\"6.1\"/>\n</ETATOPORT>"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_vi07_missing_or_invalid_port_identifier'
+                - $ref: '#/components/schemas/400_vi07_missing_or_invalid_ship_identifier'
+            application/xml:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/400_vi07_missing_or_invalid_port_identifier'
+                - $ref: '#/components/schemas/400_vi07_missing_or_invalid_ship_identifier'
+              examples:
+                Missing or invalid port identifier:
+                  summary: Missing or invalid port identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"2a10\" DESCRIPTION=\"PORT_ID OR UNLOCODE MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+                Missing or invalid ship identifier:
+                  summary: Missing or invalid ship identifier
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"2\" DESCRIPTION=\"VESSEL MMSI OR IMO OR SHIPID MISSING\"/>\n    </STATUS>\n</RESPONSE>"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/429_too_many_requests'
+              examples:
+                Area out of bound:
+                  summary: Too Many Requests
+                  value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n       \
+                    \ <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
+components:
+  parameters:
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    cursor:
+      name: cursor
+      in: query
+      description: The pagination cursor provided in the metadata section of the previous response
+      required: false
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: The limit of vessels per page (min=1000, max=5000)
+      required: false
+      schema:
+        type: integer
+        default: 2000
+    protocol_mandatory:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>jsono</li>\n  <li>csv</li>"
+      required: false
+      schema:
+        type: string
+        default: jsono
+    protocol_new:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    v_PS01:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 3 to get the latest
+      schema:
+        type: integer
+        default: 1
+    shipid_PS01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo
+        or mmsi
+      required: true
+      schema:
+        type: integer
+    mmsi_PS01:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    imo_PS01:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    days_PS01:
+      name: days
+      in: query
+      description: The number of days, starting from the time of request and going backwards, for which the response should
+        look for position data </br></br> Maximum value is 190 (days)
+      required: true
+      schema:
+        type: integer
+    fromdate_PS01:
+      name: fromdate
+      in: query
+      description: Use with todate <b>instead</b> of days to get data for a date period
+      required: false
+      schema:
+        type: string
+        format: date-time
+    todate_PS01:
+      name: todate
+      in: query
+      description: Use with fromdate <b>instead</b> of days to get data for a date period
+      required: false
+      schema:
+        type: string
+        format: date-time
+    period_PS01:
+      name: period
+      in: query
+      description: "Limit position per vessel. Omit to get all the available positions </br></br> Values are: <ul>\n  <li>hourly:\
+        \ get one position per hour</li>\n  <li>daily: get one position per day</li>\n</ul>"
+      required: false
+      schema:
+        type: string
+    msgtype_PS01:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used\
+        \ with the value <b>extended</b>, the response includes also weather data"
+      required: false
+      schema:
+        type: string
+        default: simple
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    MINLAT_PS01:
+      name: MINLAT
+      in: query
+      description: Use with MAXLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels'
+        positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON
+        - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for
+        which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    MAXLAT_PS01:
+      name: MAXLAT
+      in: query
+      description: Use with MINLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels'
+        positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON
+        - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for
+        which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    MINLON_PS01:
+      name: MINLON
+      in: query
+      description: Use with MINLAT, MAXLAT, MAXLON to define an area for which you wish to either get all the historical vessels'
+        positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON
+        - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for
+        which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    MAXLON_PS01:
+      name: MAXLON
+      in: query
+      description: Use with MINLAT, MAXLAT, MINLON to define an area for which you wish to either get all the historical vessels'
+        positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON
+        - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for
+        which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    shipid_PS01_2:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo
+        or mmsi
+      required: false
+      schema:
+        type: integer
+    v_PS02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 8 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    timespan_PS02:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned positions.  </br></br> Maximum value for terrestrial coverage
+        is 60. Maximum value for satellite coverage is 180
+      required: false
+      schema:
+        type: integer
+        default: 5
+    shiptype_PS02:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n\
+        \  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    msgtype_PS02:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n\
+        </ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related\
+        \ vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service\
+        \ terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+      required: false
+      schema:
+        type: string
+        default: simple
+    v_PS03:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 8 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    vessel_type:
+      name: vesseltypeid
+      in: query
+      description: Filter vessels based on vessel types, comma separated ids supported </br></br><a href="https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types"
+        target='_blank'>more</a>
+      required: false
+      schema:
+        type: integer
+    timespan_PS03:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned positions </br></br> Maximum value for terrestrial coverage
+        is 60. Maximum value for satellite coverage is 180
+      required: false
+      schema:
+        type: integer
+        default: 5
+    shiptype_PS03:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n\
+        \  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    msgtype_PS03:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n\
+        </ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related\
+        \ vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service\
+        \ terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+      required: false
+      schema:
+        type: string
+        default: simple
+    v_PS04:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 8 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    timespan_PS04:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned positions </br></br> Maximum value for terrestrial coverage
+        is 60. Maximum value for satellite coverage is 180
+      required: false
+      schema:
+        type: integer
+        default: 5
+    shiptype_PS04:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n\
+        \  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    msgtype_PS04:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n\
+        </ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related\
+        \ vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service\
+        \ terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+      required: false
+      schema:
+        type: string
+        default: simple
+    v_PS05:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 8 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    timespan_PS05:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned positions </br></br> Maximum value for terrestrial coverage
+        is 60. Maximum value for satellite coverage is 180
+      required: false
+      schema:
+        type: integer
+        default: 5
+    shiptype_PS05:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n\
+        \  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    msgtype_PS05:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li> full</li>\n\
+        </ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related\
+        \ vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service\
+        \ terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+      required: false
+      schema:
+        type: string
+        default: simple
+    v_PS06:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 8 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    v_MTA030AD_1:
+      name: v
+      in: query
+      description: Use latest version **9**
+      required: true
+      schema:
+        type: integer
+    v_MTA030AD_2:
+      name: v
+      in: query
+      description: Use latest version **2**
+      required: true
+      schema:
+        type: integer
+    v_MTA030AD_3:
+      name: v
+      in: query
+      description: Use latest version **6**
+      required: true
+      schema:
+        type: integer
+    timespan_PS06:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned positions. Maximum value is 2880
+      required: false
+      schema:
+        type: integer
+        default: 5
+    shiptype_PS06:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n\
+        \  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    MAXLAT_PS06:
+      name: MAXLAT
+      in: query
+      description: Use with MINLAT, MINLON, MAXLON to define an area and retrieve positional information of vessels sailing
+        in it
+      required: true
+      schema:
+        type: number
+    MINLON_PS06:
+      name: MINLON
+      in: query
+      description: Use with MINLAT, MAXLAT, MAXLON to define an area and retrieve positional information of vessels sailing
+        in it
+      required: true
+      schema:
+        type: number
+    MAXLON_PS06:
+      name: MAXLON
+      in: query
+      description: Use with MINLAT, MINLON, MAXLAT to define an area and retrieve positional information of vessels sailing
+        in it
+      required: true
+      schema:
+        type: number
+    MINLAT_PS06:
+      name: MINLAT
+      in: query
+      description: Use with MAXLAT, MINLON, MAXLON to define an area and retrieve positional information of vessels sailing
+        in it
+      required: true
+      schema:
+        type: number
+    msgtype_PS06:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n\
+        </ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related\
+        \ vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service\
+        \ terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+      required: false
+      schema:
+        type: string
+        default: simple
+    v_PS07:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 5 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    shipid_PS07:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo
+        or mmsi
+      required: true
+      schema:
+        type: integer
+    imo_PS07:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    mmsi_PS07:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    timespan_PS07:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned positions. Maximum value is 2880
+      required: false
+      schema:
+        type: integer
+        default: 2
+    msgtype_PS07:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used\
+        \ with the value <b>extended</b>, the response includes scheduled static and voyage related vessel data report (AIS\
+        \ Message 5). In this case your request frequency might be limited (depending on your service terms) </br></br> If\
+        \ omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+      required: false
+      schema:
+        type: string
+        default: simple
+    v_PS08:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 1 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    timespan_PS08:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned positions. Maximum value is 2880
+      required: false
+      schema:
+        type: integer
+        default: 5
+    shiptype_generic_PS08:
+      name: shiptype_generic
+      in: query
+      description: Filter vessels based on generic vessel types, comma separated values supported </br></br> Vessel type ID
+        should be used and not vessel type name (2=Fishing / 4=High Speed Craft / 6=Passenger / 7=Cargo / 8=Tanker) </br></br>
+        Should not be combined with shiptype_detailed filter
+      required: false
+      schema:
+        type: integer
+    shiptype_detailed_PS08:
+      name: shiptype_detailed
+      in: query
+      description: Filter vessels based on detailed vessel types, comma separated values supported </br></br> Vessel type
+        ID should be used and not vessel type name - <a href="https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types"                                 target='_blank'>more</a>
+        </br></br> Should not be combined with shiptype_generic filter
+      required: false
+      schema:
+        type: integer
+    msgtype_PS08:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n\
+        </ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related\
+        \ vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service\
+        \ terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+      required: false
+      schema:
+        type: string
+        default: simple
+    timespan_MTA030AD:
+      name: timespan
+      in: query
+      description: Overrides the default timespan
+      required: false
+      schema:
+        type: integer
+        default: 5
+    v_EV01:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 6 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    shipid_EV01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo
+        or mmsi
+      required: true
+      schema:
+        type: integer
+    mmsi_EV01:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    imo_EV01:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    timespan_EV01:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned port calls. Maximum value is 2880
+      required: false
+      schema:
+        type: integer
+        default: 2
+    movetype_EV01:
+      name: movetype
+      in: query
+      description: Use 0 to only receive arrivals or 1 to only receive departures. If not used, the response will include
+        both
+      required: false
+      schema:
+        type: integer
+    exclude_intransit_EV01:
+      name: exclude_intransit
+      in: query
+      description: Use 1 to exclude vessels in transit
+      required: false
+      schema:
+        type: integer
+    fromdate_EV01:
+      name: fromdate
+      in: query
+      description: 'Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD
+        HH:MM'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    todate_EV01:
+      name: todate
+      in: query
+      description: 'Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD
+        HH:MM'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    dwt_min_EV01:
+      name: dwt_min
+      in: query
+      description: 'Data filter: minimum DWT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    dwt_max_EV01:
+      name: dwt_max
+      in: query
+      description: 'Data filter: maximum DWT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    gt_min_EV01:
+      name: gt_min
+      in: query
+      description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    gt_max_EV01:
+      name: gt_max
+      in: query
+      description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    market_EV01:
+      name: market
+      in: query
+      description: Define market(s) for which you would like to receive port calls (single or comma separated values) - <a
+        href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+      required: false
+      schema:
+        type: string
+    msgtype_EV01:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used\
+        \ with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+      required: false
+      schema:
+        type: string
+        default: simple
+    v_EV02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 2 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    shipid_EV02:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo
+        or mmsi
+      required: true
+      schema:
+        type: integer
+    mmsi_EV02:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    imo_EV02:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    timespan_EV02:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned port calls. Maximum value is 2880
+      required: false
+      schema:
+        type: integer
+        default: 60
+    fromdate_EV02:
+      name: fromdate
+      in: query
+      description: 'Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    todate_EV02:
+      name: todate
+      in: query
+      description: 'Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    event_type_EV02:
+      name: event_type
+      in: query
+      description: You may use one or more event ids in comma separated format for the events you wish to receive
+      required: false
+      schema:
+        type: integer
+    limit_events_EV02:
+      name: limit_events
+      in: query
+      description: Limit the number of results
+      required: false
+      schema:
+        type: integer
+    v_EV03:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 3 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    shipid_EV03:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo
+        or mmsi
+      required: true
+      schema:
+        type: integer
+    mmsi_EV03:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    imo_EV03:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    timespan_EV03:
+      name: timespan
+      in: query
+      description: The maximum age, in minutes, of the returned port calls. Maximum value is 2880
+      required: false
+      schema:
+        type: integer
+        default: 2
+    fromdate_EV03:
+      name: fromdate
+      in: query
+      description: 'Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or greater than provided fromdate. Maximum period
+        requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS.'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    todate_EV03:
+      name: todate
+      in: query
+      description: 'Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or less than provided todate. Maximum period requested
+        15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    market_EV03:
+      name: market
+      in: query
+      description: "Define market for which you would like to receive berth calls - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\"\
+        >more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all</li>\n  <li>if undefined and\
+        \ ship-class is defined, return based on ship-class</li>\n  <li>if defined and ship-class is undefined, return all\
+        \ ship-classes of the specific market</li>\n</ul>"
+      required: false
+      schema:
+        type: string
+    shipclass_EV03:
+      name: shipclass
+      in: query
+      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+      required: false
+      schema:
+        type: integer
+    dwt_min_EV03:
+      name: dwt_min
+      in: query
+      description: 'Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+        = 7,8)'
+      required: false
+      schema:
+        type: integer
+    dwt_max_EV03:
+      name: dwt_max
+      in: query
+      description: 'Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+        = 7,8)'
+      required: false
+      schema:
+        type: integer
+    gt_min_EV03:
+      name: gt_min
+      in: query
+      description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    gt_max_EV03:
+      name: gt_max
+      in: query
+      description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels'
+      required: false
+      schema:
+        type: integer
+    movetype_EV03:
+      name: movetype
+      in: query
+      description: Use 0 to include both, 1 to only receive dockings or 2 for only undockings within the defined period. If
+        not used, only dockings are returned </br></br> <b>Available only from version 2 of the service</b>
+      required: false
+      schema:
+        type: integer
+    msgtype_EV03:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used\
+        \ with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+      required: false
+      schema:
+        type: string
+        default: simple
+    portid_EV01:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port you wish to monitor (found on the URL of the respective Port page) or
+        port UN/LOCODE
+      required: true
+      schema:
+        type: integer
+    portid_EV03:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port you wish to monitor (found on the URL of the respective Port page) </br></br>
+        You can <b>instead</b> use port_unlocode, berthid or terminalid
+      required: true
+      schema:
+        type: integer
+    port_unlocode_EV03:
+      name: port_unlocode
+      in: query
+      description: Port UN LOCODE (without gaps or spaces)
+      required: false
+      schema:
+        type: integer
+    berthid_EV03:
+      name: berthid
+      in: query
+      description: 'The MarineTraffic ID of the berth you wish to monitor (list to be provided upon request) '
+      required: false
+      schema:
+        type: integer
+    terminalid_EV03:
+      name: terminalid
+      in: query
+      description: The MarineTraffic ID of the terminal you wish to monitor (list to be provided upon request)
+      required: false
+      schema:
+        type: integer
+    vessel_id_VD01:
+      name: vessel_id
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) or the IMO number of the vessel </br></br> You can <b>instead</b>
+        use shipid
+      required: true
+      schema:
+        type: integer
+    shipid_VD01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      required: false
+      schema:
+        type: integer
+    v_VD02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 5 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    msgtype_VD02:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  </ul>"
+      required: false
+      schema:
+        type: string
+        default: simple
+    mmsi_VD02:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track (single or comma separated
+        values) </br></br> You can <b>instead</b> use imo or shipid
+      required: true
+      schema:
+        type: integer
+    imo_VD02:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track (single or comma separated
+        values)
+      required: false
+      schema:
+        type: integer
+    shipid_VD02:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel (single or comma separated values)
+      required: false
+      schema:
+        type: integer
+    timespan_VD02:
+      name: timespan
+      in: query
+      description: The timespan parameter defines the period of time, during which we want to receive the change in a vessel's
+        details </br></br> The maximum value can be either 5 when the interval parameter is set to days or 2880 when the interval
+        is set to minutes
+      required: false
+      schema:
+        type: integer
+    interval_VD02:
+      name: interval
+      in: query
+      description: The interval parameter can be either minutes or days
+      required: false
+      schema:
+        type: string
+        default: minutes
+    page_VD02:
+      name: page
+      in: query
+      description: Page number of the results to be returned
+      required: false
+      schema:
+        type: integer
+        default: 1
+    shipid_VD03:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use  mmsi
+        or imo
+      required: true
+      schema:
+        type: integer
+    mmsi_VD03:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> <b>NOTE:</b> Using
+        MMSI may potentially return multiple records as multiple vessels might have transponded the same MMSI
+      required: false
+      schema:
+        type: integer
+    imo_VD03:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track </br></br> <b>NOTE:</b>
+        Using IMO may potentially return multiple records as multiple vessels might have transponded the same IMO
+      required: false
+      schema:
+        type: integer
+    shiptype_VD03:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n\
+        \  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    type_name_id_VD03:
+      name: type_name_id
+      in: query
+      description: 'Data filter: AIS Shiptype </br></br> Find more information <a href="https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number">here</a>'
+      required: false
+      schema:
+        type: integer
+    shipname_VD03:
+      name: shipname
+      in: query
+      description: The vessel name. The results will contain all vessels whose name is like the given words
+      required: true
+      schema:
+        type: string
+    v_VI01:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 2 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    mmsi_VI01:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b>
+        use imo or shipid
+      required: true
+      schema:
+        type: integer
+    imo_VI01:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    shipid_VI01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      required: false
+      schema:
+        type: integer
+    msgtype_VI01:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used\
+        \ with the value <b>extended</b>, the response includes voyage related information (eg. distance travelled and to-go,\
+        \ load condition) and the estimated route to the vessel's destination"
+      required: false
+      schema:
+        type: string
+        default: simple
+    fleet_id_VI01:
+      name: fleet_id
+      in: query
+      description: The fleet id you wish to receive voyage forecast for
+      required: true
+      schema:
+        type: integer
+    mmsi_VI04:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b>
+        use imo or shipid
+      required: true
+      schema:
+        type: integer
+    imo_VI04:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    shipid_VI04:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      required: false
+      schema:
+        type: integer
+    fromportid_VI04:
+      name: fromportid
+      in: query
+      description: The MarineTraffic ID of the port you wish to receive a prediction (found on the URL of the respective Port
+        page)
+      required: false
+      schema:
+        type: integer
+    fleet_id_VI04:
+      name: fleet_id
+      in: query
+      description: The MarineTraffic ID of the fleet you wish to track
+      required: true
+      schema:
+        type: integer
+    v_VI07:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 2 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    portid_VI07:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port you wish to receive ETA info </br></br> You can <b>instead</b> use unlocode
+      required: true
+      schema:
+        type: integer
+    unlocode_VI07:
+      name: unlocode
+      in: query
+      description: The UN LOCODE (without gaps or spaces) of the port you wish to receive ETA info
+      required: false
+      schema:
+        type: string
+    mmsi_VI07:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b>
+        use imo or shipid
+      required: true
+      schema:
+        type: integer
+    imo_VI07:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    shipid_VI07:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      required: false
+      schema:
+        type: integer
+    speed_calc_VI07:
+      name: speed_calc
+      in: query
+      description: "The Speed of the Vessel that MarineTraffic will use to produce the ETA value <ul>\n  <li>if not defined\
+        \ the last average speed of the Vessel will be used</li>\n  <li>if no average speed exists then a default value of\
+        \ 12(kn) will be used</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    msgtype_VI07:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used\
+        \ with the value <b>extended</b>, the response includes voyage related data"
+      required: false
+      schema:
+        type: string
+        default: simple
+    v_VI02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 4 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    portid_VI02:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port (found on the URL of the respective Port page)
+      required: true
+      schema:
+        type: integer
+    timespan_VI02:
+      name: timespan
+      in: query
+      description: Number of days in the future to look for expected arrivals, starting from the time the API call is requested
+        </br></br> Maximum value is 40 days </br></br> If neither this nor the fromdate/todate parameters are used, the response
+        only includes vessels currently in port (or the country’s ports) and the last vessel's signal is received during the
+        last 2 days
+      required: false
+      schema:
+        type: integer
+    days_last_signal_VI02:
+      name: days_last_signal
+      in: query
+      description: Include vessels currently in port that have transmitted a position within the last x days (based on their
+        last signal timestamp). </br></br> This parameter only works when no other timeframe is defined.
+      required: false
+      schema:
+        type: integer
+    fromdate_VI02:
+      name: fromdate
+      in: query
+      description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define the
+        todate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    todate_VI02:
+      name: todate
+      in: query
+      description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define the
+        fromdate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    fromportid_VI02:
+      name: fromportid
+      in: query
+      description: The MarineTraffic ID of the previous port (found on the URL of the respective Port page) or previous port
+        UNLOCODE
+      required: false
+      schema:
+        type: integer
+    shiptype_VI02:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n\
+        \  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    dwt_min_VI02:
+      name: dwt_min
+      in: query
+      description: 'Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+        = 7,8). If used, then you should also define the dwt_max parameter'
+      required: false
+      schema:
+        type: integer
+    dwt_max_VI02:
+      name: dwt_max
+      in: query
+      description: 'Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype
+        = 7,8). If used, then you should also define the dwt_min parameter'
+      required: false
+      schema:
+        type: integer
+    gt_min_VI02:
+      name: gt_min
+      in: query
+      description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define
+        the gt_max parameter'
+      required: false
+      schema:
+        type: integer
+    gt_max_VI02:
+      name: gt_max
+      in: query
+      description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define
+        the gt_min parameter'
+      required: false
+      schema:
+        type: integer
+    msgtype_VI02:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used\
+        \ with the value <b>extended</b>, apart from the ETA information, the response includes main vessel particulars. If\
+        \ omitted, the returned records include only position and ETA reports"
+      required: false
+      schema:
+        type: string
+        default: simple
+    country_VI02:
+      name: country
+      in: query
+      description: The Country code of interest. Response includes all ports within the Country
+      required: true
+      schema:
+        type: integer
+    portid_VI05:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port you wish to receive probable visits (found on the URL of the respective
+        Port page)
+      required: true
+      schema:
+        type: integer
+    market_VI05:
+      name: market
+      in: query
+      description: "Define market for which you would like to receive probable visits - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\"\
+        >more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all </li>\n  <li>if undefined and\
+        \ ship-class is defined, return based on ship-class</li>\n  <li>If defined and ship-class is undefined, return all\
+        \ ship-classes of the specific market</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    shipclass_VI05:
+      name: shipclass
+      in: query
+      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+      required: false
+      schema:
+        type: integer
+    probability_VI05:
+      name: probability
+      in: query
+      description: Define probability over which you would like to receive probable visits (accepted > 0.3)
+      required: false
+      schema:
+        type: integer
+    portid_VI06:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port for which you wish to retrieve congestion metrics (found on the URL of
+        the respective Port page). </br></br> If you wish to retrieve congestion metrics for all ports, instead of <b>portid</b>
+        use <b>agg_port=1</b>
+      required: true
+      schema:
+        type: integer
+    year_VI06:
+      name: year
+      in: query
+      description: Year of interest (data available back to 1 year). Information further back can be requested ad-hoc
+      required: true
+      schema:
+        type: integer
+    week_VI06:
+      name: week
+      in: query
+      description: Week of Year that is of interest (e.g. for week 18/2018 input 18). For range of weeks use comma e.g. for
+        weeks 30 to 35 (30,35)
+      required: true
+      schema:
+        type: integer
+    market_VI06:
+      name: market
+      in: query
+      description: "Define market for which you would like to receive port congestion - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\"\
+        >more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then figures for ALL markets/ship-class</li>\n\
+        \  <li>if undefined and ship-class is defined, returns based on ship-class for ALL applicable to size class markets</li>\n\
+        \  <li>if defined and ship-class is undefined, returns figures for the specific market (no size class breakdown)</li>\n\
+        </ul> </br></br> If you wish to retrieve congestion metrics for all markets, instead of <b>market</b> use <b>agg_market</b>\
+        \ query parameter (=0 or =1)"
+      required: true
+      schema:
+        type: integer
+    shipclass_VI06:
+      name: shipclass
+      in: query
+      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+        </br></br> If you wish to retrieve congestion metrics for all ship classes, instead of <b>shipclass</b> use <b>agg_shipclass</b>
+        query parameter (=0 or =1)
+      required: true
+      schema:
+        type: integer
+    agg_port_VI06:
+      name: agg_port
+      in: query
+      description: "**If used, portid should not be in request** <ul>\n  <li>when agg_port = 1 is used, aggregation result\
+        \ of all ports are returned</li>\n  <li>when agg_port = 1 is used, agg_market cannot be 1</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    agg_market_VI06:
+      name: agg_market
+      in: query
+      description: "**If used, market should not be in request** <ul>\n  <li>if agg_market = 1, aggregation result of all\
+        \ markets will be returned</li>\n  <li>if 0, a breakdown of markets will be returned</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    agg_shipclass_VI06:
+      name: agg_shipclass
+      in: query
+      description: "**If used, shipclass should not be in request** <ul>\n  <li>if agg_shipclass = 1, aggregation result of\
+        \ all classes will be returned</li>\n  <li>if 0, a breakdown of classes will be returned</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    time_anch_VI06:
+      name: time_anch
+      in: query
+      description: 'The median number of days spent at anchorage by the selected market/shipclass.
+
+        Values indicate in between set to be returned </br></br> Comma separated float
+
+        numbers (one decimal)
+
+        </br></br><b>Available only if extended version of the API is used</b>'
+      required: false
+      schema:
+        type: string
+    time_port_VI06:
+      name: time_port
+      in: query
+      description: The median number of days spent at port by the selected market/shipclass. Values indicate in between set
+        to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if extended version
+        of the API is used</b>
+      required: false
+      schema:
+        type: string
+    vessels_VI06:
+      name: vessels
+      in: query
+      description: Number of vessels that were used in the median calculations. Value of parameter indicates greater than
+        relation </br></br><b>Available only if extended version of the API is used</b>
+      required: false
+      schema:
+        type: integer
+    calls_VI06:
+      name: calls
+      in: query
+      description: Number of individual calls that were used in the median calculations (e.g. if the same vessel has called
+        twice within the same week, it will count twice in calls and once in vessels. Value of parameter indicates greater
+        than relation </br></br><b>Available only if extended version of the API is used</b>
+      required: false
+      schema:
+        type: integer
+    time_anch_stdev_VI06:
+      name: time_anch_stdev
+      in: query
+      description: The standard deviation of days spent at anchorage the previous week. Values indicate in between set to
+        be returned (time_anch_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available
+        only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    time_anch_diff_VI06:
+      name: time_anch_diff
+      in: query
+      description: The week-to-week difference of number of days spent at anchorage. Values indicate in between set to be
+        returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the
+        API is used</b>
+      required: false
+      schema:
+        type: string
+    time_anch_diff_perc_VI06:
+      name: time_anch_diff_perc
+      in: query
+      description: The week-to-week difference of number of days spent at anchorage as a percentage. Values indicate in between
+        set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version
+        of the API is used</b>
+      required: false
+      schema:
+        type: string
+    time_port_stdev_VI06:
+      name: time_port_stdev
+      in: query
+      description: The standard deviation of days spent at port the previous week. Values indicate in between set to be returned
+        (time_port_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full
+        version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    time_port_diff_VI06:
+      name: time_port_diff
+      in: query
+      description: The week-to-week difference of number of days spent at port. Values indicate in between set to be returned
+        </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    time_port_diff_perc_VI06:
+      name: time_port_diff_perc
+      in: query
+      description: The week-to-week difference of number of days spent at port as a percentage. Values indicate in between
+        set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version
+        of the API is used</b>
+      required: false
+      schema:
+        type: string
+    mmsi_VI03:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b>
+        use imo or shipid
+      required: true
+      schema:
+        type: integer
+    imo_VI03:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    shipid_VI03:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      required: false
+      schema:
+        type: integer
+    port_target_id_VI03:
+      name: port_target_id
+      in: query
+      description: The MarineTraffic ID of the port you wish to put as target port (found on the URL of the respective Port
+        page) or port UN/LOCODE
+      required: true
+      schema:
+        type: integer
+    includealternatives_VI03:
+      name: includealternatives
+      in: query
+      description: Use 1 to search for all available routes regarding the specific journey or 0 to not include alternative
+        routes
+      required: false
+      schema:
+        type: integer
+    includeinland_VI03:
+      name: includeinland
+      in: query
+      description: Use 1 in order to receive routes which include inland waterways or 0 to not include alternative routes
+      required: false
+      schema:
+        type: integer
+    msgtype_VI03:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used\
+        \ with the value <b>extended</b>, the response includes also route/waypoints as Linestring Geometry in WKT - Well-Known\
+        \ Text"
+      required: false
+      schema:
+        type: string
+        default: simple
+    port_start_id_VI03:
+      name: port_start_id
+      in: query
+      description: The MarineTraffic ID of the port you wish to put as starting point (found on the URL of the respective
+        Port page) or port UN/LOCODE
+      required: true
+      schema:
+        type: integer
+    LAT_VI03:
+      name: LAT
+      in: query
+      description: The latitude of the starting point </br></br> It can be used together with LON <b>instead</b> of port_start_id
+      required: false
+      schema:
+        type: number
+    LON_VI03:
+      name: LON
+      in: query
+      description: The longitude of the starting point </br></br> It can be used together with LAT <b>instead</b> of port_start_id
+      required: false
+      schema:
+        type: integer
+    coordinates_GI01:
+      name: coordinates
+      in: query
+      description: A latitude/longitude pair that you wish to receive the MarineTraffic areas/assets that intersects with
+      required: true
+      schema:
+        type: string
+    radius_GI01:
+      name: radius
+      in: query
+      description: Maximum distance (in NM) from the given point that should be searched for nearby areas/assets </br></br>
+        Cannot be greater than 10NM
+      required: false
+      schema:
+        type: number
+    exclude_ports_GI01:
+      name: exclude_ports
+      in: query
+      description: Flag that indicates if Ports information will be excluded from response in case given point intersects
+        with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_berths_GI01:
+      name: exclude_berths
+      in: query
+      description: Flag that indicates if Berths information will be excluded from response in case given point intersects
+        with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_terminals_GI01:
+      name: exclude_terminals
+      in: query
+      description: Flag that indicates if Terminals information will be excluded from response in case given point intersects
+        with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_standard_areas_GI01:
+      name: exclude_standard_areas
+      in: query
+      description: Flag that indicates if Standard Areas information will be excluded from response in case given point intersects
+        with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_custom_areas_GI01:
+      name: exclude_custom_areas
+      in: query
+      description: Flag that indicates if Custom Areas information will be excluded from response in case given point intersects
+        with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    mmsi_PU01:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to handle, comma separated values supported
+        </br></br> You can <b>instead</b> use imo or shipid
+      required: true
+      schema:
+        type: integer
+    imo_PU01:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to handle, comma separated
+        values supported
+      required: false
+      schema:
+        type: integer
+    shipid_PU01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel, comma separated values supported
+      required: false
+      schema:
+        type: integer
+    fleet_id_PU01:
+      name: fleet_id
+      in: query
+      description: If used, vessel will be added to the specific fleet, otherwise default fleet is used
+      required: false
+      schema:
+        type: integer
+    active_PU01:
+      name: active
+      in: query
+      description: "Possible values are:  <ul>\n  <li>0 to set to inactive</li>\n  <li>1 to activate</li>\n  <li>2 to enable\
+        \ satellite coverage</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    delete_PU01:
+      name: delete
+      in: query
+      description: Set this parameter to 1 to delete a vessel from your fleet
+      required: false
+      schema:
+        type: integer
+    v_PU02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 2 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    fleet_id_PU02:
+      name: fleet_id
+      in: query
+      description: If used, will return specific fleet otherwise default fleet is used
+      required: false
+      schema:
+        type: integer
+    page_PU02:
+      name: page
+      in: query
+      description: Specifies the number of the results page to return. Use this parameter to navigate through paginated results
+        (with version 2) when the fleet contains more than 100 vessels.
+      required: false
+      schema:
+        type: integer
+    fleet_id_PU05:
+      name: fleet_id
+      in: query
+      description: The fleet id you wish to clear
+      required: true
+      schema:
+        type: integer
+    content_type_pu06:
+      name: Content-Type
+      in: header
+      description: Request's Content-Type
+      required: true
+      schema:
+        type: string
+        default: multipart/form-data
+  schemas:
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    200_vi01_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency
+              that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          DESTINATION:
+            type: string
+            description: The Destination of the subject vessel according to the AIS transmissions
+          LAST_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Last Port
+          LAST_PORT:
+            type: string
+            description: The Name of the Last Port the vessel has visited
+          LAST_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Last Port
+          LAST_PORT_TIME:
+            type: string
+            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+            format: date-time
+          NEXT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Next Port
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          ETA:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
+            format: date-time
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic
+              calculations
+            format: date-time
+      example:
+      - MMSI: '310627000'
+        IMO: '9241061'
+        SHIP_ID: '371681'
+        SHIPNAME: QUEEN MARY 2
+        DESTINATION: TORQUAY
+        LAST_PORT_ID: '106'
+        LAST_PORT: SOUTHAMPTON
+        LAST_PORT_UNLOCODE: GBSOU
+        LAST_PORT_TIME: '2020-10-14T17:00:00.000Z'
+        NEXT_PORT_ID: '10379'
+        NEXT_PORT_NAME: TORQUAY
+        NEXT_PORT_UNLOCODE: GBTOR
+        ETA: '2020-10-14T13:00:00.000Z'
+        ETA_CALC: ''
+    200_vi01_extended:
+      title: Extended
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency
+              that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          DESTINATION:
+            type: string
+            description: The Destination of the subject vessel according to the AIS transmissions
+          LAST_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Last Port
+          LAST_PORT:
+            type: string
+            description: The Name of the Last Port the vessel has visited
+          LAST_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Last Port
+          LAST_PORT_TIME:
+            type: string
+            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+            format: date-time
+          NEXT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Next Port
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          ETA:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
+            format: date-time
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic
+              calculations
+            format: date-time
+          DISTANCE_TRAVELLED:
+            type: string
+            description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
+          DISTANCE_TO_GO:
+            type: string
+            description: The Remaining Distance (in NM) for the subject vessel to reach the reported Destination
+          SPEED_CALC:
+            type: string
+            description: The Speed of the vessel (in knots x10) that MarineTraffic used to produce the ETA_CALC value
+          DRAUGHT:
+            type: string
+            description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
+          DRAUGHT_MAX:
+            type: string
+            description: The Maximum Draught (in metres x10) that has been recorded for the subject vessel
+          LOAD_STATUS_NAME:
+            type: string
+            description: The Load Condition of the subject vessel (In Ballast, Partially Loaded, Loaded)
+          ROUTE:
+            type: string
+            description: The estimated route of the subject vessel to destination in WKT format
+      example:
+      - MMSI: '310627000'
+        IMO: '9241061'
+        SHIP_ID: '371681'
+        SHIPNAME: QUEEN MARY 2
+        DESTINATION: TORQUAY
+        LAST_PORT_ID: '106'
+        LAST_PORT: SOUTHAMPTON
+        LAST_PORT_UNLOCODE: GBSOU
+        LAST_PORT_TIME: '2020-10-14T17:00:00.000Z'
+        NEXT_PORT_ID: '10379'
+        NEXT_PORT_NAME: TORQUAY
+        NEXT_PORT_UNLOCODE: GBTOR
+        ETA: '2020-10-14T13:00:00.000Z'
+        ETA_CALC: ''
+        DISTANCE_TRAVELLED: '201'
+        DISTANCE_TO_GO: '0'
+        SPEED_CALC: '120'
+        DRAUGHT: '101'
+        DRAUGHT_MAX: '105'
+        LOAD_STATUS_NAME: N/A
+        ROUTE: ''
+    400_vi01_missing_or_invalid_ship_identifier:
+      title: Missing or invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 2a
+          detail: VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE MISSING
+    404_vi01_invalid_fleet_identifier:
+      title: Invalid fleet identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 6b
+          detail: FLEET NOT FOUND
+    200_vi04_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency
+              that identifies the vessel's transmitter station
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          SHIPCLASS:
+            type: string
+            description: The class of the subject vessel based on vessel type and size
+          MARKET:
+            type: string
+            description: The commercial market segment the subject vessel belongs to
+          MANAGER:
+            type: string
+            description: The Managing Company of the subject vessel (null if the Owner and the Manager are the same)
+          OWNER:
+            type: string
+            description: The Owning Company of the subject vessel (null if the Owner and the Manager are the same)
+          FROM_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the port that was used as origin to retrieve possible
+              destinations
+          FROM_PORT:
+            type: string
+            description: The port that was used as origin to retrieve possible destinations
+          NEXT_PORT_1_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the most probable destination port from the given port
+              of origin
+          NEXT_PORT_1:
+            type: string
+            description: Most probable destination port from the given port of origin
+          NEXT_PORT_1_PROB:
+            type: string
+            description: The probability of visiting the most likely destination port
+          NEXT_AREA_1:
+            type: string
+            description: The area where the most probable port is
+          NEXT_AREA_1_PROB:
+            type: string
+            description: The probability of visiting the area where the predicted port is
+          NEXT_PORT_2_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the second most probable destination port from the given
+              port of origin
+          NEXT_PORT_2:
+            type: string
+            description: Second most probable destination port from the given port of origin
+          NEXT_PORT_2_PROB:
+            type: string
+            description: The probability of visiting the second most likely destination port
+          NEXT_AREA_2:
+            type: string
+            description: The area where the second most probable port is
+          NEXT_AREA_2_PROB:
+            type: string
+            description: The probability of visiting the area where the predicted port is
+          NEXT_PORT_3_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the third most probable destination port from the given
+              port of origin
+          NEXT_PORT_3:
+            type: string
+            description: Third most probable destination port from the given port of origin
+          NEXT_PORT_3_PROB:
+            type: string
+            description: The probability of visiting the third most likely destination port
+          NEXT_AREA_3:
+            type: string
+            description: The area where the third most probable port is
+          NEXT_AREA_3_PROB:
+            type: string
+            description: The probability of visiting the area where the predicted port is
+          NEXT_PORT_4_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the fourth most probable destination port from the given
+              port of origin
+          NEXT_PORT_4:
+            type: string
+            description: Fourth most probable destination port from the given port of origin
+          NEXT_PORT_4_PROB:
+            type: string
+            description: The probability of visiting the fourth most likely destination port
+          NEXT_AREA_4:
+            type: string
+            description: The area where the fourth most probable port is
+          NEXT_AREA_4_PROB:
+            type: string
+            description: The probability of visiting the area where the predicted port is
+          NEXT_PORT_5_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the fifth most probable destination port from the given
+              port of origin
+          NEXT_PORT_5:
+            type: string
+            description: Fifth most probable destination port from the given port of origin
+          NEXT_PORT_5_PROB:
+            type: string
+            description: The probability of visiting the fifith most likely destination port
+          NEXT_AREA_5:
+            type: string
+            description: The area where the fifth most probable port is
+          NEXT_AREA_5_PROB:
+            type: string
+            description: The probability of visiting the area where the predicted port is
+      example:
+      - IMO: '9450832'
+        SHIP_ID: '4615400'
+        MMSI: '538003690'
+        SHIPNAME: APHRODITE M
+        SHIPCLASS: HANDYSIZE
+        MARKET: DRY BULK
+        MANAGER: EMPIRE BULKERS
+        OWNER: BANK OF AMERICA LEASING AND CAPITAL
+        FROM_PORT_ID: '257'
+        FROM_PORT: ARATU
+        NEXT_PORT_1_ID: '5018'
+        NEXT_PORT_1: FORTALEZA
+        NEXT_PORT_1_PROB: '0.400'
+        NEXT_AREA_1: ECSA
+        NEXT_AREA_1_PROB: '1.000'
+        NEXT_PORT_2_ID: '5026'
+        NEXT_PORT_2: RECIFE
+        NEXT_PORT_2_PROB: '0.200'
+        NEXT_AREA_2: ECSA
+        NEXT_AREA_2_PROB: '1.000'
+        NEXT_PORT_3_ID: '645'
+        NEXT_PORT_3: VITORIA
+        NEXT_PORT_3_PROB: '0.200'
+        NEXT_AREA_3: ECSA
+        NEXT_AREA_3_PROB: '1.000'
+        NEXT_PORT_4_ID: '2479'
+        NEXT_PORT_4: CABEDELO
+        NEXT_PORT_4_PROB: '0.200'
+        NEXT_AREA_4: ECSA
+        NEXT_AREA_4_PROB: '1.000'
+        NEXT_PORT_5_ID: ''
+        NEXT_PORT_5: ''
+        NEXT_PORT_5_PROB: ''
+        NEXT_AREA_5: ''
+        NEXT_AREA_5_PROB: ''
+    400_vi04_missing_or_invalid_ship_identifier:
+      title: Missing or invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '1'
+          detail: INCORRECT CALL-CHECK PARAMETERS
+    400_vi04_invalid_fleet_identifier:
+      title: Invalid fleet identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '1'
+          detail: INCORRECT CALL-CHECK PARAMETERS
+    200_vi07_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency
+              that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          LAST_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Last Port
+          LAST_PORT:
+            type: string
+            description: The Name of the Last Port the vessel has visited
+          LAST_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Last Port
+          LAST_PORT_TIME:
+            type: string
+            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+            format: date-time
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          ETA_PORT_NAME:
+            type: string
+            description: The name of the Port that was provided by the user as input parameter during the API call and that
+              was used by MarineTraffic for ETA and voyage calculations
+          ETA_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Port that was provided by the user as input parameter
+              during the API call and that was used by MarineTraffic for ETA and voyage calculations
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic
+              calculations
+            format: date-time
+      example:
+      - SHIP_ID: '4615400'
+        MMSI: '538003690'
+        IMO: '9450832'
+        LAST_PORT_ID: '133'
+        LAST_PORT: TERNEUZEN
+        LAST_PORT_UNLOCODE: NLTNZ
+        LAST_PORT_TIME: '2020-10-23T07:20:00.000Z'
+        NEXT_PORT_NAME: ARATU
+        NEXT_PORT_UNLOCODE: BRARB
+        ETA_PORT_NAME: ROTTERDAM
+        ETA_PORT_UNLOCODE: NLRTM
+        ETA_CALC: '2020-11-17T04:18:35.000Z'
+    200_vi07_extended:
+      title: Extended
+      type: array
+      items:
+        type: object
+        properties:
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency
+              that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          LAST_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Last Port
+          LAST_PORT:
+            type: string
+            description: The Name of the Last Port the vessel has visited
+          LAST_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Last Port
+          LAST_PORT_TIME:
+            type: string
+            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+            format: date-time
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          ETA_PORT_NAME:
+            type: string
+            description: The name of the Port that was provided by the user as input parameter during the API call and that
+              was used by MarineTraffic for ETA and voyage calculations
+          ETA_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Port that was provided by the user as input parameter
+              during the API call and that was used by MarineTraffic for ETA and voyage calculations
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic
+              calculations
+            format: date-time
+          DISTANCE_TRAVELLED:
+            type: string
+            description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
+          DISTANCE_TO_GO:
+            type: string
+            description: The Remaining Distance (in NM) for the subject vessel to reach the reported Destination
+          SPEED_CALC:
+            type: string
+            description: The Speed of the vessel (in knots x10) that MarineTraffic used to produce the ETA_CALC value
+          DRAUGHT:
+            type: string
+            description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
+          DRAUGHT_MAX:
+            type: string
+            description: The Maximum Draught (in metres x10) that has been recorded for the subject vessel
+          LOAD_STATUS_NAME:
+            type: string
+            description: The Load Condition of the subject vessel (In Ballast, Partially Loaded, Loaded)
+          ROUTE:
+            type: string
+            description: The estimated route of the subject vessel to destination in WKT format
+          ETD_CALC:
+            type: string
+            description: The Estimated Time of Departure from the Port specified in query parameters according to the MarineTraffic
+              calculations based on calculated eta, time at anchorage & time at port
+            format: date-time
+          TIME_ANCH:
+            type: string
+            description: The median number of days spent at anchorage the previous week
+          TIME_PORT:
+            type: string
+            description: The median number of days spent at port by the selected market/shipclass
+      example:
+      - SHIP_ID: '4615400'
+        MMSI: '538003690'
+        IMO: '9450832'
+        LAST_PORT_ID: '133'
+        LAST_PORT: TERNEUZEN
+        LAST_PORT_UNLOCODE: NLTNZ
+        LAST_PORT_TIME: '2020-10-23T07:20:00.000Z'
+        NEXT_PORT_NAME: ARATU
+        NEXT_PORT_UNLOCODE: BRARB
+        ETA_PORT_NAME: ROTTERDAM
+        ETA_PORT_UNLOCODE: NLRTM
+        ETA_CALC: '2020-11-17T04:20:14.000Z'
+        DISTANCE_TRAVELLED: '519'
+        DISTANCE_TO_GO: '2629'
+        SPEED_CALC: '58'
+        DRAUGHT: '93'
+        DRAUGHT_MAX: '104'
+        LOAD_STATUS_NAME: LADEN
+        ROUTE: LINESTRING (-3.25721 50.5102, -3.36854 50.4274, -3.43517 50.4228, -3.43879 50.4169, -3.43297 50.4142, -3.42169
+          50.4115, -3.41547 50.407, -3.41412 50.4007, -3.41569 50.395, -3.4188 50.3885, -3.56497 50.1962, -4.6912 49.5453,
+          -5.17703 49.2673, -5.78868 48.8526, -6.98989 47.5559, -7.2535 47.316, -7.2102 47.0939, -7.2935 46.9586, -8.33592
+          45.8395, -9.09363 44.8248, -9.5244 44.2492, -9.70133 44.0603, -10.0427 43.6447, -10.1111 43.4934, -10.2361 43.3193,
+          -10.2123 42.2985, -10.1906 41.2322, -10.1462 40.1117, -10.1056 39.0589, -10.0989 38.6851, -10.0265 38.4306, -10.0125
+          38.3022, -9.69923 37.261, -9.57864 36.8751, -9.52376 36.7973, -9.25278 36.5721, -9.19231 36.5391, -8.15901 36.2992,
+          -7.0206 36.0401, -6.48534 35.9174, -5.82036 35.9016, -5.63979 35.9169, -5.26123 35.984, -4.97929 36.0055, -4.90942
+          36.0021, -3.80999 36.1162, -2.70866 36.1953, -1.70453 36.3222, -0.620848 36.4784, 0.607268 36.6633, 1.71278 36.8284,
+          2.7549 36.9733, 3.87165 37.1261, 4.69295 37.2316, 5.74852 37.2387, 6.90585 37.2472, 8.02881 37.2582, 8.64414 37.2678,
+          9.70149 37.5087, 10.0471 37.569, 10.1756 37.5695, 10.9414 37.4179, 11.4793 37.2768, 11.9401 37.095, 12.4415 36.9732,
+          13.4569 36.7885, 13.5064 36.7736, 14.5303 36.6101, 15.1167 36.5096, 16.1937 36.477, 17.4477 36.4471, 18.371 36.4181,
+          18.7263 36.3965, 20.799 36.3638, 21.7999 36.3351, 22.0905 36.3339, 22.2645 36.3226, 22.7168 36.356, 22.9405 36.4011,
+          23.1341 36.3843, 23.1449 36.3864, 23.1681 36.3932, 23.176 36.3965, 23.2887 36.4584, 23.2941 36.4631, 23.2984 36.4683,
+          23.3022 36.4743, 23.3053 36.4812, 23.4143 36.9312, 23.6949 37.4873, 23.7461 37.6468, 23.75 37.6672, 23.749 37.6724,
+          23.6701 37.8133, 23.5845 37.8766, 23.5848 37.8872)
+        ETD_CALC: '2020-11-26T16:20:14.000Z'
+        TIME_ANCH: '3.4'
+        TIME_PORT: '6.1'
+    400_vi07_missing_or_invalid_port_identifier:
+      title: Missing or invalid port identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 2a10
+          detail: PORT_ID OR UNLOCODE MISSING
+    400_vi07_missing_or_invalid_ship_identifier:
+      title: Missing or invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
