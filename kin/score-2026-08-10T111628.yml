@@ -1,0 +1,42 @@
+# Kin Score artifact — marine-traffic — 2026-08-10T111628
+# The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
+---
+kin_score:
+  slug: marine-traffic
+  schema_version: 0.9.1
+  scored_at: '2026-08-10'
+  run_ts: 2026-08-10T111628
+  composite: 46.3
+  band: developing
+  facets:
+    discoverability: 64.8
+    contract_quality: 72.6
+    governance: 68.8
+    operational_transparency: 5.3
+    developer_ergonomics: 34.8
+    commercial_clarity: 28.9
+  agent_readiness:
+    score: 35.1
+    band: agent-ready
+    dimensions:
+      spec_presence: true
+      agentic_access: derived
+      mcp_server: false
+      auth_clarity: false
+      idempotency: false
+      error_semantics: verified
+      openapi_examples: verified
+      rate_limit_signal: documented
+      event_surface_described: false
+      agent_skills: false
+      well_known_catalog: false
+      consent_identity: false
+      agent_card: false
+      dry_run_mode: false
+  provenance:
+    agentic_access: derived
+    contracts:
+      total: 14
+      derived: 0
+      coverage: 0.0
+      callable: 100.0

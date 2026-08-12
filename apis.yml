@@ -480,7 +480,7 @@ common:
   - url: https://twitter.com/MarineTraffic
     name: MarineTraffic on Twitter / X
     type: Twitter
-  - url: openapi/marine-traffic-openapi.yml
+  - url: openapi/_original/marine-traffic-openapi.yml
     type: OpenAPI
     name: Combined MarineTraffic AIS Data API (all surfaces)
   - url: rules/marine-traffic-rules.yml
