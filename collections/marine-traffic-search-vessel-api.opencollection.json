@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Events AIS API Search Vessel API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search Vessel",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Vessel by Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/shipsearch/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use  mmsi or imo"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> <b>NOTE:</b> Using MMSI may potentially return multiple records as multiple vessels might have transponded the same MMSI"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track </br></br> <b>NOTE:</b> Using IMO may potentially return multiple records as multiple vessels might have transponded the same IMO"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "type_name_id",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: AIS Shiptype </br></br> Find more information <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">here</a>"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Search for a vessel by unique identifier.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Search Vessel by Name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/shipsearch/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "shipname",
+                "value": "",
+                "type": "query",
+                "description": "The vessel name. The results will contain all vessels whose name is like the given words"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "type_name_id",
+                "value": "",
+                "type": "query",
+                "description": "Data filter: AIS Shiptype </br></br> Find more information <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">here</a>"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Search for vessels by vessel name. </br></br> <b>Notes</b> </br> In case of multiple results:\n  <ul>\n    <li>the first 100 matches will be fetched</li>\n    <li>exact matches are always first on the returned list</li>\n  </ul>\n  </br>\n  <ul>\n    <li>Only active vessels are returned</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Events AIS API Passage Plans API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Passage Plans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import Passage Plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.marinetraffic.com/api/import-passage-plan/:api_key",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import a passage plan for one of your managed vessels. </br></br> <b>Notes</b> <ul>\n    <li>Passage plans can only be imported for vessels that belong to user's managed vessels (see <a href=\"https://www.marinetraffic.com/en/online-services/plans/fleet-ops\">Fleet Operations</a> solution for more info)</li>\n    <li>Accepted file formats are CSV, RTZ or RT3</li>\n    <li>Maximum file size supported is 20MB</li>\n    <li>File should contain at least 2 waypoints</li>\n    <li>Imported passage plans over"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

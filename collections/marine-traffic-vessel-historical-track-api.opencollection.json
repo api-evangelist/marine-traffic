@@ -1,0 +1,200 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Events AIS API Vessel Historical Track API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vessel Historical Track",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Single Vessel Historical Positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvesseltrack/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 3 to get the latest"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "The number of days, starting from the time of request and going backwards, for which the response should look for position data </br></br> Maximum value is 190 (days)"
+              },
+              {
+                "name": "fromdate",
+                "value": "",
+                "type": "query",
+                "description": "Use with todate <b>instead</b> of days to get data for a date period"
+              },
+              {
+                "name": "todate",
+                "value": "",
+                "type": "query",
+                "description": "Use with fromdate <b>instead</b> of days to get data for a date period"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "Limit position per vessel. Omit to get all the available positions </br></br> Values are: <ul>\n  <li>hourly: get one position per hour</li>\n  <li>daily: get one position per day</li>\n</ul>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes also weather data"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get all historical positions of a single vessel for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>Default resolution for returned positions is up to 2 minutes. Use \"period\" parameter to limit the frequency of positions</li>\n    <li>Weather data is returned once within each hour's results</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed "
+        },
+        {
+          "info": {
+            "name": "Vessel Historical Positions in an Area",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvesseltrack/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 3 to get the latest"
+              },
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "The number of days, starting from the time of request and going backwards, for which the response should look for position data </br></br> Maximum value is 190 (days)"
+              },
+              {
+                "name": "fromdate",
+                "value": "",
+                "type": "query",
+                "description": "Use with todate <b>instead</b> of days to get data for a date period"
+              },
+              {
+                "name": "todate",
+                "value": "",
+                "type": "query",
+                "description": "Use with fromdate <b>instead</b> of days to get data for a date period"
+              },
+              {
+                "name": "MINLAT",
+                "value": "",
+                "type": "query",
+                "description": "Use with MAXLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day"
+              },
+              {
+                "name": "MAXLAT",
+                "value": "",
+                "type": "query",
+                "description": "Use with MINLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day"
+              },
+              {
+                "name": "MINLON",
+                "value": "",
+                "type": "query",
+                "description": "Use with MINLAT, MAXLAT, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day"
+              },
+              {
+                "name": "MAXLON",
+                "value": "",
+                "type": "query",
+                "description": "Use with MINLAT, MAXLAT, MINLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "Limit position per vessel. Omit to get all the available positions </br></br> Values are: <ul>\n  <li>hourly: get one position per hour</li>\n  <li>daily: get one position per day</li>\n</ul>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes also weather data"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get vessel historical positions for a single or for all vessels inside an area of your preference for a specific period of time.\n    </br></br>\n<b>Notes</b> <ul>\n    <li>Default resolution for returned positions is up to 2 minutes. Use \"period\" parameter to limit the frequency of positions</li>\n    <li>Weather data is returned once within each hour's results</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

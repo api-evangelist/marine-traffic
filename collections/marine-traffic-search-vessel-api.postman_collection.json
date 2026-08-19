@@ -1,0 +1,550 @@
+{
+  "item": [
+    {
+      "id": "2728de45-85dd-409b-a295-7abb969be223",
+      "name": "Search Vessel",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "732e30d1-7fb6-4c63-916f-6b36493d2c37",
+          "name": "Search Vessel by Identifier",
+          "request": {
+            "name": "Search Vessel by Identifier",
+            "description": {
+              "content": "Search for a vessel by unique identifier.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipsearch",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "(Required) A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use  mmsi or imo"
+                },
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> <b>NOTE:</b> Using MMSI may potentially return multiple records as multiple vessels might have transponded the same MMSI"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track </br></br> <b>NOTE:</b> Using IMO may potentially return multiple records as multiple vessels might have transponded the same IMO"
+                },
+                {
+                  "disabled": false,
+                  "key": "shiptype",
+                  "value": "<integer>",
+                  "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type_name_id",
+                  "value": "<integer>",
+                  "description": "Data filter: AIS Shiptype </br></br> Find more information <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">here</a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21bb29b0-01c3-431c-979d-571fef465486",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipsearch",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shiptype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "type_name_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"SHIPNAME\": \"THE QUEEN JACQUELINE\",\n    \"MMSI\": \"244740452\",\n    \"IMO\": \"0\",\n    \"SHIP_ID\": \"639\",\n    \"CALLSIGN\": \"PE6545\",\n    \"TYPE_NAME\": \"Inland, Ferry\",\n    \"DWT\": \"\",\n    \"FLAG\": \"NL\",\n    \"COUNTRY\": \"Netherlands\",\n    \"YEAR_BUILT\": \"\",\n    \"MT_URL\": \"http://www.marinetraffic.com/en/ais/details/ships/shipid:639/mmsi:244740452/vessel:639\"\n  },\n  {\n    \"SHIPNAME\": \"BACHATA QUEEN\",\n    \"MMSI\": \"229540000\",\n    \"IMO\": \"0\",\n    \"SHIP_ID\": \"2771\",\n    \"CALLSIGN\": \"9HB3419\",\n    \"TYPE_NAME\": \"Pleasure Craft\",\n    \"DWT\": \"\",\n    \"FLAG\": \"MT\",\n    \"COUNTRY\": \"Malta\",\n    \"YEAR_BUILT\": \"\",\n    \"MT_URL\": \"http://www.marinetraffic.com/en/ais/details/ships/shipid:2771/mmsi:229540000/vessel:2771\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ff464ea-3348-404b-8dbe-b441ccd725bf",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipsearch",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shiptype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "type_name_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"54\",\n      \"detail\": \"NO SEARCH TERM SUPPLIED\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "203e7bab-776f-4bbf-8e0e-7cc3d779891a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipsearch",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shiptype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "type_name_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1r\",\n      \"detail\": \"TOO MANY REQUESTS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9c74e687-46d5-4002-b8d4-4db3235e15da",
+          "name": "Search Vessel by Name",
+          "request": {
+            "name": "Search Vessel by Name",
+            "description": {
+              "content": "Search for vessels by vessel name. </br></br> <b>Notes</b> </br> In case of multiple results:\n  <ul>\n    <li>the first 100 matches will be fetched</li>\n    <li>exact matches are always first on the returned list</li>\n  </ul>\n  </br>\n  <ul>\n    <li>Only active vessels are returned</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n  </ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipsearch",
+                "{{api_key}} "
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "shipname",
+                  "value": "<string>",
+                  "description": "(Required) The vessel name. The results will contain all vessels whose name is like the given words"
+                },
+                {
+                  "disabled": false,
+                  "key": "shiptype",
+                  "value": "<integer>",
+                  "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type_name_id",
+                  "value": "<integer>",
+                  "description": "Data filter: AIS Shiptype </br></br> Find more information <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">here</a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a968b755-96bc-4088-a1e3-187a90c955bc",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipsearch",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shipname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shiptype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "type_name_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"SHIPNAME\": \"THE QUEEN JACQUELINE\",\n    \"MMSI\": \"244740452\",\n    \"IMO\": \"0\",\n    \"SHIP_ID\": \"639\",\n    \"CALLSIGN\": \"PE6545\",\n    \"TYPE_NAME\": \"Inland, Ferry\",\n    \"DWT\": \"\",\n    \"FLAG\": \"NL\",\n    \"COUNTRY\": \"Netherlands\",\n    \"YEAR_BUILT\": \"\",\n    \"MT_URL\": \"http://www.marinetraffic.com/en/ais/details/ships/shipid:639/mmsi:244740452/vessel:639\"\n  },\n  {\n    \"SHIPNAME\": \"BACHATA QUEEN\",\n    \"MMSI\": \"229540000\",\n    \"IMO\": \"0\",\n    \"SHIP_ID\": \"2771\",\n    \"CALLSIGN\": \"9HB3419\",\n    \"TYPE_NAME\": \"Pleasure Craft\",\n    \"DWT\": \"\",\n    \"FLAG\": \"MT\",\n    \"COUNTRY\": \"Malta\",\n    \"YEAR_BUILT\": \"\",\n    \"MT_URL\": \"http://www.marinetraffic.com/en/ais/details/ships/shipid:2771/mmsi:229540000/vessel:2771\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f3aa755-5311-4ac2-a94e-a14aab283ba1",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipsearch",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shipname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shiptype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "type_name_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"11\",\n      \"detail\": \"KEYWORD SHOULD BE AT LEAST 3 CHARACTERS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afd128a1-aa4b-4903-bb15-99a79cdf4b93",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipsearch",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shipname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shiptype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "type_name_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.marinetraffic.com/api",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) API key: 40-character hexadecimal number",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "api_key"
+    }
+  ],
+  "info": {
+    "_postman_id": "ec864607-d36d-42f2-a142-17a9b74755fc",
+    "name": "MarineTraffic Events AIS API Search Vessel API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.\n\nContact Support:\n Name: MarineTraffic",
+      "type": "text/plain"
+    }
+  }
+}

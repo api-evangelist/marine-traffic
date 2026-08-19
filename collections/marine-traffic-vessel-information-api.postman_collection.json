@@ -1,0 +1,608 @@
+{
+  "item": [
+    {
+      "id": "9cf160ce-4501-4ce5-a947-e6884166105a",
+      "name": "Vessel Information",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1db5fc7-f479-4105-83ec-a999b3d851b0",
+          "name": "Vessel Photo",
+          "request": {
+            "name": "Vessel Photo",
+            "description": {
+              "content": "Retrieve the most popular photo of a vessel.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exportvesselphoto",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "vessel_id",
+                  "value": "<integer>",
+                  "description": "(Required) The Maritime Mobile Service Identity (MMSI) or the IMO number of the vessel </br></br> You can <b>instead</b> use shipid"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "A uniquely assigned ID by MarineTraffic for the subject vessel"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "31baf247-639e-460a-947f-b2b2f4d88360",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvesselphoto",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vessel_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"URL\": \"https://photos.marinetraffic.com/ais/showphoto.aspx?photoid=534918\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efafec6e-061a-4f85-af68-c38881bc5481",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvesselphoto",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vessel_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"2\",\n      \"detail\": \"VESSEL MMSI OR IMO OR SHIPID MISSING\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9a8bbfc-a3e7-4eab-b05a-614b7bbfc2c4",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvesselphoto",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vessel_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1r\",\n      \"detail\": \"TOO MANY REQUESTS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6d51dc2-07c8-4cb4-aebc-679dbb0be5da",
+          "name": "Vessel Particulars (Legacy API)",
+          "request": {
+            "name": "Vessel Particulars (Legacy API)",
+            "description": {
+              "content": "⚠️This is a legacy endpoint.</br></br>\nA new and improved version is now available, offering enhanced data quality, latest features and better performance. \nWe strongly recommend switching to the latest version, which you can explore here: <a href=\"https://developers.kpler.com/spec/1240abb4-7ed9-42e2-ae5e-e13a047a16ec\">Vessel Particulars & Ownership.</a></br></br>\nIf you would like to see the new endpoint in action, feel free to <a href=\"https://www.kpler.com/demos/request-maritime-api-data-services\"> request a demo </a> - our team would be happy to walk you through it.</br></br>\nRetrieve particulars for one or more vessels. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>If page parameter is missing, then default page:1 will be used instead</li>\n    <li>The results returned from the API call are split into pages of 100 rows</li>\n    <li>In order to get each page generated by the call, add the /page:#value/ parameter to the URL. The default value is /page:1/</li>\n    <li>The API does not return results for vessels that are not IMO-registered</li>\n    <li>The API does not return results for dead vessels</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vesselmasterdata",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "1",
+                  "description": "(Required) Version of the service to be executed. Use version 5 to get the latest"
+                },
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "(Required) The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track (single or comma separated values) </br></br> You can <b>instead</b> use imo or shipid"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track (single or comma separated values)"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "A uniquely assigned ID by MarineTraffic for the subject vessel (single or comma separated values)"
+                },
+                {
+                  "disabled": false,
+                  "key": "timespan",
+                  "value": "<integer>",
+                  "description": "The timespan parameter defines the period of time, during which we want to receive the change in a vessel's details </br></br> The maximum value can be either 5 when the interval parameter is set to days or 2880 when the interval is set to minutes"
+                },
+                {
+                  "disabled": false,
+                  "key": "interval",
+                  "value": "minutes",
+                  "description": "The interval parameter can be either minutes or days"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to be returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "msgtype",
+                  "value": "simple",
+                  "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  </ul>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8acfcc0c-cfa0-4427-87cd-7622f211c6ef",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vesselmasterdata",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "interval",
+                      "value": "minutes"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"ENI\": \"string\",\n    \"NAME\": \"string\",\n    \"BUILDER\": \"string\",\n    \"PLACE_OF_BUILD\": \"string\",\n    \"BUILD\": \"string\",\n    \"YARD_NUMBER\": \"string\",\n    \"BREADTH_EXTREME\": \"string\",\n    \"BREADTH_MOULDED\": \"string\",\n    \"DEPTH\": \"string\",\n    \"SUMMER_DWT\": \"string\",\n    \"DISPLACEMENT_SUMMER\": \"string\",\n    \"CALLSIGN\": \"string\",\n    \"FLAG\": \"string\",\n    \"DRAUGHT\": \"string\",\n    \"LENGHT_OVERALL\": \"string\",\n    \"LENGTH_B_W_PERPENDICULARS\": \"string\",\n    \"FUEL_CONSUMPTION\": \"string\",\n    \"SPEED_MAX\": \"string\",\n    \"SPEED_SERVICE\": \"string\",\n    \"TEU\": \"string\",\n    \"GROSS_TONNAGE\": \"string\",\n    \"NET_TONNAGE\": \"string\",\n    \"LIQUID_OIL\": \"string\",\n    \"LIQUID_GAS\": \"string\",\n    \"GRAIN\": \"string\",\n    \"OWNER\": \"string\",\n    \"MANAGER\": \"string\",\n    \"FINANCIAL_OWNER\": \"string\",\n    \"TECHNICAL_MANAGER\": \"string\",\n    \"INSURER\": \"string\",\n    \"VESSEL_TYPE\": \"string\"\n  },\n  {\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"ENI\": \"string\",\n    \"NAME\": \"string\",\n    \"BUILDER\": \"string\",\n    \"PLACE_OF_BUILD\": \"string\",\n    \"BUILD\": \"string\",\n    \"YARD_NUMBER\": \"string\",\n    \"BREADTH_EXTREME\": \"string\",\n    \"BREADTH_MOULDED\": \"string\",\n    \"DEPTH\": \"string\",\n    \"SUMMER_DWT\": \"string\",\n    \"DISPLACEMENT_SUMMER\": \"string\",\n    \"CALLSIGN\": \"string\",\n    \"FLAG\": \"string\",\n    \"DRAUGHT\": \"string\",\n    \"LENGHT_OVERALL\": \"string\",\n    \"LENGTH_B_W_PERPENDICULARS\": \"string\",\n    \"FUEL_CONSUMPTION\": \"string\",\n    \"SPEED_MAX\": \"string\",\n    \"SPEED_SERVICE\": \"string\",\n    \"TEU\": \"string\",\n    \"GROSS_TONNAGE\": \"string\",\n    \"NET_TONNAGE\": \"string\",\n    \"LIQUID_OIL\": \"string\",\n    \"LIQUID_GAS\": \"string\",\n    \"GRAIN\": \"string\",\n    \"OWNER\": \"string\",\n    \"MANAGER\": \"string\",\n    \"FINANCIAL_OWNER\": \"string\",\n    \"TECHNICAL_MANAGER\": \"string\",\n    \"INSURER\": \"string\",\n    \"VESSEL_TYPE\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7cbef01a-a0ee-4022-8c46-6f724545896f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vesselmasterdata",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "interval",
+                      "value": "minutes"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"2\",\n      \"detail\": \"VESSEL MMSI OR IMO OR SHIPID MISSING\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "940654ea-f186-407f-918d-7fb75f6121c6",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vesselmasterdata",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "interval",
+                      "value": "minutes"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.marinetraffic.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fb74f161-4e44-4d75-b637-3f484d255fbf",
+    "name": "MarineTraffic Events AIS API Vessel Information API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.\n\nContact Support:\n Name: MarineTraffic",
+      "type": "text/plain"
+    }
+  }
+}

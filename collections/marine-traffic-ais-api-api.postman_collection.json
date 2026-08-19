@@ -1,0 +1,688 @@
+{
+  "item": [
+    {
+      "id": "bf921256-f482-4a2d-b04d-70ba39b1f59a",
+      "name": "AIS API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "916a5222-94ff-4598-be67-d38bd7c275ad",
+          "name": "Vessel Positions",
+          "request": {
+            "name": "Vessel Positions",
+            "description": {
+              "content": "<strong>The latest version of this API endpoint, including significant improvements, is available <a href=\"https://developers.kpler.com/spec/dfdcdd47-ed9d-4fe1-bcc1-1f736a0a0266\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.</br></br>Please contact your Customer Success Manager to request access to the new endpoint.</strong></br></br></br></br>\nTrack vessels of interest anywhere in the world.</br></br><b>Notes</b><ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**SPEED** and **COURSE** values for base stations are represented by zero (0)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>**HEADING** true heading in degrees (0-359) (values -1 or 511 indicate lack of data)</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**DSRC** describes whether the transmitted AIS message was received by a terrestrial (TER), satellite (SAT) or roaming (ROAM) AIS antenna. </li>\n    <li>The <b>timespan</b> parameter lets you specify how far back in time the API should look for the latest available vessel positions. Default value is set to 5 minutes and can be adjusted to a maximum of 1,440 minutes (24 hours).</li>\n    <li>More information about response parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552867-what-is-the-significance-of-the-ais-navigational-status-values\">STATUS</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">SHIPTYPE</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exportvessels",
+                "{{api_key}}     "
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "<integer>",
+                  "description": "(Required) Use latest version **9**"
+                },
+                {
+                  "disabled": false,
+                  "key": "timespan",
+                  "value": "5",
+                  "description": "Overrides the default timespan"
+                },
+                {
+                  "disabled": false,
+                  "key": "vesseltypeid",
+                  "value": "<integer>",
+                  "description": "Filter vessels based on vessel types, comma separated ids supported </br></br><a href=\"https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types\" target='_blank'>more</a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The pagination cursor provided in the metadata section of the previous response"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "2000",
+                  "description": "The limit of vessels per page (min=1000, max=5000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "jsono",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>jsono</li>\n  <li>csv</li>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db9d20d6-3076-4126-a2b9-73a54a52de7e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvessels",
+                    "{{api_key}}     "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "5"
+                    },
+                    {
+                      "key": "vesseltypeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "jsono"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"DATA\": [\n    {\n      \"MMSI\": \"string\",\n      \"IMO\": \"string\",\n      \"SHIP_ID\": \"string\",\n      \"LAT\": \"string\",\n      \"LON\": \"string\",\n      \"SPEED\": \"string\",\n      \"HEADING\": \"string\",\n      \"COURSE\": \"string\",\n      \"STATUS\": \"string\",\n      \"TIMESTAMP\": \"1951-02-28T18:22:18.862Z\",\n      \"DSRC\": \"string\",\n      \"UTC_SECONDS\": \"string\",\n      \"MARKET\": \"string\",\n      \"SHIPNAME\": \"string\",\n      \"SHIPTYPE\": \"string\",\n      \"CALLSIGN\": \"string\",\n      \"FLAG\": \"string\",\n      \"LENGTH\": \"string\",\n      \"WIDTH\": \"string\",\n      \"GRT\": \"string\",\n      \"DWT\": \"string\",\n      \"DRAUGHT\": \"string\",\n      \"YEAR_BUILT\": \"string\",\n      \"SHIP_COUNTRY\": \"string\",\n      \"SHIP_CLASS\": \"string\",\n      \"ROT\": \"string\",\n      \"TYPE_NAME\": \"string\",\n      \"AIS_TYPE_SUMMARY\": \"string\",\n      \"DESTINATION\": \"string\",\n      \"ETA\": \"2023-04-28T16:52:15.098Z\",\n      \"L_FORE\": \"string\",\n      \"W_LEFT\": \"string\",\n      \"LAST_PORT\": \"string\",\n      \"LAST_PORT_TIME\": \"2001-05-11T08:11:14.048Z\",\n      \"LAST_PORT_ID\": \"string\",\n      \"LAST_PORT_UNLOCODE\": \"string\",\n      \"LAST_PORT_COUNTRY\": \"string\",\n      \"CURRENT_PORT\": \"string\",\n      \"CURRENT_PORT_ID\": \"string\",\n      \"CURRENT_PORT_UNLOCODE\": \"string\",\n      \"CURRENT_PORT_COUNTRY\": \"string\",\n      \"NEXT_PORT_ID\": \"string\",\n      \"NEXT_PORT_UNLOCODE\": \"string\",\n      \"NEXT_PORT_NAME\": \"string\",\n      \"NEXT_PORT_COUNTRY\": \"string\",\n      \"ETA_CALC\": \"1963-11-03T22:40:49.990Z\",\n      \"ETA_UPDATED\": \"2017-09-29T00:21:33.362Z\",\n      \"DISTANCE_TO_GO\": \"string\",\n      \"DISTANCE_TRAVELLED\": \"string\",\n      \"AVG_SPEED\": \"string\",\n      \"MAX_SPEED\": \"string\"\n    },\n    {\n      \"MMSI\": \"string\",\n      \"IMO\": \"string\",\n      \"SHIP_ID\": \"string\",\n      \"LAT\": \"string\",\n      \"LON\": \"string\",\n      \"SPEED\": \"string\",\n      \"HEADING\": \"string\",\n      \"COURSE\": \"string\",\n      \"STATUS\": \"string\",\n      \"TIMESTAMP\": \"2021-06-21T02:17:58.526Z\",\n      \"DSRC\": \"string\",\n      \"UTC_SECONDS\": \"string\",\n      \"MARKET\": \"string\",\n      \"SHIPNAME\": \"string\",\n      \"SHIPTYPE\": \"string\",\n      \"CALLSIGN\": \"string\",\n      \"FLAG\": \"string\",\n      \"LENGTH\": \"string\",\n      \"WIDTH\": \"string\",\n      \"GRT\": \"string\",\n      \"DWT\": \"string\",\n      \"DRAUGHT\": \"string\",\n      \"YEAR_BUILT\": \"string\",\n      \"SHIP_COUNTRY\": \"string\",\n      \"SHIP_CLASS\": \"string\",\n      \"ROT\": \"string\",\n      \"TYPE_NAME\": \"string\",\n      \"AIS_TYPE_SUMMARY\": \"string\",\n      \"DESTINATION\": \"string\",\n      \"ETA\": \"1951-04-11T05:21:11.302Z\",\n      \"L_FORE\": \"string\",\n      \"W_LEFT\": \"string\",\n      \"LAST_PORT\": \"string\",\n      \"LAST_PORT_TIME\": \"1990-10-30T09:45:34.951Z\",\n      \"LAST_PORT_ID\": \"string\",\n      \"LAST_PORT_UNLOCODE\": \"string\",\n      \"LAST_PORT_COUNTRY\": \"string\",\n      \"CURRENT_PORT\": \"string\",\n      \"CURRENT_PORT_ID\": \"string\",\n      \"CURRENT_PORT_UNLOCODE\": \"string\",\n      \"CURRENT_PORT_COUNTRY\": \"string\",\n      \"NEXT_PORT_ID\": \"string\",\n      \"NEXT_PORT_UNLOCODE\": \"string\",\n      \"NEXT_PORT_NAME\": \"string\",\n      \"NEXT_PORT_COUNTRY\": \"string\",\n      \"ETA_CALC\": \"1947-05-03T18:12:59.111Z\",\n      \"ETA_UPDATED\": \"1999-02-20T10:47:33.563Z\",\n      \"DISTANCE_TO_GO\": \"string\",\n      \"DISTANCE_TRAVELLED\": \"string\",\n      \"AVG_SPEED\": \"string\",\n      \"MAX_SPEED\": \"string\"\n    }\n  ],\n  \"METADATA\": {\n    \"CURSOR\": \"string\",\n    \"DATE_FROM\": \"1989-12-06T18:49:54.646Z\",\n    \"DATE_TO\": \"1984-07-05T14:37:57.646Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8633101e-8e92-4083-9492-057d6ea8aaf7",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvessels",
+                    "{{api_key}}     "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "5"
+                    },
+                    {
+                      "key": "vesseltypeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "jsono"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1r\",\n      \"detail\": \"TOO MANY REQUESTS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1c37979-899c-4670-8c14-18a3c6fb1626",
+          "name": "Vessel Positions in an Area of Interest",
+          "request": {
+            "name": "Vessel Positions in an Area of Interest",
+            "description": {
+              "content": "<strong>The latest version of this API endpoint, including significant improvements, is available <a href=\"https://developers.kpler.com/spec/dfdcdd47-ed9d-4fe1-bcc1-1f736a0a0266\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.</br></br>Please contact your Customer Success Manager to request access to the new endpoint.</strong></br></br></br></br>\nTrack Vessels of interest in a predefined area of interest.</br></br><b>Notes</b><ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**SPEED** and **COURSE** values for base stations are represented by zero (0)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>**HEADING** true heading in degrees (0-359) (values -1 or 511 indicate lack of data)</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**DSRC** describes whether the transmitted AIS message was received by a terrestrial (TER), satellite (SAT) or roaming (ROAM) AIS antenna. </li>\n    <li>The <b>timespan</b> parameter lets you specify how far back in time the API should look for the latest available vessel positions. Default value is set to 5 minutes and can be adjusted to a maximum of 1,440 minutes (24 hours).</li>\n    <li>More information about response parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552867-what-is-the-significance-of-the-ais-navigational-status-values\">STATUS</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">SHIPTYPE</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exportvessels-custom-area",
+                "{{api_key}} "
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "<integer>",
+                  "description": "(Required) Use latest version **2**"
+                },
+                {
+                  "disabled": false,
+                  "key": "timespan",
+                  "value": "5",
+                  "description": "Overrides the default timespan"
+                },
+                {
+                  "disabled": false,
+                  "key": "vesseltypeid",
+                  "value": "<integer>",
+                  "description": "Filter vessels based on vessel types, comma separated ids supported </br></br><a href=\"https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types\" target='_blank'>more</a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The pagination cursor provided in the metadata section of the previous response"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "2000",
+                  "description": "The limit of vessels per page (min=1000, max=5000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "jsono",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>jsono</li>\n  <li>csv</li>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9074dc16-1852-4287-8cd1-a521407a76f5",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvessels-custom-area",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "5"
+                    },
+                    {
+                      "key": "vesseltypeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "jsono"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"DATA\": [\n    {\n      \"MMSI\": \"string\",\n      \"IMO\": \"string\",\n      \"SHIP_ID\": \"string\",\n      \"LAT\": \"string\",\n      \"LON\": \"string\",\n      \"SPEED\": \"string\",\n      \"HEADING\": \"string\",\n      \"COURSE\": \"string\",\n      \"STATUS\": \"string\",\n      \"TIMESTAMP\": \"1952-11-04T06:54:43.500Z\",\n      \"DSRC\": \"string\",\n      \"UTC_SECONDS\": \"string\",\n      \"MARKET\": \"string\",\n      \"SHIPNAME\": \"string\",\n      \"SHIPTYPE\": \"string\",\n      \"CALLSIGN\": \"string\",\n      \"FLAG\": \"string\",\n      \"LENGTH\": \"string\",\n      \"WIDTH\": \"string\",\n      \"GRT\": \"string\",\n      \"DWT\": \"string\",\n      \"DRAUGHT\": \"string\",\n      \"YEAR_BUILT\": \"string\",\n      \"SHIP_COUNTRY\": \"string\",\n      \"SHIP_CLASS\": \"string\",\n      \"ROT\": \"string\",\n      \"TYPE_NAME\": \"string\",\n      \"AIS_TYPE_SUMMARY\": \"string\",\n      \"DESTINATION\": \"string\",\n      \"ETA\": \"1985-09-12T21:01:29.293Z\",\n      \"L_FORE\": \"string\",\n      \"W_LEFT\": \"string\",\n      \"LAST_PORT\": \"string\",\n      \"LAST_PORT_TIME\": \"1956-09-14T02:07:00.887Z\",\n      \"LAST_PORT_ID\": \"string\",\n      \"LAST_PORT_UNLOCODE\": \"string\",\n      \"LAST_PORT_COUNTRY\": \"string\",\n      \"CURRENT_PORT\": \"string\",\n      \"CURRENT_PORT_ID\": \"string\",\n      \"CURRENT_PORT_UNLOCODE\": \"string\",\n      \"CURRENT_PORT_COUNTRY\": \"string\",\n      \"NEXT_PORT_ID\": \"string\",\n      \"NEXT_PORT_UNLOCODE\": \"string\",\n      \"NEXT_PORT_NAME\": \"string\",\n      \"NEXT_PORT_COUNTRY\": \"string\",\n      \"ETA_CALC\": \"2011-12-29T03:41:17.871Z\",\n      \"ETA_UPDATED\": \"2026-02-06T11:10:55.475Z\",\n      \"DISTANCE_TO_GO\": \"string\",\n      \"DISTANCE_TRAVELLED\": \"string\",\n      \"AVG_SPEED\": \"string\",\n      \"MAX_SPEED\": \"string\"\n    },\n    {\n      \"MMSI\": \"string\",\n      \"IMO\": \"string\",\n      \"SHIP_ID\": \"string\",\n      \"LAT\": \"string\",\n      \"LON\": \"string\",\n      \"SPEED\": \"string\",\n      \"HEADING\": \"string\",\n      \"COURSE\": \"string\",\n      \"STATUS\": \"string\",\n      \"TIMESTAMP\": \"1985-05-31T07:03:22.638Z\",\n      \"DSRC\": \"string\",\n      \"UTC_SECONDS\": \"string\",\n      \"MARKET\": \"string\",\n      \"SHIPNAME\": \"string\",\n      \"SHIPTYPE\": \"string\",\n      \"CALLSIGN\": \"string\",\n      \"FLAG\": \"string\",\n      \"LENGTH\": \"string\",\n      \"WIDTH\": \"string\",\n      \"GRT\": \"string\",\n      \"DWT\": \"string\",\n      \"DRAUGHT\": \"string\",\n      \"YEAR_BUILT\": \"string\",\n      \"SHIP_COUNTRY\": \"string\",\n      \"SHIP_CLASS\": \"string\",\n      \"ROT\": \"string\",\n      \"TYPE_NAME\": \"string\",\n      \"AIS_TYPE_SUMMARY\": \"string\",\n      \"DESTINATION\": \"string\",\n      \"ETA\": \"1985-09-21T13:23:27.468Z\",\n      \"L_FORE\": \"string\",\n      \"W_LEFT\": \"string\",\n      \"LAST_PORT\": \"string\",\n      \"LAST_PORT_TIME\": \"1950-10-26T22:39:46.074Z\",\n      \"LAST_PORT_ID\": \"string\",\n      \"LAST_PORT_UNLOCODE\": \"string\",\n      \"LAST_PORT_COUNTRY\": \"string\",\n      \"CURRENT_PORT\": \"string\",\n      \"CURRENT_PORT_ID\": \"string\",\n      \"CURRENT_PORT_UNLOCODE\": \"string\",\n      \"CURRENT_PORT_COUNTRY\": \"string\",\n      \"NEXT_PORT_ID\": \"string\",\n      \"NEXT_PORT_UNLOCODE\": \"string\",\n      \"NEXT_PORT_NAME\": \"string\",\n      \"NEXT_PORT_COUNTRY\": \"string\",\n      \"ETA_CALC\": \"2024-12-04T04:28:06.793Z\",\n      \"ETA_UPDATED\": \"1957-11-01T04:57:02.553Z\",\n      \"DISTANCE_TO_GO\": \"string\",\n      \"DISTANCE_TRAVELLED\": \"string\",\n      \"AVG_SPEED\": \"string\",\n      \"MAX_SPEED\": \"string\"\n    }\n  ],\n  \"METADATA\": {\n    \"CURSOR\": \"string\",\n    \"DATE_FROM\": \"1974-05-14T10:17:30.094Z\",\n    \"DATE_TO\": \"2007-05-01T08:10:55.104Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4757674d-b6cc-491b-8f78-e8bb5e0d6eb5",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvessels-custom-area",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "5"
+                    },
+                    {
+                      "key": "vesseltypeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "jsono"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e32b5439-2a5a-4e3c-9a2f-116c43a64a8d",
+          "name": "Single Vessel Positions",
+          "request": {
+            "name": "Single Vessel Positions",
+            "description": {
+              "content": "<strong>The latest version of this API endpoint, including significant improvements, is available <a href=\"https://developers.kpler.com/spec/dfdcdd47-ed9d-4fe1-bcc1-1f736a0a0266\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.</br></br>Please contact your Customer Success Manager to request access to the new endpoint.</strong></br></br></br></br>\nGet the latest available position and voyage information for a single vessel.</br></br><b>Notes</b><ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**SPEED** and **COURSE** values for base stations are represented by zero (0)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>**HEADING** true heading in degrees (0-359) (values -1 or 511 indicate lack of data)</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**DSRC** describes whether the transmitted AIS message was received by a terrestrial (TER), satellite (SAT) or roaming (ROAM) AIS antenna. </li>\n    <li>The <b>timespan</b> parameter lets you specify how far back in time the API should look for the latest available vessel positions. Default value is set to 5 minutes and can be adjusted to a maximum of 1,440 minutes (24 hours).</li>\n    <li>More information about response parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552867-what-is-the-significance-of-the-ais-navigational-status-values\">STATUS</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number\">SHIPTYPE</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exportvessel",
+                "{{api_key}} "
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "<integer>",
+                  "description": "(Required) Use latest version **6**"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "(Required) A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "timespan",
+                  "value": "5",
+                  "description": "Overrides the default timespan"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "jsono",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>jsono</li>\n  <li>csv</li>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9ead4f8d-3ffa-4617-b743-d8c7200677bb",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvessel",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "5"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "jsono"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"SHIP_ID\": \"string\",\n    \"LAT\": \"string\",\n    \"LON\": \"string\",\n    \"SPEED\": \"string\",\n    \"HEADING\": \"string\",\n    \"COURSE\": \"string\",\n    \"STATUS\": \"string\",\n    \"TIMESTAMP\": \"1993-03-01T19:15:23.192Z\",\n    \"DSRC\": \"string\",\n    \"UTC_SECONDS\": \"string\",\n    \"MARKET\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"SHIPTYPE\": \"string\",\n    \"CALLSIGN\": \"string\",\n    \"FLAG\": \"string\",\n    \"LENGTH\": \"string\",\n    \"WIDTH\": \"string\",\n    \"GRT\": \"string\",\n    \"DWT\": \"string\",\n    \"DRAUGHT\": \"string\",\n    \"YEAR_BUILT\": \"string\",\n    \"SHIP_COUNTRY\": \"string\",\n    \"SHIP_CLASS\": \"string\",\n    \"ROT\": \"string\",\n    \"TYPE_NAME\": \"string\",\n    \"AIS_TYPE_SUMMARY\": \"string\",\n    \"DESTINATION\": \"string\",\n    \"ETA\": \"1949-03-09T01:23:44.864Z\",\n    \"L_FORE\": \"string\",\n    \"W_LEFT\": \"string\",\n    \"LAST_PORT\": \"string\",\n    \"LAST_PORT_TIME\": \"1984-03-15T16:38:45.622Z\",\n    \"LAST_PORT_ID\": \"string\",\n    \"LAST_PORT_UNLOCODE\": \"string\",\n    \"LAST_PORT_COUNTRY\": \"string\",\n    \"CURRENT_PORT\": \"string\",\n    \"CURRENT_PORT_ID\": \"string\",\n    \"CURRENT_PORT_UNLOCODE\": \"string\",\n    \"CURRENT_PORT_COUNTRY\": \"string\",\n    \"NEXT_PORT_ID\": \"string\",\n    \"NEXT_PORT_UNLOCODE\": \"string\",\n    \"NEXT_PORT_NAME\": \"string\",\n    \"NEXT_PORT_COUNTRY\": \"string\",\n    \"ETA_CALC\": \"1997-06-29T11:17:38.289Z\",\n    \"ETA_UPDATED\": \"1999-04-30T00:15:35.441Z\",\n    \"DISTANCE_TO_GO\": \"string\",\n    \"DISTANCE_TRAVELLED\": \"string\",\n    \"AVG_SPEED\": \"string\",\n    \"MAX_SPEED\": \"string\"\n  },\n  {\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"SHIP_ID\": \"string\",\n    \"LAT\": \"string\",\n    \"LON\": \"string\",\n    \"SPEED\": \"string\",\n    \"HEADING\": \"string\",\n    \"COURSE\": \"string\",\n    \"STATUS\": \"string\",\n    \"TIMESTAMP\": \"2005-11-21T02:37:39.737Z\",\n    \"DSRC\": \"string\",\n    \"UTC_SECONDS\": \"string\",\n    \"MARKET\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"SHIPTYPE\": \"string\",\n    \"CALLSIGN\": \"string\",\n    \"FLAG\": \"string\",\n    \"LENGTH\": \"string\",\n    \"WIDTH\": \"string\",\n    \"GRT\": \"string\",\n    \"DWT\": \"string\",\n    \"DRAUGHT\": \"string\",\n    \"YEAR_BUILT\": \"string\",\n    \"SHIP_COUNTRY\": \"string\",\n    \"SHIP_CLASS\": \"string\",\n    \"ROT\": \"string\",\n    \"TYPE_NAME\": \"string\",\n    \"AIS_TYPE_SUMMARY\": \"string\",\n    \"DESTINATION\": \"string\",\n    \"ETA\": \"1984-08-01T12:46:01.931Z\",\n    \"L_FORE\": \"string\",\n    \"W_LEFT\": \"string\",\n    \"LAST_PORT\": \"string\",\n    \"LAST_PORT_TIME\": \"1969-08-02T16:09:14.834Z\",\n    \"LAST_PORT_ID\": \"string\",\n    \"LAST_PORT_UNLOCODE\": \"string\",\n    \"LAST_PORT_COUNTRY\": \"string\",\n    \"CURRENT_PORT\": \"string\",\n    \"CURRENT_PORT_ID\": \"string\",\n    \"CURRENT_PORT_UNLOCODE\": \"string\",\n    \"CURRENT_PORT_COUNTRY\": \"string\",\n    \"NEXT_PORT_ID\": \"string\",\n    \"NEXT_PORT_UNLOCODE\": \"string\",\n    \"NEXT_PORT_NAME\": \"string\",\n    \"NEXT_PORT_COUNTRY\": \"string\",\n    \"ETA_CALC\": \"1977-06-06T14:33:23.383Z\",\n    \"ETA_UPDATED\": \"2011-09-05T13:35:16.308Z\",\n    \"DISTANCE_TO_GO\": \"string\",\n    \"DISTANCE_TRAVELLED\": \"string\",\n    \"AVG_SPEED\": \"string\",\n    \"MAX_SPEED\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6eb4899a-57ef-4fa0-a0ad-1c1c631248ca",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvessel",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "5"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "jsono"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"2\",\n      \"detail\": \"VESSEL MMSI OR IMO OR SHIPID MISSING\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ce98469-9b50-4822-830b-144532d947c4",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exportvessel",
+                    "{{api_key}} "
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "5"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "jsono"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.marinetraffic.com/api",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) API key: 40-character hexadecimal number",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "api_key"
+    }
+  ],
+  "info": {
+    "_postman_id": "9e0a32ef-4cf9-4521-b76e-7e49dec3076f",
+    "name": "MarineTraffic Events AIS API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.\n\nContact Support:\n Name: MarineTraffic",
+      "type": "text/plain"
+    }
+  }
+}

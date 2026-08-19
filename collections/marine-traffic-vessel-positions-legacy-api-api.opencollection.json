@@ -1,0 +1,403 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MarineTraffic Events AIS API Vessel Positions (Legacy API) API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vessel Positions (Legacy API)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Vessel Positions of a Static Fleet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvessels/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 8 to get the latest"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned positions.  </br></br> Maximum value for terrestrial coverage is 60. Maximum value for satellite coverage is 180"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n</ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Keep a close eye on the vessel or group of vessels of your interest. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**HEADING** values -1 or 511 indicate lack of data</li>\n    <"
+        },
+        {
+          "info": {
+            "name": "Vessel Positions of a Dynamic Fleet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvessels/:api_key ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 8 to get the latest"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned positions </br></br> Maximum value for terrestrial coverage is 60. Maximum value for satellite coverage is 180"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n</ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Monitor vessel activity for your MarineTraffic fleet(s). </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**HEADING** values -1 or 511 indicate lack of data</li>\n    <li>**SPEED**"
+        },
+        {
+          "info": {
+            "name": "Vessel Positions Within a Port",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvessels/:api_key  ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 8 to get the latest"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned positions </br></br> Maximum value for terrestrial coverage is 60. Maximum value for satellite coverage is 180"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n</ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Monitor vessel activity in one or more ports of your interest. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**HEADING** values -1 or 511 indicate lack of data</li>\n    <li>**S"
+        },
+        {
+          "info": {
+            "name": "Vessel Positions in a Predefined Bounding Box",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvessels/:api_key   ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 8 to get the latest"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned positions </br></br> Maximum value for terrestrial coverage is 60. Maximum value for satellite coverage is 180"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li> full</li>\n</ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Monitor vessel activity in an area of your interest. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**HEADING** values -1 or 511 indicate lack of data</li>\n    <li>**SPEED** and"
+        },
+        {
+          "info": {
+            "name": "Vessel Positions in a Dynamic Bounding Box",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvessels/:api_key    ",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 8 to get the latest"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned positions. Maximum value is 2880"
+              },
+              {
+                "name": "shiptype",
+                "value": "",
+                "type": "query",
+                "description": "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+              },
+              {
+                "name": "MAXLAT",
+                "value": "",
+                "type": "query",
+                "description": "Use with MINLAT, MINLON, MAXLON to define an area and retrieve positional information of vessels sailing in it"
+              },
+              {
+                "name": "MINLON",
+                "value": "",
+                "type": "query",
+                "description": "Use with MINLAT, MAXLAT, MAXLON to define an area and retrieve positional information of vessels sailing in it"
+              },
+              {
+                "name": "MAXLON",
+                "value": "",
+                "type": "query",
+                "description": "Use with MINLAT, MINLON, MAXLAT to define an area and retrieve positional information of vessels sailing in it"
+              },
+              {
+                "name": "MINLAT",
+                "value": "",
+                "type": "query",
+                "description": "Use with MAXLAT, MINLON, MAXLON to define an area and retrieve positional information of vessels sailing in it"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n</ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+              }
+            ]
+          },
+          "docs": "Retrieve positions for vessels sailing in an area that you define each time you call the service. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**HEADING** values -1 or 511 ind"
+        },
+        {
+          "info": {
+            "name": "Single Vessel Positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvessel/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 5 to get the latest"
+              },
+              {
+                "name": "shipid",
+                "value": "",
+                "type": "query",
+                "description": "A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+              },
+              {
+                "name": "imo",
+                "value": "",
+                "type": "query",
+                "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+              },
+              {
+                "name": "mmsi",
+                "value": "",
+                "type": "query",
+                "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned positions. Maximum value is 2880"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes scheduled static and voyage related vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Get the latest available position and voyage information for a particular vessel. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and TIMESTAMP in UTC</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**HEADING** values -1 or 511 indicate lack of data</"
+        },
+        {
+          "info": {
+            "name": "Vessel Positions in a Custom Area",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://services.marinetraffic.com/api/exportvessels-custom-area/:api_key",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "API key: 40-character hexadecimal number"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version of the service to be executed. Use version 1 to get the latest"
+              },
+              {
+                "name": "timespan",
+                "value": "",
+                "type": "query",
+                "description": "The maximum age, in minutes, of the returned positions. Maximum value is 2880"
+              },
+              {
+                "name": "shiptype_generic",
+                "value": "",
+                "type": "query",
+                "description": "Filter vessels based on generic vessel types, comma separated values supported </br></br> Vessel type ID should be used and not vessel type name (2=Fishing / 4=High Speed Craft / 6=Passenger / 7=Cargo / 8=Tanker) </br></br> Should not be combined with shiptype_detailed filter"
+              },
+              {
+                "name": "shiptype_detailed",
+                "value": "",
+                "type": "query",
+                "description": "Filter vessels based on detailed vessel types, comma separated values supported </br></br> Vessel type ID should be used and not vessel type name - <a href=\"https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types\"                                 target='_blank'>more</a> </br></br> Should not be combined with shiptype_generic filter"
+              },
+              {
+                "name": "msgtype",
+                "value": "",
+                "type": "query",
+                "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  <li>full</li>\n</ul> If used with the value <b>extended</b> or <b>full</b>, the response includes scheduled static and voyage related vessel data report (AIS Message 5). In this case your request frequency might be limited (depending on your service terms) </br></br> If omitted, the returned records include only position reports (AIS Messages 1, 2, 3/ 18, 19)"
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "query",
+                "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+              }
+            ]
+          },
+          "docs": "Monitor vessel activity in a Custom Area of your interest. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>**HEADING** for SAR Aircrafts contains the Altitude of the aircraft (“STATUS” = 97)</li>\n    <li>**HEADING** values -1 or 511 indicate lack of data</li>\n    <li>**SPEED"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

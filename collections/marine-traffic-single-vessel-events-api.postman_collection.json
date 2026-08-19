@@ -1,0 +1,1328 @@
+{
+  "item": [
+    {
+      "id": "6110499f-c097-47d9-a051-fa98af8ff424",
+      "name": "Single Vessel Events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eb4d1e73-dc04-4f98-8d95-ef468a78ebe4",
+          "name": "Single Vessel Port Calls",
+          "request": {
+            "name": "Single Vessel Port Calls",
+            "description": {
+              "content": "Retrieve arrival and departure information of a vessel for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>Data is available for dates **after** 2015-01-16</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**MOVE_TYPE** values: 1=Departure, 0=Arrival</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "portcalls",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "1",
+                  "description": "(Required) Version of the service to be executed. Use version 6 to get the latest"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "(Required) A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+                },
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "timespan",
+                  "value": "2",
+                  "description": "The maximum age, in minutes, of the returned port calls. Maximum value is 2880"
+                },
+                {
+                  "disabled": false,
+                  "key": "movetype",
+                  "value": "<integer>",
+                  "description": "Use 0 to only receive arrivals or 1 to only receive departures. If not used, the response will include both"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_intransit",
+                  "value": "<integer>",
+                  "description": "Use 1 to exclude vessels in transit"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromdate",
+                  "value": "<dateTime>",
+                  "description": "Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD HH:MM"
+                },
+                {
+                  "disabled": false,
+                  "key": "todate",
+                  "value": "<dateTime>",
+                  "description": "Portcalls between fromdate and todate. Maximum period requested 190 days </br></br> Date format: YYYY-MM-DD HH:MM"
+                },
+                {
+                  "disabled": false,
+                  "key": "dwt_min",
+                  "value": "<integer>",
+                  "description": "Data filter: minimum DWT </br></br> Applicable to IMO-having vessels"
+                },
+                {
+                  "disabled": false,
+                  "key": "dwt_max",
+                  "value": "<integer>",
+                  "description": "Data filter: maximum DWT </br></br> Applicable to IMO-having vessels"
+                },
+                {
+                  "disabled": false,
+                  "key": "gt_min",
+                  "value": "<integer>",
+                  "description": "Data filter: minimum GT </br></br> Applicable to IMO-having vessels"
+                },
+                {
+                  "disabled": false,
+                  "key": "gt_max",
+                  "value": "<integer>",
+                  "description": "Data filter: maximum GT </br></br> Applicable to IMO-having vessels"
+                },
+                {
+                  "disabled": false,
+                  "key": "market",
+                  "value": "<string>",
+                  "description": "Define market(s) for which you would like to receive port calls (single or comma separated values) - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "msgtype",
+                  "value": "simple",
+                  "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e538b07c-95ae-425e-97b2-f36c02269a85",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portcalls",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "2"
+                    },
+                    {
+                      "key": "movetype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_intransit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromdate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "todate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "dwt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dwt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "market",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"SHIP_ID\": \"string\",\n    \"IMO\": \"string\",\n    \"MMSI\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"TIMESTAMP_LT\": \"1957-12-16T03:33:43.244Z\",\n    \"TIMESTAMP_UTC\": \"1993-10-13T03:56:58.646Z\",\n    \"MOVE_TYPE\": \"string\",\n    \"TYPE_NAME\": \"string\",\n    \"PORT_ID\": \"string\",\n    \"PORT_NAME\": \"string\",\n    \"PORT_COUNTRY_CODE\": \"string\",\n    \"PORT_UNLOCODE\": \"string\",\n    \"MARKET\": \"string\"\n  },\n  {\n    \"SHIP_ID\": \"string\",\n    \"IMO\": \"string\",\n    \"MMSI\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"TIMESTAMP_LT\": \"2013-10-30T19:09:01.862Z\",\n    \"TIMESTAMP_UTC\": \"2017-04-19T17:47:10.733Z\",\n    \"MOVE_TYPE\": \"string\",\n    \"TYPE_NAME\": \"string\",\n    \"PORT_ID\": \"string\",\n    \"PORT_NAME\": \"string\",\n    \"PORT_COUNTRY_CODE\": \"string\",\n    \"PORT_UNLOCODE\": \"string\",\n    \"MARKET\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6a41fd7-d814-4604-a844-e37023a2a87b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portcalls",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "2"
+                    },
+                    {
+                      "key": "movetype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_intransit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromdate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "todate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "dwt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dwt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "market",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1g\",\n      \"detail\": \"DATE RANGE OUT OF BOUNDS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0cce915-9fdd-4257-981c-2323be985365",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portcalls",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "2"
+                    },
+                    {
+                      "key": "movetype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_intransit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromdate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "todate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "dwt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dwt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "market",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1r\",\n      \"detail\": \"TOO MANY REQUESTS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08be19c6-0753-479e-90b1-0e9c432afd66",
+          "name": "Single Vessel Events",
+          "request": {
+            "name": "Single Vessel Events",
+            "description": {
+              "content": "Get event based intelligence for a vessel. </br></br> <b>Notes</b> <ul>\n    <li>Here is a <a href=\"https://support.marinetraffic.com/en/articles/9552887-what-is-the-significance-of-the-marinetraffic-events\">COMPLETE LIST OF EVENT TYPES</a> available for this endpoint. You can use these as values for the **event_type** query parameter. </li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vesselevents",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "1",
+                  "description": "(Required) Version of the service to be executed. Use version 2 to get the latest"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "(Required) A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+                },
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "timespan",
+                  "value": "60",
+                  "description": "The maximum age, in minutes, of the returned port calls. Maximum value is 2880"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromdate",
+                  "value": "<dateTime>",
+                  "description": "Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+                },
+                {
+                  "disabled": false,
+                  "key": "todate",
+                  "value": "<dateTime>",
+                  "description": "Vessel Events between fromdate and todate </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_type",
+                  "value": "<integer>",
+                  "description": "You may use one or more event ids in comma separated format for the events you wish to receive"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit_events",
+                  "value": "<integer>",
+                  "description": "Limit the number of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b544b391-f4a2-4e6b-aca4-1626a0d040c4",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vesselevents",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "60"
+                    },
+                    {
+                      "key": "fromdate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "todate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "event_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit_events",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"MMSI\": \"310624000\",\n    \"IMO\": \"\",\n    \"SHIP_ID\": \"\",\n    \"SHIPNAME\": \"QUEEN VICTORIA\",\n    \"EVENT_ID\": \"1\",\n    \"EVENT_NAME\": \"FIRST_DAILY_POS\",\n    \"EVENT_CONTENT\": \"At N 50° 12' 06.53'' - W 002° 41' 31.37''\",\n    \"TIMESTAMP\": \"2020-10-20T00:13:00.000Z\"\n  },\n  {\n    \"MMSI\": \"310624000\",\n    \"IMO\": \"\",\n    \"SHIP_ID\": \"\",\n    \"SHIPNAME\": \"QUEEN VICTORIA\",\n    \"EVENT_ID\": \"6\",\n    \"EVENT_NAME\": \"UNDERWAY\",\n    \"EVENT_CONTENT\": \"At N 50° 35' 15.59'' - W 002° 21' 27.11''\",\n    \"TIMESTAMP\": \"2020-10-19T19:56:00.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ffae0db-e08e-4886-ad68-a2be808d4c7b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vesselevents",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "60"
+                    },
+                    {
+                      "key": "fromdate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "todate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "event_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit_events",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1g\",\n      \"detail\": \"DATE RANGE OUT OF BOUNDS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d6377fb-43b8-4910-a3f4-8d4607ae1b95",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vesselevents",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "60"
+                    },
+                    {
+                      "key": "fromdate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "todate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "event_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit_events",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66803b85-0996-42a8-8fcb-4f57f6a14ad2",
+          "name": "Single Vessel Berth Calls",
+          "request": {
+            "name": "Single Vessel Berth Calls",
+            "description": {
+              "content": "Get berth arrival and departure information for a specific vessel. </br></br> <b>Notes</b> <ul>\n    <li>Data is available for dates **after** 2017-07-03</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">MARKET</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">SHIPCLASS</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "berth-calls",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "v",
+                  "value": "1",
+                  "description": "(Required) Version of the service to be executed. Use version 3 to get the latest"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipid",
+                  "value": "<integer>",
+                  "description": "(Required) A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi"
+                },
+                {
+                  "disabled": false,
+                  "key": "mmsi",
+                  "value": "<integer>",
+                  "description": "The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "imo",
+                  "value": "<integer>",
+                  "description": "The International Maritime Organization (IMO) number of the vessel you wish to track"
+                },
+                {
+                  "disabled": false,
+                  "key": "timespan",
+                  "value": "2",
+                  "description": "The maximum age, in minutes, of the returned port calls. Maximum value is 2880"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromdate",
+                  "value": "<dateTime>",
+                  "description": "Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or greater than provided fromdate. Maximum period requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS."
+                },
+                {
+                  "disabled": false,
+                  "key": "todate",
+                  "value": "<dateTime>",
+                  "description": "Return Berth Calls where DOCK_TIMESTAMP_UTC is equal to or less than provided todate. Maximum period requested 15 days </br></br> Date format: YYYY-MM-DD HH:MM:SS"
+                },
+                {
+                  "disabled": false,
+                  "key": "market",
+                  "value": "<string>",
+                  "description": "Define market for which you would like to receive berth calls - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all</li>\n  <li>if undefined and ship-class is defined, return based on ship-class</li>\n  <li>if defined and ship-class is undefined, return all ship-classes of the specific market</li>\n</ul>"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipclass",
+                  "value": "<integer>",
+                  "description": "Define ship class of interest - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "dwt_min",
+                  "value": "<integer>",
+                  "description": "Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8)"
+                },
+                {
+                  "disabled": false,
+                  "key": "dwt_max",
+                  "value": "<integer>",
+                  "description": "Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8)"
+                },
+                {
+                  "disabled": false,
+                  "key": "gt_min",
+                  "value": "<integer>",
+                  "description": "Data filter: minimum GT </br></br> Applicable to IMO-having vessels"
+                },
+                {
+                  "disabled": false,
+                  "key": "gt_max",
+                  "value": "<integer>",
+                  "description": "Data filter: maximum GT </br></br> Applicable to IMO-having vessels"
+                },
+                {
+                  "disabled": false,
+                  "key": "movetype",
+                  "value": "<integer>",
+                  "description": "Use 0 to include both, 1 to only receive dockings or 2 for only undockings within the defined period. If not used, only dockings are returned </br></br> <b>Available only from version 2 of the service</b>"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocol",
+                  "value": "xml",
+                  "description": "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+                },
+                {
+                  "disabled": false,
+                  "key": "msgtype",
+                  "value": "simple",
+                  "description": "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data since the previous port call"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b635c20b-45c6-4d8d-8114-7b8131e7767c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "berth-calls",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "2"
+                    },
+                    {
+                      "key": "fromdate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "todate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "market",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shipclass",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dwt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dwt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "movetype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"SHIP_ID\": \"string\",\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"DOCK_TIMESTAMP_LT\": \"1979-06-25T03:47:11.194Z\",\n    \"DOCK_TIMESTAMP_UTC\": \"1993-09-05T11:01:40.964Z\",\n    \"DOCK_TIMESTAMP_OFFSET\": \"string\",\n    \"UNDOCK_TIMESTAMP_LT\": \"2023-11-29T23:22:13.694Z\",\n    \"UNDOCK_TIMESTAMP_UTC\": \"2005-06-12T04:19:39.445Z\",\n    \"UNDOCK_TIMESTAMP_OFFSET\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"TYPE_NAME\": \"string\",\n    \"DWT\": \"string\",\n    \"GRT\": \"string\",\n    \"FLAG\": \"string\",\n    \"YEAR_BUILT\": \"string\",\n    \"BERTH_ID\": \"string\",\n    \"BERTH_NAME\": \"string\",\n    \"TERMINAL_ID\": \"string\",\n    \"TERMINAL_NAME\": \"string\",\n    \"PORT_ID\": \"string\",\n    \"PORT_NAME\": \"string\",\n    \"PORT_UNLOCODE\": \"string\",\n    \"PORT_COUNTRY_CODE\": \"string\",\n    \"DESTINATION_ID\": \"string\",\n    \"DESTINATION\": \"string\",\n    \"MARKET\": \"string\"\n  },\n  {\n    \"SHIP_ID\": \"string\",\n    \"MMSI\": \"string\",\n    \"IMO\": \"string\",\n    \"DOCK_TIMESTAMP_LT\": \"1954-01-18T19:56:49.155Z\",\n    \"DOCK_TIMESTAMP_UTC\": \"1967-05-26T10:01:53.997Z\",\n    \"DOCK_TIMESTAMP_OFFSET\": \"string\",\n    \"UNDOCK_TIMESTAMP_LT\": \"2017-12-22T07:41:24.569Z\",\n    \"UNDOCK_TIMESTAMP_UTC\": \"1952-03-26T20:14:43.822Z\",\n    \"UNDOCK_TIMESTAMP_OFFSET\": \"string\",\n    \"SHIPNAME\": \"string\",\n    \"TYPE_NAME\": \"string\",\n    \"DWT\": \"string\",\n    \"GRT\": \"string\",\n    \"FLAG\": \"string\",\n    \"YEAR_BUILT\": \"string\",\n    \"BERTH_ID\": \"string\",\n    \"BERTH_NAME\": \"string\",\n    \"TERMINAL_ID\": \"string\",\n    \"TERMINAL_NAME\": \"string\",\n    \"PORT_ID\": \"string\",\n    \"PORT_NAME\": \"string\",\n    \"PORT_UNLOCODE\": \"string\",\n    \"PORT_COUNTRY_CODE\": \"string\",\n    \"DESTINATION_ID\": \"string\",\n    \"DESTINATION\": \"string\",\n    \"MARKET\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e18f7cd-2933-42ec-8679-36a01b60d895",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "berth-calls",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "2"
+                    },
+                    {
+                      "key": "fromdate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "todate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "market",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shipclass",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dwt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dwt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "movetype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"1g\",\n      \"detail\": \"DATE RANGE OUT OF BOUNDS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b3e3449-1833-4fd3-9f46-7ae63dd89b38",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "berth-calls",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "v",
+                      "value": "1"
+                    },
+                    {
+                      "key": "shipid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mmsi",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "imo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timespan",
+                      "value": "2"
+                    },
+                    {
+                      "key": "fromdate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "todate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "market",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shipclass",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dwt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dwt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_min",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gt_max",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "movetype",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "protocol",
+                      "value": "xml"
+                    },
+                    {
+                      "key": "msgtype",
+                      "value": "simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.marinetraffic.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3cc20ced-6a90-49db-9fd3-ca5d9f4ecb34",
+    "name": "MarineTraffic Events AIS API Single Vessel Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.\n\nContact Support:\n Name: MarineTraffic",
+      "type": "text/plain"
+    }
+  }
+}

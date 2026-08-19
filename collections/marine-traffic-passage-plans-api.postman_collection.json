@@ -1,0 +1,205 @@
+{
+  "item": [
+    {
+      "id": "6b928f6b-ff4d-4fe9-9221-8e028f29b1fb",
+      "name": "Passage Plans",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4273e9c0-f638-453c-b2f6-e9d75353f05e",
+          "name": "Import Passage Plan",
+          "request": {
+            "name": "Import Passage Plan",
+            "description": {
+              "content": "Import a passage plan for one of your managed vessels. </br></br> <b>Notes</b> <ul>\n    <li>Passage plans can only be imported for vessels that belong to user's managed vessels (see <a href=\"https://www.marinetraffic.com/en/online-services/plans/fleet-ops\">Fleet Operations</a> solution for more info)</li>\n    <li>Accepted file formats are CSV, RTZ or RT3</li>\n    <li>Maximum file size supported is 20MB</li>\n    <li>File should contain at least 2 waypoints</li>\n    <li>Imported passage plans overwrite previously imported ones for the provided api_key and IMO combination</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "import-passage-plan",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) API key: 40-character hexadecimal number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"imo\": \"<integer>\",\n    \"file\": \"<object>\",\n    \"protocol\": \"<string>\"\n  },\n  {\n    \"imo\": \"<integer>\",\n    \"file\": \"<object>\",\n    \"protocol\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1e9dd045-f81b-49bd-9428-b160dd4a1362",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "import-passage-plan",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Request's Content-Type",
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"imo\": \"<integer>\",\n    \"file\": \"<object>\",\n    \"protocol\": \"<string>\"\n  },\n  {\n    \"imo\": \"<integer>\",\n    \"file\": \"<object>\",\n    \"protocol\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": [\n    {\n      \"code\": \"s8\",\n      \"description\": \"PASSAGE PLAN IMPORTED\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "100003bf-05e5-4a6f-91c3-2d0724aaed09",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "import-passage-plan",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) API key: 40-character hexadecimal number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Request's Content-Type",
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"imo\": \"<integer>\",\n    \"file\": \"<object>\",\n    \"protocol\": \"<string>\"\n  },\n  {\n    \"imo\": \"<integer>\",\n    \"file\": \"<object>\",\n    \"protocol\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"code\": \"2a11\",\n      \"description\": \"VESSEL NOT FOUND\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.marinetraffic.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "33dc2daa-e3ff-441b-9e27-0251c733f74a",
+    "name": "MarineTraffic Events AIS API Passage Plans API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.\n\nContact Support:\n Name: MarineTraffic",
+      "type": "text/plain"
+    }
+  }
+}
