@@ -1,0 +1,26 @@
+slug: marine-traffic
+provider: MarineTraffic
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Voyage Information
+  spec_file: marine-traffic-voyage-information-api-openapi.yml
+  capability_id: BC-2510.30
+  capability_id_l1: BC-2510
+  capability_name: ETA Prediction Management
+  confidence: 0.78
+  evidence: '"Single Vessel Voyage Forecast", "Single Vessel Predictive Destinations", "Vessel ETA to
+    Port"'
+  reason: The surface computes forecast destinations and estimated time of arrival to port for vessels
+    and fleets, which is precisely ETA prediction within end-to-end visibility. Not fully 0.95 because
+    the predictive-destination endpoints also touch general voyage forecasting.

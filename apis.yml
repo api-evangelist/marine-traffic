@@ -449,6 +449,9 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/marine-traffic.png
 access: 3rd-Party
 common:
+  - type: CapabilityMap
+    url: capabilities/marine-traffic-capability-edges.yml
+    name: MarineTraffic Business Capability Map
   - type: AgenticAccess
     url: agentic-access/marine-traffic-agentic-access.yml
   - type: DomainSecurity
