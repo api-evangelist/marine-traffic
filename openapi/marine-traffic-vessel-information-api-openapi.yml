@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS API Vessel Information API
+  title: MarineTraffic Events AIS Vessel Information API
   version: 1.0.0
   description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
   contact:
@@ -137,13 +137,14 @@ components:
       required: false
       schema:
         type: integer
-    mmsi_VD02:
-      name: mmsi
+    v_VD02:
+      name: v
       in: query
-      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track (single or comma separated values) </br></br> You can <b>instead</b> use imo or shipid
+      description: Version of the service to be executed. Use version 5 to get the latest
       required: true
       schema:
         type: integer
+        default: 1
     page_VD02:
       name: page
       in: query
@@ -152,6 +153,36 @@ components:
       schema:
         type: integer
         default: 1
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    interval_VD02:
+      name: interval
+      in: query
+      description: The interval parameter can be either minutes or days
+      required: false
+      schema:
+        type: string
+        default: minutes
+    shipid_VD02:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel (single or comma separated values)
+      required: false
+      schema:
+        type: integer
+    mmsi_VD02:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track (single or comma separated values) </br></br> You can <b>instead</b> use imo or shipid
+      required: true
+      schema:
+        type: integer
     msgtype_VD02:
       name: msgtype
       in: query
@@ -160,10 +191,17 @@ components:
       schema:
         type: string
         default: simple
-    shipid_VD02:
-      name: shipid
+    vessel_id_VD01:
+      name: vessel_id
       in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel (single or comma separated values)
+      description: The Maritime Mobile Service Identity (MMSI) or the IMO number of the vessel </br></br> You can <b>instead</b> use shipid
+      required: true
+      schema:
+        type: integer
+    imo_VD02:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track (single or comma separated values)
       required: false
       schema:
         type: integer
@@ -174,37 +212,6 @@ components:
       required: true
       schema:
         type: string
-    protocol:
-      name: protocol
-      in: query
-      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
-      required: false
-      schema:
-        type: string
-        default: xml
-    v_VD02:
-      name: v
-      in: query
-      description: Version of the service to be executed. Use version 5 to get the latest
-      required: true
-      schema:
-        type: integer
-        default: 1
-    interval_VD02:
-      name: interval
-      in: query
-      description: The interval parameter can be either minutes or days
-      required: false
-      schema:
-        type: string
-        default: minutes
-    imo_VD02:
-      name: imo
-      in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to track (single or comma separated values)
-      required: false
-      schema:
-        type: integer
     shipid_VD01:
       name: shipid
       in: query
@@ -212,14 +219,64 @@ components:
       required: false
       schema:
         type: integer
-    vessel_id_VD01:
-      name: vessel_id
-      in: query
-      description: The Maritime Mobile Service Identity (MMSI) or the IMO number of the vessel </br></br> You can <b>instead</b> use shipid
-      required: true
-      schema:
-        type: integer
   schemas:
+    400_vd01_missing_or_invalid_ship_identifier:
+      title: Missing or invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+    400_vd02_missing_or_invalid_ship_identifier:
+      title: Missing or invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
     200_vd02_default:
       title: Simple
       type: array
@@ -359,6 +416,17 @@ components:
         TECHNICAL_MANAGER: null
         INSURER: JAPAN SHIP OWNERS P & I ASSOCIATION
         VESSEL_TYPE: CONTAINER SHIP
+    200_vd01_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          URL:
+            type: string
+            description: The URL of the photo.
+      example:
+      - URL: https://photos.marinetraffic.com/ais/showphoto.aspx?photoid=534918
     200_vd02_extended:
       title: Extended
       type: array
@@ -586,71 +654,3 @@ components:
         W_LEFT: '25'
         FINANCIAL_OWNER_COUNTRY: null,
         TECHNICAL_MANAGER_COUNTRY: CYPRUS
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
-    200_vd01_default:
-      title: Simple
-      type: array
-      items:
-        type: object
-        properties:
-          URL:
-            type: string
-            description: The URL of the photo.
-      example:
-      - URL: https://photos.marinetraffic.com/ais/showphoto.aspx?photoid=534918
-    400_vd01_missing_or_invalid_ship_identifier:
-      title: Missing or invalid ship identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: '2'
-          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
-    400_vd02_missing_or_invalid_ship_identifier:
-      title: Missing or invalid ship identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: '2'
-          detail: VESSEL MMSI OR IMO OR SHIPID MISSING

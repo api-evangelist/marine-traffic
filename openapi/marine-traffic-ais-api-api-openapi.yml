@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS API API
+  title: MarineTraffic Events AIS API
   version: 1.0.0
   description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
   contact:
@@ -110,50 +110,6 @@ components:
       required: false
       schema:
         type: integer
-    v_MTA030AD_2:
-      name: v
-      in: query
-      description: Use latest version **2**
-      required: true
-      schema:
-        type: integer
-    timespan_MTA030AD:
-      name: timespan
-      in: query
-      description: Overrides the default timespan
-      required: false
-      schema:
-        type: integer
-        default: 5
-    limit:
-      name: limit
-      in: query
-      description: The limit of vessels per page (min=1000, max=5000)
-      required: false
-      schema:
-        type: integer
-        default: 2000
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
-    imo_PS07:
-      name: imo
-      in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to track
-      required: false
-      schema:
-        type: integer
-    v_MTA030AD_3:
-      name: v
-      in: query
-      description: Use latest version **6**
-      required: true
-      schema:
-        type: integer
     shipid_PS07:
       name: shipid
       in: query
@@ -168,13 +124,35 @@ components:
       required: false
       schema:
         type: string
-    vessel_type:
-      name: vesseltypeid
+    v_MTA030AD_3:
+      name: v
       in: query
-      description: Filter vessels based on vessel types, comma separated ids supported </br></br><a href="https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types" target='_blank'>more</a>
+      description: Use latest version **6**
+      required: true
+      schema:
+        type: integer
+    limit:
+      name: limit
+      in: query
+      description: The limit of vessels per page (min=1000, max=5000)
       required: false
       schema:
         type: integer
+        default: 2000
+    v_MTA030AD_2:
+      name: v
+      in: query
+      description: Use latest version **2**
+      required: true
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
     v_MTA030AD_1:
       name: v
       in: query
@@ -182,6 +160,28 @@ components:
       required: true
       schema:
         type: integer
+    vessel_type:
+      name: vesseltypeid
+      in: query
+      description: Filter vessels based on vessel types, comma separated ids supported </br></br><a href="https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types" target='_blank'>more</a>
+      required: false
+      schema:
+        type: integer
+    imo_PS07:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    timespan_MTA030AD:
+      name: timespan
+      in: query
+      description: Overrides the default timespan
+      required: false
+      schema:
+        type: integer
+        default: 5
     protocol_mandatory:
       name: protocol
       in: query
@@ -191,6 +191,25 @@ components:
         type: string
         default: jsono
   schemas:
+    400_ps07__missing_ship_identifier:
+      title: ' Missing ship identifier'
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
     200_MTA030AD:
       title: Default
       type: object
@@ -429,6 +448,25 @@ components:
           CURSOR: abcdef
           DATE_FROM: '2023-11-20 15:57:00'
           DATE_TO: '2023-11-20 16:57:00'
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
     200_MTA030AD_single:
       title: Default
       type: array
@@ -645,41 +683,3 @@ components:
         DISTANCE_TRAVELLED: '74'
         AVG_SPEED: '12.6'
         MAX_SPEED: '13.2'
-    400_ps07__missing_ship_identifier:
-      title: ' Missing ship identifier'
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: '2'
-          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS

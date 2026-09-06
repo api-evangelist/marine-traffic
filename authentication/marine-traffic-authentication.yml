@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/marinetraffic-ais-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: APIKey
+  type: apiKey
+  in: query
+  parameter: apikey
+  description: MarineTraffic API key provided in the URL path for most endpoints
+  sources:
+  - openapi/marinetraffic-ais-openapi.yml

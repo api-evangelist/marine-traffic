@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS API Search Vessel API
+  title: MarineTraffic Events AIS Search Vessel API
   version: 1.0.0
   description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
   contact:
@@ -128,34 +128,6 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   parameters:
-    shipid_VD03:
-      name: shipid
-      in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use  mmsi or imo
-      required: true
-      schema:
-        type: integer
-    shipname_VD03:
-      name: shipname
-      in: query
-      description: The vessel name. The results will contain all vessels whose name is like the given words
-      required: true
-      schema:
-        type: string
-    type_name_id_VD03:
-      name: type_name_id
-      in: query
-      description: 'Data filter: AIS Shiptype </br></br> Find more information <a href="https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number">here</a>'
-      required: false
-      schema:
-        type: integer
-    shiptype_VD03:
-      name: shiptype
-      in: query
-      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
-      required: false
-      schema:
-        type: integer
     imo_VD03:
       name: imo
       in: query
@@ -163,17 +135,10 @@ components:
       required: false
       schema:
         type: integer
-    mmsi_VD03:
-      name: mmsi
+    shipname_VD03:
+      name: shipname
       in: query
-      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> <b>NOTE:</b> Using MMSI may potentially return multiple records as multiple vessels might have transponded the same MMSI
-      required: false
-      schema:
-        type: integer
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
+      description: The vessel name. The results will contain all vessels whose name is like the given words
       required: true
       schema:
         type: string
@@ -185,6 +150,41 @@ components:
       schema:
         type: string
         default: xml
+    shiptype_VD03:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    type_name_id_VD03:
+      name: type_name_id
+      in: query
+      description: 'Data filter: AIS Shiptype </br></br> Find more information <a href="https://support.marinetraffic.com/en/articles/9552866-what-is-the-significance-of-the-ais-shiptype-number">here</a>'
+      required: false
+      schema:
+        type: integer
+    mmsi_VD03:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> <b>NOTE:</b> Using MMSI may potentially return multiple records as multiple vessels might have transponded the same MMSI
+      required: false
+      schema:
+        type: integer
+    shipid_VD03:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use  mmsi or imo
+      required: true
+      schema:
+        type: integer
   schemas:
     400_vd03_missing_search_identifier:
       title: Missing search identifier
@@ -205,8 +205,8 @@ components:
         errors:
         - code: '54'
           detail: NO SEARCH TERM SUPPLIED
-    400_vd03_missing_search_term:
-      title: Missing search term
+    400_vd03_invalid_search_string_length:
+      title: Invalid search string length
       type: object
       properties:
         errors:
@@ -222,8 +222,8 @@ components:
                 description: Error message
       example:
         errors:
-        - code: '54'
-          detail: NO SEARCH TERM SUPPLIED
+        - code: '11'
+          detail: KEYWORD SHOULD BE AT LEAST 3 CHARACTERS
     429_too_many_requests:
       title: Too many requests
       type: object
@@ -305,8 +305,8 @@ components:
         COUNTRY: Malta
         YEAR_BUILT: ''
         MT_URL: http://www.marinetraffic.com/en/ais/details/ships/shipid:2771/mmsi:229540000/vessel:2771
-    400_vd03_invalid_search_string_length:
-      title: Invalid search string length
+    400_vd03_missing_search_term:
+      title: Missing search term
       type: object
       properties:
         errors:
@@ -322,5 +322,5 @@ components:
                 description: Error message
       example:
         errors:
-        - code: '11'
-          detail: KEYWORD SHOULD BE AT LEAST 3 CHARACTERS
+        - code: '54'
+          detail: NO SEARCH TERM SUPPLIED

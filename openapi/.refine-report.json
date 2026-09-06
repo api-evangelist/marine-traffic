@@ -35,6 +35,22 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "marine-traffic-ais-api-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-balances-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-fleets-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-passage-plans-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-port-events-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-ports-information-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-reverse-geocoding-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-routing-information-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-search-vessel-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-single-vessel-events-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-vessel-historical-track-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-vessel-information-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-vessel-positions-legacy-api-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "marine-traffic-voyage-information-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

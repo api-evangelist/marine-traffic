@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS API Passage Plans API
+  title: MarineTraffic Events AIS Passage Plans API
   version: 1.0.0
   description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
   contact:

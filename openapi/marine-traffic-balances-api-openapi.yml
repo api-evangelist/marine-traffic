@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS API Balances API
+  title: MarineTraffic Events AIS Balances API
   version: 1.0.0
   description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
   contact:
@@ -48,14 +48,6 @@ paths:
                   summary: Too Many Requests
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
-  parameters:
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
   schemas:
     429_too_many_requests:
       title: Too many requests
@@ -95,3 +87,11 @@ components:
       - USER_ID: '13541873'
         CREDIT_BALANCE: '1542'
         LAST_CHARGED: '2017-01-17T12:23:24.000Z'
+  parameters:
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string

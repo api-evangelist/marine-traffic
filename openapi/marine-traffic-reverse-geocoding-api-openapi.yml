@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS API Reverse Geocoding API
+  title: MarineTraffic Events AIS Reverse Geocoding API
   version: 1.0.0
   description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
   contact:
@@ -57,13 +57,6 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   parameters:
-    exclude_custom_areas_GI01:
-      name: exclude_custom_areas
-      in: query
-      description: Flag that indicates if Custom Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
-      required: false
-      schema:
-        type: integer
     exclude_berths_GI01:
       name: exclude_berths
       in: query
@@ -71,20 +64,6 @@ components:
       required: false
       schema:
         type: integer
-    exclude_terminals_GI01:
-      name: exclude_terminals
-      in: query
-      description: Flag that indicates if Terminals information will be excluded from response in case given point intersects with them (0:no, 1:yes)
-      required: false
-      schema:
-        type: integer
-    radius_GI01:
-      name: radius
-      in: query
-      description: Maximum distance (in NM) from the given point that should be searched for nearby areas/assets </br></br> Cannot be greater than 10NM
-      required: false
-      schema:
-        type: number
     protocol:
       name: protocol
       in: query
@@ -93,6 +72,27 @@ components:
       schema:
         type: string
         default: xml
+    radius_GI01:
+      name: radius
+      in: query
+      description: Maximum distance (in NM) from the given point that should be searched for nearby areas/assets </br></br> Cannot be greater than 10NM
+      required: false
+      schema:
+        type: number
+    exclude_custom_areas_GI01:
+      name: exclude_custom_areas
+      in: query
+      description: Flag that indicates if Custom Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_standard_areas_GI01:
+      name: exclude_standard_areas
+      in: query
+      description: Flag that indicates if Standard Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
     coordinates_GI01:
       name: coordinates
       in: query
@@ -107,13 +107,6 @@ components:
       required: true
       schema:
         type: string
-    exclude_standard_areas_GI01:
-      name: exclude_standard_areas
-      in: query
-      description: Flag that indicates if Standard Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
-      required: false
-      schema:
-        type: integer
     exclude_ports_GI01:
       name: exclude_ports
       in: query
@@ -121,7 +114,33 @@ components:
       required: false
       schema:
         type: integer
+    exclude_terminals_GI01:
+      name: exclude_terminals
+      in: query
+      description: Flag that indicates if Terminals information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
   schemas:
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
     200_gi01_default:
       title: Simple
       type: array
@@ -199,22 +218,3 @@ components:
         DISTANCE: '0'
         TERMINAL: null
         URL: null
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS

@@ -449,6 +449,14 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/marine-traffic.png
 access: 3rd-Party
 common:
+  - type: Authentication
+    url: authentication/marine-traffic-authentication.yml
+  - type: TermsOfService
+    url: https://www.kpler.com/company/terms-of-use
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/marinetraffic/refs/heads/main/json-schema/marinetraffic-vessel-schema.json
+  - type: JSONLDContext
+    url: https://raw.githubusercontent.com/api-evangelist/marinetraffic/refs/heads/main/json-ld/marinetraffic-context.jsonld
   - type: CapabilityMap
     url: capabilities/marine-traffic-capability-edges.yml
     name: MarineTraffic Business Capability Map
