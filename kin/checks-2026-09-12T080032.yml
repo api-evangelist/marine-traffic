@@ -1,16 +1,16 @@
 ---
 kin_checks:
   slug: marine-traffic
-  schema_version: 0.18.3
-  scored_at: '2026-09-06'
-  run_ts: 2026-09-06T011047
+  schema_version: 0.21.0
+  scored_at: '2026-09-12'
+  run_ts: 2026-09-12T080032
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.18.3.yml; counts below let you verify that.
+    in rubric/scoring-0.21.0.yml; counts below let you verify that.
   counts:
-    total: 132
-    earned: 40
-    partial: 8
-    missed: 58
+    total: 136
+    earned: 44
+    partial: 9
+    missed: 57
     na: 26
   checks:
   - id: base_url_per_api
@@ -68,8 +68,6 @@ kin_checks:
     status: missed
   - id: getting_started_present
     status: missed
-  - id: authentication_documented
-    status: missed
   - id: sdk_count_1
     status: missed
   - id: sdk_count_3
@@ -88,8 +86,6 @@ kin_checks:
     status: missed
   - id: sign_up_present
     status: missed
-  - id: terms_of_service
-    status: missed
   - id: privacy_policy
     status: missed
   - id: compliance_published
@@ -98,19 +94,21 @@ kin_checks:
     status: missed
   - id: reg_oauth_scopes
     status: missed
-  - id: reg_authentication_documented
-    status: missed
   - id: reg_vulnerability_disclosure
-    status: missed
-  - id: reg_terms_of_service
     status: missed
   - id: reg_privacy_policy
     status: missed
   - id: reg_compliance_published
     status: missed
-  - id: mcp_server
+  - id: upsert_outcome_discriminator
     status: missed
-  - id: auth_clarity
+  - id: upsert_alternate_key
+    status: missed
+  - id: upsert_named
+    status: missed
+  - id: upsert_declared_conflict
+    status: missed
+  - id: mcp_server
     status: missed
   - id: idempotency
     status: missed
@@ -158,6 +156,10 @@ kin_checks:
     status: partial
     earned: 2.4
     detail: 'grade: documented'
+  - id: auth_clarity
+    status: partial
+    earned: 3.5
+    detail: 'grade: bearer'
   - id: rate_limit_signal
     status: partial
     earned: 3.5
