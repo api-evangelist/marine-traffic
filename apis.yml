@@ -64,6 +64,8 @@ apis:
   description: The Fleets API from MarineTraffic — 4 operation(s) for fleets.
   humanURL: https://servicedocs.marinetraffic.com/
   tags:
+  - Fleet
+  tags_raw:
   - Fleets
   properties:
   - type: OpenAPI
