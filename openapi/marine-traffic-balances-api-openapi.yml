@@ -1,8 +1,15 @@
 openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS Balances API
+  title: MarineTraffic AIS Data Balances API
+  description: Complete MarineTraffic AIS Data API covering vessel positions, events, vessels data, voyage information, ports information, routing, reverse geocoding, and power-user fleet/balance services. Backed by 13,000+ AIS receivers operated by Kpler / MarineTraffic.
   version: 1.0.0
-  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  license:
+    name: Property of Kpler
+    url: https://www.kpler.com/product/maritime/data-services
+  x-logo:
+    url: https://www.marinetraffic.com/img/logos/Logo.png
+    altText: MarineTraffic logo
+    href: https://www.marinetraffic.com/en/ais/home/centerx:-12.0/centery:25.0/zoom:4
   contact:
     name: MarineTraffic
     url: https://www.marinetraffic.com/
@@ -16,7 +23,15 @@ paths:
       tags:
       - Balances
       summary: Credits Balance
-      description: "Get a snapshot of your current credits balance.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Get a snapshot of your current credits balance.
+
+
+        Notes
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: exportcredits
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -49,25 +64,6 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   schemas:
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
     200_pu04_default:
       title: Simple
       type: array
@@ -87,6 +83,25 @@ components:
       - USER_ID: '13541873'
         CREDIT_BALANCE: '1542'
         LAST_CHARGED: '2017-01-17T12:23:24.000Z'
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
   parameters:
     api_key:
       name: api_key
@@ -95,3 +110,34 @@ components:
       required: true
       schema:
         type: string
+x-tagGroups:
+- name: Solutions
+  tags:
+  - Containers API
+  - MT Inbox
+- name: Vessel Positions
+  tags:
+  - AIS API
+  - Vessel Historical Track
+  - Vessel Positions (Legacy API)
+- name: Events
+  tags:
+  - Single Vessel Events
+  - Port Events
+- name: Vessels Data
+  tags:
+  - Vessel Information
+  - Search Vessel
+- name: Voyage Info
+  tags:
+  - Voyage Information
+  - Ports Information
+  - Routing Information
+- name: Geographical Info
+  tags:
+  - Reverse Geocoding
+- name: Power User
+  tags:
+  - Fleets
+  - Balances
+  - Passage Plans

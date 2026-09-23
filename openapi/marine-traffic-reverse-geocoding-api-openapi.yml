@@ -1,8 +1,15 @@
 openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS Reverse Geocoding API
+  title: MarineTraffic AIS Data Reverse Geocoding API
+  description: Complete MarineTraffic AIS Data API covering vessel positions, events, vessels data, voyage information, ports information, routing, reverse geocoding, and power-user fleet/balance services. Backed by 13,000+ AIS receivers operated by Kpler / MarineTraffic.
   version: 1.0.0
-  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  license:
+    name: Property of Kpler
+    url: https://www.kpler.com/product/maritime/data-services
+  x-logo:
+    url: https://www.marinetraffic.com/img/logos/Logo.png
+    altText: MarineTraffic logo
+    href: https://www.marinetraffic.com/en/ais/home/centerx:-12.0/centery:25.0/zoom:4
   contact:
     name: MarineTraffic
     url: https://www.marinetraffic.com/
@@ -16,7 +23,15 @@ paths:
       tags:
       - Reverse Geocoding
       summary: Reverse Geocoding of a Single Point
-      description: "Get a list of geometries that a given point of coordinates intersects with.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Get a list of geometries that a given point of coordinates intersects with.
+
+
+        Notes
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: reversegeocode
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -57,6 +72,34 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   parameters:
+    radius_GI01:
+      name: radius
+      in: query
+      description: Maximum distance (in NM) from the given point that should be searched for nearby areas/assets </br></br> Cannot be greater than 10NM
+      required: false
+      schema:
+        type: number
+    exclude_terminals_GI01:
+      name: exclude_terminals
+      in: query
+      description: Flag that indicates if Terminals information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    exclude_custom_areas_GI01:
+      name: exclude_custom_areas
+      in: query
+      description: Flag that indicates if Custom Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
     exclude_berths_GI01:
       name: exclude_berths
       in: query
@@ -72,24 +115,17 @@ components:
       schema:
         type: string
         default: xml
-    radius_GI01:
-      name: radius
-      in: query
-      description: Maximum distance (in NM) from the given point that should be searched for nearby areas/assets </br></br> Cannot be greater than 10NM
-      required: false
-      schema:
-        type: number
-    exclude_custom_areas_GI01:
-      name: exclude_custom_areas
-      in: query
-      description: Flag that indicates if Custom Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
-      required: false
-      schema:
-        type: integer
     exclude_standard_areas_GI01:
       name: exclude_standard_areas
       in: query
       description: Flag that indicates if Standard Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_ports_GI01:
+      name: exclude_ports
+      in: query
+      description: Flag that indicates if Ports information will be excluded from response in case given point intersects with them (0:no, 1:yes)
       required: false
       schema:
         type: integer
@@ -100,47 +136,7 @@ components:
       required: true
       schema:
         type: string
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
-    exclude_ports_GI01:
-      name: exclude_ports
-      in: query
-      description: Flag that indicates if Ports information will be excluded from response in case given point intersects with them (0:no, 1:yes)
-      required: false
-      schema:
-        type: integer
-    exclude_terminals_GI01:
-      name: exclude_terminals
-      in: query
-      description: Flag that indicates if Terminals information will be excluded from response in case given point intersects with them (0:no, 1:yes)
-      required: false
-      schema:
-        type: integer
   schemas:
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
     200_gi01_default:
       title: Simple
       type: array
@@ -218,3 +214,53 @@ components:
         DISTANCE: '0'
         TERMINAL: null
         URL: null
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
+x-tagGroups:
+- name: Solutions
+  tags:
+  - Containers API
+  - MT Inbox
+- name: Vessel Positions
+  tags:
+  - AIS API
+  - Vessel Historical Track
+  - Vessel Positions (Legacy API)
+- name: Events
+  tags:
+  - Single Vessel Events
+  - Port Events
+- name: Vessels Data
+  tags:
+  - Vessel Information
+  - Search Vessel
+- name: Voyage Info
+  tags:
+  - Voyage Information
+  - Ports Information
+  - Routing Information
+- name: Geographical Info
+  tags:
+  - Reverse Geocoding
+- name: Power User
+  tags:
+  - Fleets
+  - Balances
+  - Passage Plans

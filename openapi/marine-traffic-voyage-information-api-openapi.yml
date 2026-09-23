@@ -1,8 +1,15 @@
 openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS Voyage Information API
+  title: MarineTraffic AIS Data Voyage Information API
+  description: Complete MarineTraffic AIS Data API covering vessel positions, events, vessels data, voyage information, ports information, routing, reverse geocoding, and power-user fleet/balance services. Backed by 13,000+ AIS receivers operated by Kpler / MarineTraffic.
   version: 1.0.0
-  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  license:
+    name: Property of Kpler
+    url: https://www.kpler.com/product/maritime/data-services
+  x-logo:
+    url: https://www.marinetraffic.com/img/logos/Logo.png
+    altText: MarineTraffic logo
+    href: https://www.marinetraffic.com/en/ais/home/centerx:-12.0/centery:25.0/zoom:4
   contact:
     name: MarineTraffic
     url: https://www.marinetraffic.com/
@@ -16,7 +23,21 @@ paths:
       tags:
       - Voyage Information
       summary: Single Vessel Voyage Forecast
-      description: "Get voyage information for a single vessel. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Get voyage information for a single vessel.
+
+
+        Notes
+
+
+        Information about AIS-transmitted data
+
+
+        **SPEED** returned in (knots x10) and **TIMESTAMP** in UTC
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: voyageforecast_
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -78,7 +99,21 @@ paths:
       tags:
       - Voyage Information
       summary: Fleet Voyage Forecast
-      description: "Get voyage information for one for your MarineTraffic Fleets. </br></br> <b>Notes</b> <ul>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Get voyage information for one for your MarineTraffic Fleets.
+
+
+        Notes
+
+
+        Information about AIS-transmitted data
+
+
+        **SPEED** returned in (knots x10) and **TIMESTAMP** in UTC
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: voyageforecast
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -138,7 +173,15 @@ paths:
       tags:
       - Voyage Information
       summary: Single Vessel Predictive Destinations
-      description: "Receive a prediction of the likely destination of a single vessel.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Receive a prediction of the likely destination of a single vessel.
+
+
+        Notes
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: predictive-destination-areas
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -192,7 +235,15 @@ paths:
       tags:
       - Voyage Information
       summary: Fleet Predictive Destinations
-      description: "Receive a prediction of the likely destination for one of your MarineTraffic fleets.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Receive a prediction of the likely destination for one of your MarineTraffic fleets.
+
+
+        Notes
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: predictive-destination-areas_
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -244,7 +295,15 @@ paths:
       tags:
       - Voyage Information
       summary: Vessel ETA to Port
-      description: "Get ETA and voyage information for a vessel of your choice, to any port you define.</br></br> <b>Notes</b> <ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Get ETA and voyage information for a vessel of your choice, to any port you define.
+
+
+        Notes
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: etatoport
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -313,6 +372,101 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   schemas:
+    400_vi04_invalid_fleet_identifier:
+      title: Invalid fleet identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '1'
+          detail: INCORRECT CALL-CHECK PARAMETERS
+    404_vi01_invalid_fleet_identifier:
+      title: Invalid fleet identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 6b
+          detail: FLEET NOT FOUND
+    400_vi07_missing_or_invalid_ship_identifier:
+      title: Missing or invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+    400_vi01_missing_or_invalid_ship_identifier:
+      title: Missing or invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 2a
+          detail: VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE MISSING
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
     200_vi07_default:
       title: Simple
       type: array
@@ -370,6 +524,119 @@ components:
         ETA_PORT_NAME: ROTTERDAM
         ETA_PORT_UNLOCODE: NLRTM
         ETA_CALC: '2020-11-17T04:18:35.000Z'
+    200_vi01_extended:
+      title: Extended
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          DESTINATION:
+            type: string
+            description: The Destination of the subject vessel according to the AIS transmissions
+          LAST_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Last Port
+          LAST_PORT:
+            type: string
+            description: The Name of the Last Port the vessel has visited
+          LAST_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Last Port
+          LAST_PORT_TIME:
+            type: string
+            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+            format: date-time
+          NEXT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Next Port
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          ETA:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
+            format: date-time
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
+            format: date-time
+          DISTANCE_TRAVELLED:
+            type: string
+            description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
+          DISTANCE_TO_GO:
+            type: string
+            description: The Remaining Distance (in NM) for the subject vessel to reach the reported Destination
+          SPEED_CALC:
+            type: string
+            description: The Speed of the vessel (in knots x10) that MarineTraffic used to produce the ETA_CALC value
+          DRAUGHT:
+            type: string
+            description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
+          DRAUGHT_MAX:
+            type: string
+            description: The Maximum Draught (in metres x10) that has been recorded for the subject vessel
+          LOAD_STATUS_NAME:
+            type: string
+            description: The Load Condition of the subject vessel (In Ballast, Partially Loaded, Loaded)
+          ROUTE:
+            type: string
+            description: The estimated route of the subject vessel to destination in WKT format
+      example:
+      - MMSI: '310627000'
+        IMO: '9241061'
+        SHIP_ID: '371681'
+        SHIPNAME: QUEEN MARY 2
+        DESTINATION: TORQUAY
+        LAST_PORT_ID: '106'
+        LAST_PORT: SOUTHAMPTON
+        LAST_PORT_UNLOCODE: GBSOU
+        LAST_PORT_TIME: '2020-10-14T17:00:00.000Z'
+        NEXT_PORT_ID: '10379'
+        NEXT_PORT_NAME: TORQUAY
+        NEXT_PORT_UNLOCODE: GBTOR
+        ETA: '2020-10-14T13:00:00.000Z'
+        ETA_CALC: ''
+        DISTANCE_TRAVELLED: '201'
+        DISTANCE_TO_GO: '0'
+        SPEED_CALC: '120'
+        DRAUGHT: '101'
+        DRAUGHT_MAX: '105'
+        LOAD_STATUS_NAME: N/A
+        ROUTE: ''
+    400_vi04_missing_or_invalid_ship_identifier:
+      title: Missing or invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '1'
+          detail: INCORRECT CALL-CHECK PARAMETERS
     200_vi07_extended:
       title: Extended
       type: array
@@ -468,8 +735,8 @@ components:
         ETD_CALC: '2020-11-26T16:20:14.000Z'
         TIME_ANCH: '3.4'
         TIME_PORT: '6.1'
-    400_vi07_missing_or_invalid_ship_identifier:
-      title: Missing or invalid ship identifier
+    400_vi07_missing_or_invalid_port_identifier:
+      title: Missing or invalid port identifier
       type: object
       properties:
         errors:
@@ -485,8 +752,74 @@ components:
                 description: Error message
       example:
         errors:
-        - code: '2'
-          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+        - code: 2a10
+          detail: PORT_ID OR UNLOCODE MISSING
+    200_vi01_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          DESTINATION:
+            type: string
+            description: The Destination of the subject vessel according to the AIS transmissions
+          LAST_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Last Port
+          LAST_PORT:
+            type: string
+            description: The Name of the Last Port the vessel has visited
+          LAST_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Last Port
+          LAST_PORT_TIME:
+            type: string
+            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+            format: date-time
+          NEXT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Next Port
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          ETA:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
+            format: date-time
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
+            format: date-time
+      example:
+      - MMSI: '310627000'
+        IMO: '9241061'
+        SHIP_ID: '371681'
+        SHIPNAME: QUEEN MARY 2
+        DESTINATION: TORQUAY
+        LAST_PORT_ID: '106'
+        LAST_PORT: SOUTHAMPTON
+        LAST_PORT_UNLOCODE: GBSOU
+        LAST_PORT_TIME: '2020-10-14T17:00:00.000Z'
+        NEXT_PORT_ID: '10379'
+        NEXT_PORT_NAME: TORQUAY
+        NEXT_PORT_UNLOCODE: GBTOR
+        ETA: '2020-10-14T13:00:00.000Z'
+        ETA_CALC: ''
     200_vi04_default:
       title: Simple
       type: array
@@ -634,285 +967,32 @@ components:
         NEXT_PORT_5_PROB: ''
         NEXT_AREA_5: ''
         NEXT_AREA_5_PROB: ''
-    400_vi01_missing_or_invalid_ship_identifier:
-      title: Missing or invalid ship identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 2a
-          detail: VESSEL MMSI OR IMO OR SHIPID OR PORTID OR UNLOCODE MISSING
-    200_vi01_default:
-      title: Simple
-      type: array
-      items:
-        type: object
-        properties:
-          MMSI:
-            type: string
-            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
-          IMO:
-            type: string
-            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
-          SHIP_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the subject vessel
-          SHIPNAME:
-            type: string
-            description: The Shipname of the subject vessel
-          DESTINATION:
-            type: string
-            description: The Destination of the subject vessel according to the AIS transmissions
-          LAST_PORT_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the Last Port
-          LAST_PORT:
-            type: string
-            description: The Name of the Last Port the vessel has visited
-          LAST_PORT_UNLOCODE:
-            type: string
-            description: A uniquely assigned ID by United Nations for the Last Port
-          LAST_PORT_TIME:
-            type: string
-            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
-            format: date-time
-          NEXT_PORT_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the Next Port
-          NEXT_PORT_NAME:
-            type: string
-            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
-          NEXT_PORT_UNLOCODE:
-            type: string
-            description: A uniquely assigned ID by United Nations for the Next Port
-          ETA:
-            type: string
-            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
-            format: date-time
-          ETA_CALC:
-            type: string
-            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
-            format: date-time
-      example:
-      - MMSI: '310627000'
-        IMO: '9241061'
-        SHIP_ID: '371681'
-        SHIPNAME: QUEEN MARY 2
-        DESTINATION: TORQUAY
-        LAST_PORT_ID: '106'
-        LAST_PORT: SOUTHAMPTON
-        LAST_PORT_UNLOCODE: GBSOU
-        LAST_PORT_TIME: '2020-10-14T17:00:00.000Z'
-        NEXT_PORT_ID: '10379'
-        NEXT_PORT_NAME: TORQUAY
-        NEXT_PORT_UNLOCODE: GBTOR
-        ETA: '2020-10-14T13:00:00.000Z'
-        ETA_CALC: ''
-    400_vi04_invalid_fleet_identifier:
-      title: Invalid fleet identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: '1'
-          detail: INCORRECT CALL-CHECK PARAMETERS
-    400_vi07_missing_or_invalid_port_identifier:
-      title: Missing or invalid port identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 2a10
-          detail: PORT_ID OR UNLOCODE MISSING
-    200_vi01_extended:
-      title: Extended
-      type: array
-      items:
-        type: object
-        properties:
-          MMSI:
-            type: string
-            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
-          IMO:
-            type: string
-            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
-          SHIP_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the subject vessel
-          SHIPNAME:
-            type: string
-            description: The Shipname of the subject vessel
-          DESTINATION:
-            type: string
-            description: The Destination of the subject vessel according to the AIS transmissions
-          LAST_PORT_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the Last Port
-          LAST_PORT:
-            type: string
-            description: The Name of the Last Port the vessel has visited
-          LAST_PORT_UNLOCODE:
-            type: string
-            description: A uniquely assigned ID by United Nations for the Last Port
-          LAST_PORT_TIME:
-            type: string
-            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
-            format: date-time
-          NEXT_PORT_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the Next Port
-          NEXT_PORT_NAME:
-            type: string
-            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
-          NEXT_PORT_UNLOCODE:
-            type: string
-            description: A uniquely assigned ID by United Nations for the Next Port
-          ETA:
-            type: string
-            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
-            format: date-time
-          ETA_CALC:
-            type: string
-            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
-            format: date-time
-          DISTANCE_TRAVELLED:
-            type: string
-            description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
-          DISTANCE_TO_GO:
-            type: string
-            description: The Remaining Distance (in NM) for the subject vessel to reach the reported Destination
-          SPEED_CALC:
-            type: string
-            description: The Speed of the vessel (in knots x10) that MarineTraffic used to produce the ETA_CALC value
-          DRAUGHT:
-            type: string
-            description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
-          DRAUGHT_MAX:
-            type: string
-            description: The Maximum Draught (in metres x10) that has been recorded for the subject vessel
-          LOAD_STATUS_NAME:
-            type: string
-            description: The Load Condition of the subject vessel (In Ballast, Partially Loaded, Loaded)
-          ROUTE:
-            type: string
-            description: The estimated route of the subject vessel to destination in WKT format
-      example:
-      - MMSI: '310627000'
-        IMO: '9241061'
-        SHIP_ID: '371681'
-        SHIPNAME: QUEEN MARY 2
-        DESTINATION: TORQUAY
-        LAST_PORT_ID: '106'
-        LAST_PORT: SOUTHAMPTON
-        LAST_PORT_UNLOCODE: GBSOU
-        LAST_PORT_TIME: '2020-10-14T17:00:00.000Z'
-        NEXT_PORT_ID: '10379'
-        NEXT_PORT_NAME: TORQUAY
-        NEXT_PORT_UNLOCODE: GBTOR
-        ETA: '2020-10-14T13:00:00.000Z'
-        ETA_CALC: ''
-        DISTANCE_TRAVELLED: '201'
-        DISTANCE_TO_GO: '0'
-        SPEED_CALC: '120'
-        DRAUGHT: '101'
-        DRAUGHT_MAX: '105'
-        LOAD_STATUS_NAME: N/A
-        ROUTE: ''
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
-    400_vi04_missing_or_invalid_ship_identifier:
-      title: Missing or invalid ship identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: '1'
-          detail: INCORRECT CALL-CHECK PARAMETERS
-    404_vi01_invalid_fleet_identifier:
-      title: Invalid fleet identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 6b
-          detail: FLEET NOT FOUND
   parameters:
-    fromportid_VI04:
-      name: fromportid
+    mmsi_VI01:
+      name: mmsi
       in: query
-      description: The MarineTraffic ID of the port you wish to receive a prediction (found on the URL of the respective Port page)
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid
+      required: true
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    fleet_id_VI04:
+      name: fleet_id
+      in: query
+      description: The MarineTraffic ID of the fleet you wish to track
+      required: true
+      schema:
+        type: integer
+    shipid_VI07:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel
       required: false
       schema:
         type: integer
@@ -924,6 +1004,13 @@ components:
       schema:
         type: string
         default: simple
+    mmsi_VI07:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid
+      required: true
+      schema:
+        type: integer
     imo_VI01:
       name: imo
       in: query
@@ -931,61 +1018,10 @@ components:
       required: false
       schema:
         type: integer
-    mmsi_VI04:
-      name: mmsi
+    speed_calc_VI07:
+      name: speed_calc
       in: query
-      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid
-      required: true
-      schema:
-        type: integer
-    protocol_new:
-      name: protocol
-      in: query
-      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
-      required: false
-      schema:
-        type: string
-        default: xml
-    imo_VI04:
-      name: imo
-      in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to track
-      required: false
-      schema:
-        type: integer
-    msgtype_VI07:
-      name: msgtype
-      in: query
-      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data"
-      required: false
-      schema:
-        type: string
-        default: simple
-    fleet_id_VI04:
-      name: fleet_id
-      in: query
-      description: The MarineTraffic ID of the fleet you wish to track
-      required: true
-      schema:
-        type: integer
-    imo_VI07:
-      name: imo
-      in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to track
-      required: false
-      schema:
-        type: integer
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
-    shipid_VI04:
-      name: shipid
-      in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      description: "The Speed of the Vessel that MarineTraffic will use to produce the ETA value <ul>\n  <li>if not defined the last average speed of the Vessel will be used</li>\n  <li>if no average speed exists then a default value of 12(kn) will be used</li>\n</ul>"
       required: false
       schema:
         type: integer
@@ -996,48 +1032,18 @@ components:
       required: true
       schema:
         type: integer
-    v_VI07:
-      name: v
+    imo_VI07:
+      name: imo
       in: query
-      description: Version of the service to be executed. Use version 2 to get the latest
-      required: true
-      schema:
-        type: integer
-        default: 1
-    unlocode_VI07:
-      name: unlocode
-      in: query
-      description: The UN LOCODE (without gaps or spaces) of the port you wish to receive ETA info
-      required: false
-      schema:
-        type: string
-    speed_calc_VI07:
-      name: speed_calc
-      in: query
-      description: "The Speed of the Vessel that MarineTraffic will use to produce the ETA value <ul>\n  <li>if not defined the last average speed of the Vessel will be used</li>\n  <li>if no average speed exists then a default value of 12(kn) will be used</li>\n</ul>"
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
       required: false
       schema:
         type: integer
-    v_VI01:
-      name: v
+    shipid_VI04:
+      name: shipid
       in: query
-      description: Version of the service to be executed. Use version 2 to get the latest
-      required: true
-      schema:
-        type: integer
-        default: 1
-    fleet_id_VI01:
-      name: fleet_id
-      in: query
-      description: The fleet id you wish to receive voyage forecast for
-      required: true
-      schema:
-        type: integer
-    mmsi_VI07:
-      name: mmsi
-      in: query
-      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid
-      required: true
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      required: false
       schema:
         type: integer
     shipid_VI01:
@@ -1047,10 +1053,17 @@ components:
       required: false
       schema:
         type: integer
-    shipid_VI07:
-      name: shipid
+    imo_VI04:
+      name: imo
       in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    fromportid_VI04:
+      name: fromportid
+      in: query
+      description: The MarineTraffic ID of the port you wish to receive a prediction (found on the URL of the respective Port page)
       required: false
       schema:
         type: integer
@@ -1062,10 +1075,87 @@ components:
       schema:
         type: string
         default: xml
-    mmsi_VI01:
+    v_VI01:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 2 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    msgtype_VI07:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, the response includes voyage related data"
+      required: false
+      schema:
+        type: string
+        default: simple
+    v_VI07:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 2 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    mmsi_VI04:
       name: mmsi
       in: query
       description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track </br></br> You can <b>instead</b> use imo or shipid
       required: true
       schema:
         type: integer
+    fleet_id_VI01:
+      name: fleet_id
+      in: query
+      description: The fleet id you wish to receive voyage forecast for
+      required: true
+      schema:
+        type: integer
+    unlocode_VI07:
+      name: unlocode
+      in: query
+      description: The UN LOCODE (without gaps or spaces) of the port you wish to receive ETA info
+      required: false
+      schema:
+        type: string
+    protocol_new:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+x-tagGroups:
+- name: Solutions
+  tags:
+  - Containers API
+  - MT Inbox
+- name: Vessel Positions
+  tags:
+  - AIS API
+  - Vessel Historical Track
+  - Vessel Positions (Legacy API)
+- name: Events
+  tags:
+  - Single Vessel Events
+  - Port Events
+- name: Vessels Data
+  tags:
+  - Vessel Information
+  - Search Vessel
+- name: Voyage Info
+  tags:
+  - Voyage Information
+  - Ports Information
+  - Routing Information
+- name: Geographical Info
+  tags:
+  - Reverse Geocoding
+- name: Power User
+  tags:
+  - Fleets
+  - Balances
+  - Passage Plans

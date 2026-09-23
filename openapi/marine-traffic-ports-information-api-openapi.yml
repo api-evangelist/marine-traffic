@@ -1,8 +1,15 @@
 openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS Ports Information API
+  title: MarineTraffic AIS Data Ports Information API
+  description: Complete MarineTraffic AIS Data API covering vessel positions, events, vessels data, voyage information, ports information, routing, reverse geocoding, and power-user fleet/balance services. Backed by 13,000+ AIS receivers operated by Kpler / MarineTraffic.
   version: 1.0.0
-  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  license:
+    name: Property of Kpler
+    url: https://www.kpler.com/product/maritime/data-services
+  x-logo:
+    url: https://www.marinetraffic.com/img/logos/Logo.png
+    altText: MarineTraffic logo
+    href: https://www.marinetraffic.com/en/ais/home/centerx:-12.0/centery:25.0/zoom:4
   contact:
     name: MarineTraffic
     url: https://www.marinetraffic.com/
@@ -16,7 +23,24 @@ paths:
       tags:
       - Ports Information
       summary: Expected Port Arrivals
-      description: "Get expected arrivals to a specific port. </br></br> <b>Notes</b> <ul>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>Use either **TIMESPAN** or **FROMDATE/TODATE** in order to look for expected arrivals in a specific date range</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Get expected arrivals to a specific port.
+
+
+        Notes
+
+
+        **SPEED** returned in (knots x10) and **TIMESTAMP** in UTC
+
+
+        Use either **TIMESPAN** or **FROMDATE/TODATE** in order to look for expected arrivals in a specific date range
+
+
+        Information about AIS-transmitted data
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: expectedarrivals
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -86,7 +110,24 @@ paths:
       tags:
       - Ports Information
       summary: Expected Country Arrivals
-      description: "Get expected arrivals to a specific country. </br></br> <b>Notes</b> <ul>\n    <li>**SPEED** returned in (knots x10) and **TIMESTAMP** in UTC</li>\n    <li>Use either **TIMESPAN** or **FROMDATE/TODATE** in order to look for expected arrivals in a specific date range</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Get expected arrivals to a specific country.
+
+
+        Notes
+
+
+        **SPEED** returned in (knots x10) and **TIMESTAMP** in UTC
+
+
+        Use either **TIMESPAN** or **FROMDATE/TODATE** in order to look for expected arrivals in a specific date range
+
+
+        Information about AIS-transmitted data
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: expectedarrivals_
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -156,7 +197,18 @@ paths:
       tags:
       - Ports Information
       summary: Predictive Port Arrivals
-      description: "Receive a prediction of the vessels likely to arrive to a specific port. </br></br> <b>Notes</b> <ul>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">MARKET</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">SHIPCLASS</a></li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Receive a prediction of the vessels likely to arrive to a specific port.
+
+
+        Notes
+
+
+        More information about input parameters: MARKET, SHIPCLASS
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: predictive-arrivals
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -210,7 +262,33 @@ paths:
       tags:
       - Ports Information
       summary: Port Congestion
-      description: "Receive the Port Congestion for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>More information about input parameters: <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">MARKET</a>, <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">SHIPCLASS</a></li>\n    <li>**NOT ALLOWED** combinations in request</li>\n      <ul>\n        <li>agg_market:1 **and** agg_shipclass:0</li>\n        <li>agg_market:1 **and** agg_port:1</li>\n        <li>agg_shipclass:1 **and** agg_port:1</li>\n        <li>agg_market:1 **and** shipclass (specific value in shipclass e.g. POST PANAMAX)</li>\n      </ul>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Receive the Port Congestion for a specific period of time.
+
+
+        Notes
+
+
+        More information about input parameters: MARKET, SHIPCLASS
+
+
+        **NOT ALLOWED** combinations in request
+
+
+        agg_market:1 **and** agg_shipclass:0
+
+
+        agg_market:1 **and** agg_port:1
+
+
+        agg_shipclass:1 **and** agg_port:1
+
+
+        agg_market:1 **and** shipclass (specific value in shipclass e.g. POST PANAMAX)
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: port-congestion
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -274,6 +352,292 @@ paths:
                   summary: Too Many Requests
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
+  parameters:
+    vessels_VI06:
+      name: vessels
+      in: query
+      description: Number of vessels that were used in the median calculations. Value of parameter indicates greater than relation </br></br><b>Available only if extended version of the API is used</b>
+      required: false
+      schema:
+        type: integer
+    market_VI05:
+      name: market
+      in: query
+      description: "Define market for which you would like to receive probable visits - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all </li>\n  <li>if undefined and ship-class is defined, return based on ship-class</li>\n  <li>If defined and ship-class is undefined, return all ship-classes of the specific market</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    probability_VI05:
+      name: probability
+      in: query
+      description: Define probability over which you would like to receive probable visits (accepted > 0.3)
+      required: false
+      schema:
+        type: integer
+    shipclass_VI05:
+      name: shipclass
+      in: query
+      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
+      required: false
+      schema:
+        type: integer
+    agg_market_VI06:
+      name: agg_market
+      in: query
+      description: "**If used, market should not be in request** <ul>\n  <li>if agg_market = 1, aggregation result of all markets will be returned</li>\n  <li>if 0, a breakdown of markets will be returned</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    year_VI06:
+      name: year
+      in: query
+      description: Year of interest (data available back to 1 year). Information further back can be requested ad-hoc
+      required: true
+      schema:
+        type: integer
+    gt_min_VI02:
+      name: gt_min
+      in: query
+      description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_max parameter'
+      required: false
+      schema:
+        type: integer
+    portid_VI02:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port (found on the URL of the respective Port page)
+      required: true
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    time_port_diff_perc_VI06:
+      name: time_port_diff_perc
+      in: query
+      description: The week-to-week difference of number of days spent at port as a percentage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    fromdate_VI02:
+      name: fromdate
+      in: query
+      description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define the todate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    time_anch_stdev_VI06:
+      name: time_anch_stdev
+      in: query
+      description: The standard deviation of days spent at anchorage the previous week. Values indicate in between set to be returned (time_anch_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    shiptype_VI02:
+      name: shiptype
+      in: query
+      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
+      required: false
+      schema:
+        type: integer
+    time_port_stdev_VI06:
+      name: time_port_stdev
+      in: query
+      description: The standard deviation of days spent at port the previous week. Values indicate in between set to be returned (time_port_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    time_anch_VI06:
+      name: time_anch
+      in: query
+      description: 'The median number of days spent at anchorage by the selected market/shipclass.
+
+        Values indicate in between set to be returned </br></br> Comma separated float
+
+        numbers (one decimal)
+
+        </br></br><b>Available only if extended version of the API is used</b>'
+      required: false
+      schema:
+        type: string
+    msgtype_VI02:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, apart from the ETA information, the response includes main vessel particulars. If omitted, the returned records include only position and ETA reports"
+      required: false
+      schema:
+        type: string
+        default: simple
+    calls_VI06:
+      name: calls
+      in: query
+      description: Number of individual calls that were used in the median calculations (e.g. if the same vessel has called twice within the same week, it will count twice in calls and once in vessels. Value of parameter indicates greater than relation </br></br><b>Available only if extended version of the API is used</b>
+      required: false
+      schema:
+        type: integer
+    time_anch_diff_VI06:
+      name: time_anch_diff
+      in: query
+      description: The week-to-week difference of number of days spent at anchorage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    shipclass_VI06:
+      name: shipclass
+      in: query
+      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a> </br></br> If you wish to retrieve congestion metrics for all ship classes, instead of <b>shipclass</b> use <b>agg_shipclass</b> query parameter (=0 or =1)
+      required: true
+      schema:
+        type: integer
+    timespan_VI02:
+      name: timespan
+      in: query
+      description: Number of days in the future to look for expected arrivals, starting from the time the API call is requested </br></br> Maximum value is 40 days </br></br> If neither this nor the fromdate/todate parameters are used, the response only includes vessels currently in port (or the country’s ports) and the last vessel's signal is received during the last 2 days
+      required: false
+      schema:
+        type: integer
+    todate_VI02:
+      name: todate
+      in: query
+      description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define the fromdate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    time_anch_diff_perc_VI06:
+      name: time_anch_diff_perc
+      in: query
+      description: The week-to-week difference of number of days spent at anchorage as a percentage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    week_VI06:
+      name: week
+      in: query
+      description: Week of Year that is of interest (e.g. for week 18/2018 input 18). For range of weeks use comma e.g. for weeks 30 to 35 (30,35)
+      required: true
+      schema:
+        type: integer
+    time_port_VI06:
+      name: time_port
+      in: query
+      description: The median number of days spent at port by the selected market/shipclass. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if extended version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    portid_VI05:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port you wish to receive probable visits (found on the URL of the respective Port page)
+      required: true
+      schema:
+        type: integer
+    time_port_diff_VI06:
+      name: time_port_diff
+      in: query
+      description: The week-to-week difference of number of days spent at port. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
+      required: false
+      schema:
+        type: string
+    dwt_max_VI02:
+      name: dwt_max
+      in: query
+      description: 'Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_min parameter'
+      required: false
+      schema:
+        type: integer
+    agg_shipclass_VI06:
+      name: agg_shipclass
+      in: query
+      description: "**If used, shipclass should not be in request** <ul>\n  <li>if agg_shipclass = 1, aggregation result of all classes will be returned</li>\n  <li>if 0, a breakdown of classes will be returned</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    agg_port_VI06:
+      name: agg_port
+      in: query
+      description: "**If used, portid should not be in request** <ul>\n  <li>when agg_port = 1 is used, aggregation result of all ports are returned</li>\n  <li>when agg_port = 1 is used, agg_market cannot be 1</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
+    gt_max_VI02:
+      name: gt_max
+      in: query
+      description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_min parameter'
+      required: false
+      schema:
+        type: integer
+    days_last_signal_VI02:
+      name: days_last_signal
+      in: query
+      description: Include vessels currently in port that have transmitted a position within the last x days (based on their last signal timestamp). </br></br> This parameter only works when no other timeframe is defined.
+      required: false
+      schema:
+        type: integer
+    v_VI02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 4 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    market_VI06:
+      name: market
+      in: query
+      description: "Define market for which you would like to receive port congestion - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then figures for ALL markets/ship-class</li>\n  <li>if undefined and ship-class is defined, returns based on ship-class for ALL applicable to size class markets</li>\n  <li>if defined and ship-class is undefined, returns figures for the specific market (no size class breakdown)</li>\n</ul> </br></br> If you wish to retrieve congestion metrics for all markets, instead of <b>market</b> use <b>agg_market</b> query parameter (=0 or =1)"
+      required: true
+      schema:
+        type: integer
+    dwt_min_VI02:
+      name: dwt_min
+      in: query
+      description: 'Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_max parameter'
+      required: false
+      schema:
+        type: integer
+    country_VI02:
+      name: country
+      in: query
+      description: The Country code of interest. Response includes all ports within the Country
+      required: true
+      schema:
+        type: integer
+    protocol_new:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    portid_VI06:
+      name: portid
+      in: query
+      description: The MarineTraffic ID of the port for which you wish to retrieve congestion metrics (found on the URL of the respective Port page). </br></br> If you wish to retrieve congestion metrics for all ports, instead of <b>portid</b> use <b>agg_port=1</b>
+      required: true
+      schema:
+        type: integer
+    fromportid_VI02:
+      name: fromportid
+      in: query
+      description: The MarineTraffic ID of the previous port (found on the URL of the respective Port page) or previous port UNLOCODE
+      required: false
+      schema:
+        type: integer
   schemas:
     200_vi02_extended:
       title: Extended
@@ -558,8 +922,8 @@ components:
         errors:
         - code: 2a9
           detail: MANDATORY FIELD MISSING portid
-    400_vi02_missing_or_invalid_port_identifier:
-      title: Missing or invalid port identifier
+    429_too_many_requests:
+      title: Too many requests
       type: object
       properties:
         errors:
@@ -575,8 +939,8 @@ components:
                 description: Error message
       example:
         errors:
-        - code: 2a5
-          detail: PORT OR COUNTRY MISSING
+        - code: 1r
+          detail: TOO MANY REQUESTS
     200_vi06_default:
       title: Simple
       type: array
@@ -644,7 +1008,7 @@ components:
         TIME_PORT_STDEV: '3.5'
         TIME_PORT_DIFF: '-9.9'
         TIME_PORT_DIFF_PERC: '-74.4'
-    400_vi05_missing_or_invalid_port_identifier:
+    400_vi02_missing_or_invalid_port_identifier:
       title: Missing or invalid port identifier
       type: object
       properties:
@@ -661,8 +1025,8 @@ components:
                 description: Error message
       example:
         errors:
-        - code: '1'
-          detail: INCORRECT CALL-CHECK PARAMETERS
+        - code: 2a5
+          detail: PORT OR COUNTRY MISSING
     200_vi02_default:
       title: Simple
       type: array
@@ -779,8 +1143,8 @@ components:
         ETA_CALC: ''
         ETA_UPDATED: ''
         TIMESTAMP: '2020-10-30T08:57:24.000Z'
-    429_too_many_requests:
-      title: Too many requests
+    400_vi05_missing_or_invalid_port_identifier:
+      title: Missing or invalid port identifier
       type: object
       properties:
         errors:
@@ -796,291 +1160,36 @@ components:
                 description: Error message
       example:
         errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
-  parameters:
-    time_anch_diff_perc_VI06:
-      name: time_anch_diff_perc
-      in: query
-      description: The week-to-week difference of number of days spent at anchorage as a percentage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
-      required: false
-      schema:
-        type: string
-    dwt_min_VI02:
-      name: dwt_min
-      in: query
-      description: 'Data filter: minimum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_max parameter'
-      required: false
-      schema:
-        type: integer
-    market_VI05:
-      name: market
-      in: query
-      description: "Define market for which you would like to receive probable visits - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then return all </li>\n  <li>if undefined and ship-class is defined, return based on ship-class</li>\n  <li>If defined and ship-class is undefined, return all ship-classes of the specific market</li>\n</ul>"
-      required: false
-      schema:
-        type: integer
-    market_VI06:
-      name: market
-      in: query
-      description: "Define market for which you would like to receive port congestion - <a href=\"https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class\">more</a> <ul>\n  <li>if undefined and ship-class is also undefined, then figures for ALL markets/ship-class</li>\n  <li>if undefined and ship-class is defined, returns based on ship-class for ALL applicable to size class markets</li>\n  <li>if defined and ship-class is undefined, returns figures for the specific market (no size class breakdown)</li>\n</ul> </br></br> If you wish to retrieve congestion metrics for all markets, instead of <b>market</b> use <b>agg_market</b> query parameter (=0 or =1)"
-      required: true
-      schema:
-        type: integer
-    todate_VI02:
-      name: todate
-      in: query
-      description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define the fromdate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
-      required: false
-      schema:
-        type: string
-        format: date-time
-    calls_VI06:
-      name: calls
-      in: query
-      description: Number of individual calls that were used in the median calculations (e.g. if the same vessel has called twice within the same week, it will count twice in calls and once in vessels. Value of parameter indicates greater than relation </br></br><b>Available only if extended version of the API is used</b>
-      required: false
-      schema:
-        type: integer
-    week_VI06:
-      name: week
-      in: query
-      description: Week of Year that is of interest (e.g. for week 18/2018 input 18). For range of weeks use comma e.g. for weeks 30 to 35 (30,35)
-      required: true
-      schema:
-        type: integer
-    shipclass_VI05:
-      name: shipclass
-      in: query
-      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a>
-      required: false
-      schema:
-        type: integer
-    agg_port_VI06:
-      name: agg_port
-      in: query
-      description: "**If used, portid should not be in request** <ul>\n  <li>when agg_port = 1 is used, aggregation result of all ports are returned</li>\n  <li>when agg_port = 1 is used, agg_market cannot be 1</li>\n</ul>"
-      required: false
-      schema:
-        type: integer
-    protocol_new:
-      name: protocol
-      in: query
-      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>jsono</li>"
-      required: false
-      schema:
-        type: string
-        default: xml
-    time_port_diff_VI06:
-      name: time_port_diff
-      in: query
-      description: The week-to-week difference of number of days spent at port. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
-      required: false
-      schema:
-        type: string
-    agg_market_VI06:
-      name: agg_market
-      in: query
-      description: "**If used, market should not be in request** <ul>\n  <li>if agg_market = 1, aggregation result of all markets will be returned</li>\n  <li>if 0, a breakdown of markets will be returned</li>\n</ul>"
-      required: false
-      schema:
-        type: integer
-    time_port_diff_perc_VI06:
-      name: time_port_diff_perc
-      in: query
-      description: The week-to-week difference of number of days spent at port as a percentage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
-      required: false
-      schema:
-        type: string
-    shipclass_VI06:
-      name: shipclass
-      in: query
-      description: Define ship class of interest - <a href="https://support.marinetraffic.com/en/articles/9552918-how-does-marinetraffic-categorise-commercial-market-and-commercial-size-class">more</a> </br></br> If you wish to retrieve congestion metrics for all ship classes, instead of <b>shipclass</b> use <b>agg_shipclass</b> query parameter (=0 or =1)
-      required: true
-      schema:
-        type: integer
-    portid_VI06:
-      name: portid
-      in: query
-      description: The MarineTraffic ID of the port for which you wish to retrieve congestion metrics (found on the URL of the respective Port page). </br></br> If you wish to retrieve congestion metrics for all ports, instead of <b>portid</b> use <b>agg_port=1</b>
-      required: true
-      schema:
-        type: integer
-    time_port_VI06:
-      name: time_port
-      in: query
-      description: The median number of days spent at port by the selected market/shipclass. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if extended version of the API is used</b>
-      required: false
-      schema:
-        type: string
-    fromdate_VI02:
-      name: fromdate
-      in: query
-      description: 'Timestamp in the future to start looking for expected arrivals. If used, then you should also define the todate parameter </br></br> Date format: YYYY-MM-DD HH:MM:SS'
-      required: false
-      schema:
-        type: string
-        format: date-time
-    time_anch_VI06:
-      name: time_anch
-      in: query
-      description: 'The median number of days spent at anchorage by the selected market/shipclass.
-
-        Values indicate in between set to be returned </br></br> Comma separated float
-
-        numbers (one decimal)
-
-        </br></br><b>Available only if extended version of the API is used</b>'
-      required: false
-      schema:
-        type: string
-    year_VI06:
-      name: year
-      in: query
-      description: Year of interest (data available back to 1 year). Information further back can be requested ad-hoc
-      required: true
-      schema:
-        type: integer
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
-    agg_shipclass_VI06:
-      name: agg_shipclass
-      in: query
-      description: "**If used, shipclass should not be in request** <ul>\n  <li>if agg_shipclass = 1, aggregation result of all classes will be returned</li>\n  <li>if 0, a breakdown of classes will be returned</li>\n</ul>"
-      required: false
-      schema:
-        type: integer
-    dwt_max_VI02:
-      name: dwt_max
-      in: query
-      description: 'Data filter: maximum DWT </br></br> Use it to filter by size Cargo and Tanker IMO-having vessels (shiptype = 7,8). If used, then you should also define the dwt_min parameter'
-      required: false
-      schema:
-        type: integer
-    timespan_VI02:
-      name: timespan
-      in: query
-      description: Number of days in the future to look for expected arrivals, starting from the time the API call is requested </br></br> Maximum value is 40 days </br></br> If neither this nor the fromdate/todate parameters are used, the response only includes vessels currently in port (or the country’s ports) and the last vessel's signal is received during the last 2 days
-      required: false
-      schema:
-        type: integer
-    days_last_signal_VI02:
-      name: days_last_signal
-      in: query
-      description: Include vessels currently in port that have transmitted a position within the last x days (based on their last signal timestamp). </br></br> This parameter only works when no other timeframe is defined.
-      required: false
-      schema:
-        type: integer
-    gt_max_VI02:
-      name: gt_max
-      in: query
-      description: 'Data filter: maximum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_min parameter'
-      required: false
-      schema:
-        type: integer
-    time_anch_stdev_VI06:
-      name: time_anch_stdev
-      in: query
-      description: The standard deviation of days spent at anchorage the previous week. Values indicate in between set to be returned (time_anch_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
-      required: false
-      schema:
-        type: string
-    portid_VI02:
-      name: portid
-      in: query
-      description: The MarineTraffic ID of the port (found on the URL of the respective Port page)
-      required: true
-      schema:
-        type: integer
-    msgtype_VI02:
-      name: msgtype
-      in: query
-      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n</ul> If used with the value <b>extended</b>, apart from the ETA information, the response includes main vessel particulars. If omitted, the returned records include only position and ETA reports"
-      required: false
-      schema:
-        type: string
-        default: simple
-    country_VI02:
-      name: country
-      in: query
-      description: The Country code of interest. Response includes all ports within the Country
-      required: true
-      schema:
-        type: integer
-    probability_VI05:
-      name: probability
-      in: query
-      description: Define probability over which you would like to receive probable visits (accepted > 0.3)
-      required: false
-      schema:
-        type: integer
-    gt_min_VI02:
-      name: gt_min
-      in: query
-      description: 'Data filter: minimum GT </br></br> Applicable to IMO-having vessels. If used, then you should also define the gt_max parameter'
-      required: false
-      schema:
-        type: integer
-    protocol:
-      name: protocol
-      in: query
-      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
-      required: false
-      schema:
-        type: string
-        default: xml
-    time_anch_diff_VI06:
-      name: time_anch_diff
-      in: query
-      description: The week-to-week difference of number of days spent at anchorage. Values indicate in between set to be returned </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
-      required: false
-      schema:
-        type: string
-    time_port_stdev_VI06:
-      name: time_port_stdev
-      in: query
-      description: The standard deviation of days spent at port the previous week. Values indicate in between set to be returned (time_port_stdev:0.5,1.5) </br></br> Comma separated float numbers (one decimal) </br></br><b>Available only if full version of the API is used</b>
-      required: false
-      schema:
-        type: string
-    fromportid_VI02:
-      name: fromportid
-      in: query
-      description: The MarineTraffic ID of the previous port (found on the URL of the respective Port page) or previous port UNLOCODE
-      required: false
-      schema:
-        type: integer
-    shiptype_VI02:
-      name: shiptype
-      in: query
-      description: "Filter data by vessel type: <ul>\n  <li>2: Fishing</li>\n  <li>4: High Speed Craf</li>\n  <li>6: Passenger</li>\n  <li>7: Cargo</li>\n  <li>8: Tanker</li>"
-      required: false
-      schema:
-        type: integer
-    vessels_VI06:
-      name: vessels
-      in: query
-      description: Number of vessels that were used in the median calculations. Value of parameter indicates greater than relation </br></br><b>Available only if extended version of the API is used</b>
-      required: false
-      schema:
-        type: integer
-    v_VI02:
-      name: v
-      in: query
-      description: Version of the service to be executed. Use version 4 to get the latest
-      required: true
-      schema:
-        type: integer
-        default: 1
-    portid_VI05:
-      name: portid
-      in: query
-      description: The MarineTraffic ID of the port you wish to receive probable visits (found on the URL of the respective Port page)
-      required: true
-      schema:
-        type: integer
+        - code: '1'
+          detail: INCORRECT CALL-CHECK PARAMETERS
+x-tagGroups:
+- name: Solutions
+  tags:
+  - Containers API
+  - MT Inbox
+- name: Vessel Positions
+  tags:
+  - AIS API
+  - Vessel Historical Track
+  - Vessel Positions (Legacy API)
+- name: Events
+  tags:
+  - Single Vessel Events
+  - Port Events
+- name: Vessels Data
+  tags:
+  - Vessel Information
+  - Search Vessel
+- name: Voyage Info
+  tags:
+  - Voyage Information
+  - Ports Information
+  - Routing Information
+- name: Geographical Info
+  tags:
+  - Reverse Geocoding
+- name: Power User
+  tags:
+  - Fleets
+  - Balances
+  - Passage Plans

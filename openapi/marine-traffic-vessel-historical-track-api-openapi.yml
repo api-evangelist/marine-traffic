@@ -1,8 +1,15 @@
 openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS Vessel Historical Track API
+  title: MarineTraffic AIS Data Vessel Historical Track API
+  description: Complete MarineTraffic AIS Data API covering vessel positions, events, vessels data, voyage information, ports information, routing, reverse geocoding, and power-user fleet/balance services. Backed by 13,000+ AIS receivers operated by Kpler / MarineTraffic.
   version: 1.0.0
-  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  license:
+    name: Property of Kpler
+    url: https://www.kpler.com/product/maritime/data-services
+  x-logo:
+    url: https://www.marinetraffic.com/img/logos/Logo.png
+    altText: MarineTraffic logo
+    href: https://www.marinetraffic.com/en/ais/home/centerx:-12.0/centery:25.0/zoom:4
   contact:
     name: MarineTraffic
     url: https://www.marinetraffic.com/
@@ -16,7 +23,48 @@ paths:
       tags:
       - Vessel Historical Track
       summary: Single Vessel Historical Positions
-      description: "Get all historical positions of a single vessel for a specific period of time. </br></br> <b>Notes</b> <ul>\n    <li>Default resolution for returned positions is up to 2 minutes. Use \"period\" parameter to limit the frequency of positions</li>\n    <li>Weather data is returned once within each hour's results</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>Historical positions are available since January 2015</li>\n    <li>**Hourly** and **daily** records are the first records received during the hour or the day respectively</li>\n    <li>When the **period** is **hourly**, the data field **HEADING** is not available for positions older than 2017-11-17</li>\n    <li>**Hourly** records are available for dates after 2014-08-28</li>\n    <li>Weather data for **winds** are available for dates after 2015-05-27</li>\n    <li>Weather data for **waves**, **swells** and **currents** are available for dates after 2021-01-21</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Get all historical positions of a single vessel for a specific period of time.
+
+
+        Notes
+
+
+        Default resolution for returned positions is up to 2 minutes. Use "period" parameter to limit the frequency of positions
+
+
+        Weather data is returned once within each hour''s results
+
+
+        Information about AIS-transmitted data
+
+
+        **SPEED** speed over ground returned in (knots x10)
+
+
+        **TIMESTAMP** UTC second when the report was generated (0-59)
+
+
+        Historical positions are available since January 2015
+
+
+        **Hourly** and **daily** records are the first records received during the hour or the day respectively
+
+
+        When the **period** is **hourly**, the data field **HEADING** is not available for positions older than 2017-11-17
+
+
+        **Hourly** records are available for dates after 2014-08-28
+
+
+        Weather data for **winds** are available for dates after 2015-05-27
+
+
+        Weather data for **waves**, **swells** and **currents** are available for dates after 2021-01-21
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: exportvesseltrack
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -89,7 +137,48 @@ paths:
       tags:
       - Vessel Historical Track
       summary: Vessel Historical Positions in an Area
-      description: "Get vessel historical positions for a single or for all vessels inside an area of your preference for a specific period of time.\n    </br></br>\n<b>Notes</b> <ul>\n    <li>Default resolution for returned positions is up to 2 minutes. Use \"period\" parameter to limit the frequency of positions</li>\n    <li>Weather data is returned once within each hour's results</li>\n    <li>Information about <a href=\"https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted\">AIS-transmitted data</a></li>\n    <li>**SPEED** speed over ground returned in (knots x10)</li>\n    <li>**TIMESTAMP** UTC second when the report was generated (0-59)</li>\n    <li>Historical positions are available since January 2015</li>\n    <li>**Hourly** and **daily** records are the first records received during the hour or the day respectively</li>\n    <li>When the **period** is **hourly**, the data field **HEADING** is not available for positions older than 2017-11-17</li>\n    <li>**Hourly** records are available for dates after 2014-08-28</li>\n    <li>Weather data for **winds** are available for dates after 2015-05-27</li>\n    <li>Weather data for **waves**, **swells** and **currents** are available for dates after 2021-01-21</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Get vessel historical positions for a single or for all vessels inside an area of your preference for a specific period of time.
+
+
+        Notes
+
+
+        Default resolution for returned positions is up to 2 minutes. Use "period" parameter to limit the frequency of positions
+
+
+        Weather data is returned once within each hour''s results
+
+
+        Information about AIS-transmitted data
+
+
+        **SPEED** speed over ground returned in (knots x10)
+
+
+        **TIMESTAMP** UTC second when the report was generated (0-59)
+
+
+        Historical positions are available since January 2015
+
+
+        **Hourly** and **daily** records are the first records received during the hour or the day respectively
+
+
+        When the **period** is **hourly**, the data field **HEADING** is not available for positions older than 2017-11-17
+
+
+        **Hourly** records are available for dates after 2014-08-28
+
+
+        Weather data for **winds** are available for dates after 2015-05-27
+
+
+        Weather data for **waves**, **swells** and **currents** are available for dates after 2021-01-21
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: exportvesseltrack_
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -156,41 +245,21 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   parameters:
-    period_PS01:
-      name: period
+    todate_PS01:
+      name: todate
       in: query
-      description: "Limit position per vessel. Omit to get all the available positions </br></br> Values are: <ul>\n  <li>hourly: get one position per hour</li>\n  <li>daily: get one position per day</li>\n</ul>"
+      description: Use with fromdate <b>instead</b> of days to get data for a date period
       required: false
       schema:
         type: string
-    shipid_PS01:
-      name: shipid
+        format: date-time
+    mmsi_PS01:
+      name: mmsi
       in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
-      required: true
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
       schema:
         type: integer
-    MINLAT_PS01:
-      name: MINLAT
-      in: query
-      description: Use with MAXLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
-      required: true
-      schema:
-        type: number
-    days_PS01:
-      name: days
-      in: query
-      description: The number of days, starting from the time of request and going backwards, for which the response should look for position data </br></br> Maximum value is 190 (days)
-      required: true
-      schema:
-        type: integer
-    MINLON_PS01:
-      name: MINLON
-      in: query
-      description: Use with MINLAT, MAXLAT, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
-      required: true
-      schema:
-        type: number
     api_key:
       name: api_key
       in: path
@@ -198,13 +267,63 @@ components:
       required: true
       schema:
         type: string
-    imo_PS01:
-      name: imo
+    days_PS01:
+      name: days
       in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      description: The number of days, starting from the time of request and going backwards, for which the response should look for position data </br></br> Maximum value is 190 (days)
+      required: true
+      schema:
+        type: integer
+    period_PS01:
+      name: period
+      in: query
+      description: "Limit position per vessel. Omit to get all the available positions </br></br> Values are: <ul>\n  <li>hourly: get one position per hour</li>\n  <li>daily: get one position per day</li>\n</ul>"
+      required: false
+      schema:
+        type: string
+    MINLON_PS01:
+      name: MINLON
+      in: query
+      description: Use with MINLAT, MAXLAT, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    MINLAT_PS01:
+      name: MINLAT
+      in: query
+      description: Use with MAXLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    shipid_PS01_2:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
       required: false
       schema:
         type: integer
+    MAXLON_PS01:
+      name: MAXLON
+      in: query
+      description: Use with MINLAT, MAXLAT, MINLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    MAXLAT_PS01:
+      name: MAXLAT
+      in: query
+      description: Use with MINLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
+      required: true
+      schema:
+        type: number
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
     v_PS01:
       name: v
       in: query
@@ -212,6 +331,20 @@ components:
       schema:
         type: integer
         default: 1
+    imo_PS01:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    shipid_PS01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
+      required: true
+      schema:
+        type: integer
     fromdate_PS01:
       name: fromdate
       in: query
@@ -228,51 +361,26 @@ components:
       schema:
         type: string
         default: simple
-    mmsi_PS01:
-      name: mmsi
-      in: query
-      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
-      required: false
-      schema:
-        type: integer
-    todate_PS01:
-      name: todate
-      in: query
-      description: Use with fromdate <b>instead</b> of days to get data for a date period
-      required: false
-      schema:
-        type: string
-        format: date-time
-    MAXLAT_PS01:
-      name: MAXLAT
-      in: query
-      description: Use with MINLAT, MINLON, MAXLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
-      required: true
-      schema:
-        type: number
-    MAXLON_PS01:
-      name: MAXLON
-      in: query
-      description: Use with MINLAT, MAXLAT, MINLON to define an area for which you wish to either get all the historical vessels' positions or historical positions for a specific vessel </br></br> The absolute value of MAXLAT - MINLAT + MAXLON - MINLON has to be equal to or less than <b>2</b> </br></br> If you do not define a vessel, the maximum period for which you can look back has a maximum period of one day
-      required: true
-      schema:
-        type: number
-    protocol:
-      name: protocol
-      in: query
-      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
-      required: false
-      schema:
-        type: string
-        default: xml
-    shipid_PS01_2:
-      name: shipid
-      in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
-      required: false
-      schema:
-        type: integer
   schemas:
+    400_ps01_area_out_of_bound:
+      title: Area out of bound
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1k
+          detail: BOX OUT OF BOUNDS
     200_ps01_default:
       title: Simple
       type: array
@@ -449,63 +557,6 @@ components:
         CURRENTS_ANGLE: '21'
         CURRENTS_SPEED: '20'
         SWELL_DIRECTION: '303'
-    400_ps01_days_out_of_limit:
-      title: Days out of limit
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 9c
-          detail: DAYS ABOVE ALLOWED LIMIT
-    400_ps01_area_out_of_bound:
-      title: Area out of bound
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1k
-          detail: BOX OUT OF BOUNDS
-    400_ps01_missing_ship_identifier:
-      title: Missing ship identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: '2'
-          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
     429_too_many_requests:
       title: Too many requests
       type: object
@@ -525,3 +576,72 @@ components:
         errors:
         - code: 1r
           detail: TOO MANY REQUESTS
+    400_ps01_missing_ship_identifier:
+      title: Missing ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+    400_ps01_days_out_of_limit:
+      title: Days out of limit
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 9c
+          detail: DAYS ABOVE ALLOWED LIMIT
+x-tagGroups:
+- name: Solutions
+  tags:
+  - Containers API
+  - MT Inbox
+- name: Vessel Positions
+  tags:
+  - AIS API
+  - Vessel Historical Track
+  - Vessel Positions (Legacy API)
+- name: Events
+  tags:
+  - Single Vessel Events
+  - Port Events
+- name: Vessels Data
+  tags:
+  - Vessel Information
+  - Search Vessel
+- name: Voyage Info
+  tags:
+  - Voyage Information
+  - Ports Information
+  - Routing Information
+- name: Geographical Info
+  tags:
+  - Reverse Geocoding
+- name: Power User
+  tags:
+  - Fleets
+  - Balances
+  - Passage Plans

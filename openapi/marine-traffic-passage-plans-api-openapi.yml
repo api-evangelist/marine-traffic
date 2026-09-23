@@ -1,8 +1,15 @@
 openapi: 3.2.0
 info:
-  title: MarineTraffic Events AIS Passage Plans API
+  title: MarineTraffic AIS Data Passage Plans API
+  description: Complete MarineTraffic AIS Data API covering vessel positions, events, vessels data, voyage information, ports information, routing, reverse geocoding, and power-user fleet/balance services. Backed by 13,000+ AIS receivers operated by Kpler / MarineTraffic.
   version: 1.0.0
-  description: Port calls, berth calls, and event timelines for single vessels and entire ports — surfacing every arrival, departure, and berth touch detected by the global AIS network.
+  license:
+    name: Property of Kpler
+    url: https://www.kpler.com/product/maritime/data-services
+  x-logo:
+    url: https://www.marinetraffic.com/img/logos/Logo.png
+    altText: MarineTraffic logo
+    href: https://www.marinetraffic.com/en/ais/home/centerx:-12.0/centery:25.0/zoom:4
   contact:
     name: MarineTraffic
     url: https://www.marinetraffic.com/
@@ -16,7 +23,30 @@ paths:
       tags:
       - Passage Plans
       summary: Import Passage Plan
-      description: "Import a passage plan for one of your managed vessels. </br></br> <b>Notes</b> <ul>\n    <li>Passage plans can only be imported for vessels that belong to user's managed vessels (see <a href=\"https://www.marinetraffic.com/en/online-services/plans/fleet-ops\">Fleet Operations</a> solution for more info)</li>\n    <li>Accepted file formats are CSV, RTZ or RT3</li>\n    <li>Maximum file size supported is 20MB</li>\n    <li>File should contain at least 2 waypoints</li>\n    <li>Imported passage plans overwrite previously imported ones for the provided api_key and IMO combination</li>\n    <li>The <b>frequency of allowed API calls</b> is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”. </br>Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.</li>\n</ul>"
+      description: 'Import a passage plan for one of your managed vessels.
+
+
+        Notes
+
+
+        Passage plans can only be imported for vessels that belong to user''s managed vessels (see Fleet Operations solution for more info)
+
+
+        Accepted file formats are CSV, RTZ or RT3
+
+
+        Maximum file size supported is 20MB
+
+
+        File should contain at least 2 waypoints
+
+
+        Imported passage plans overwrite previously imported ones for the provided api_key and IMO combination
+
+
+        The frequency of allowed API calls is specific to your API key and is detailed in your contract as a number of successful calls per time period. For example “2 calls per minute”.
+
+        Regardless of this agreed limit, each API key is technically restricted to a maximum of 100 total (including successful and unsuccessful) requests per minute to ensure system stability.'
       operationId: import-passage-plan
       parameters:
       - $ref: '#/components/parameters/api_key'
@@ -56,25 +86,6 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a11\" DESCRIPTION=\"VESSEL NOT FOUND\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   schemas:
-    pu06_request_body:
-      title: Request Body
-      type: array
-      items:
-        type: object
-        properties:
-          imo:
-            type: integer
-            description: The International Maritime Organization (IMO) number of the vessel you wish to import the passage plan for
-          file:
-            type: object
-            description: 'Input file that contains an ECDIS passage plan. Accepted formats are: CSV, RTZ and RT3'
-          protocol:
-            type: string
-            description: 'Response type. Use one of the following: xml, csv, json, jsono (object)'
-      example:
-      - imo: 9750701
-        file: your_file.rtz
-        suez: jsono
     200_pu06_default:
       title: Simple
       type: object
@@ -113,6 +124,25 @@ components:
         error:
         - code: 2a11
           description: VESSEL NOT FOUND
+    pu06_request_body:
+      title: Request Body
+      type: array
+      items:
+        type: object
+        properties:
+          imo:
+            type: integer
+            description: The International Maritime Organization (IMO) number of the vessel you wish to import the passage plan for
+          file:
+            type: object
+            description: 'Input file that contains an ECDIS passage plan. Accepted formats are: CSV, RTZ and RT3'
+          protocol:
+            type: string
+            description: 'Response type. Use one of the following: xml, csv, json, jsono (object)'
+      example:
+      - imo: 9750701
+        file: your_file.rtz
+        suez: jsono
   parameters:
     api_key:
       name: api_key
@@ -129,3 +159,34 @@ components:
       schema:
         type: string
         default: multipart/form-data
+x-tagGroups:
+- name: Solutions
+  tags:
+  - Containers API
+  - MT Inbox
+- name: Vessel Positions
+  tags:
+  - AIS API
+  - Vessel Historical Track
+  - Vessel Positions (Legacy API)
+- name: Events
+  tags:
+  - Single Vessel Events
+  - Port Events
+- name: Vessels Data
+  tags:
+  - Vessel Information
+  - Search Vessel
+- name: Voyage Info
+  tags:
+  - Voyage Information
+  - Ports Information
+  - Routing Information
+- name: Geographical Info
+  tags:
+  - Reverse Geocoding
+- name: Power User
+  tags:
+  - Fleets
+  - Balances
+  - Passage Plans
