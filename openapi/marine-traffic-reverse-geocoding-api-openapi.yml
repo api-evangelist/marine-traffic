@@ -72,6 +72,27 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   parameters:
+    exclude_standard_areas_GI01:
+      name: exclude_standard_areas
+      in: query
+      description: Flag that indicates if Standard Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_custom_areas_GI01:
+      name: exclude_custom_areas
+      in: query
+      description: Flag that indicates if Custom Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
+    exclude_ports_GI01:
+      name: exclude_ports
+      in: query
+      description: Flag that indicates if Ports information will be excluded from response in case given point intersects with them (0:no, 1:yes)
+      required: false
+      schema:
+        type: integer
     radius_GI01:
       name: radius
       in: query
@@ -86,20 +107,6 @@ components:
       required: false
       schema:
         type: integer
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
-    exclude_custom_areas_GI01:
-      name: exclude_custom_areas
-      in: query
-      description: Flag that indicates if Custom Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
-      required: false
-      schema:
-        type: integer
     exclude_berths_GI01:
       name: exclude_berths
       in: query
@@ -107,6 +114,13 @@ components:
       required: false
       schema:
         type: integer
+    coordinates_GI01:
+      name: coordinates
+      in: query
+      description: A latitude/longitude pair that you wish to receive the MarineTraffic areas/assets that intersects with
+      required: true
+      schema:
+        type: string
     protocol:
       name: protocol
       in: query
@@ -115,24 +129,10 @@ components:
       schema:
         type: string
         default: xml
-    exclude_standard_areas_GI01:
-      name: exclude_standard_areas
-      in: query
-      description: Flag that indicates if Standard Areas information will be excluded from response in case given point intersects with them (0:no, 1:yes)
-      required: false
-      schema:
-        type: integer
-    exclude_ports_GI01:
-      name: exclude_ports
-      in: query
-      description: Flag that indicates if Ports information will be excluded from response in case given point intersects with them (0:no, 1:yes)
-      required: false
-      schema:
-        type: integer
-    coordinates_GI01:
-      name: coordinates
-      in: query
-      description: A latitude/longitude pair that you wish to receive the MarineTraffic areas/assets that intersects with
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
       required: true
       schema:
         type: string

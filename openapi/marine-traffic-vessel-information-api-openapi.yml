@@ -182,6 +182,27 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   parameters:
+    imo_VD02:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track (single or comma separated values)
+      required: false
+      schema:
+        type: integer
+    timespan_VD02:
+      name: timespan
+      in: query
+      description: The timespan parameter defines the period of time, during which we want to receive the change in a vessel's details </br></br> The maximum value can be either 5 when the interval parameter is set to days or 2880 when the interval is set to minutes
+      required: false
+      schema:
+        type: integer
+    shipid_VD02:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel (single or comma separated values)
+      required: false
+      schema:
+        type: integer
     mmsi_VD02:
       name: mmsi
       in: query
@@ -189,6 +210,14 @@ components:
       required: true
       schema:
         type: integer
+    interval_VD02:
+      name: interval
+      in: query
+      description: The interval parameter can be either minutes or days
+      required: false
+      schema:
+        type: string
+        default: minutes
     shipid_VD01:
       name: shipid
       in: query
@@ -204,50 +233,6 @@ components:
       schema:
         type: integer
         default: 1
-    interval_VD02:
-      name: interval
-      in: query
-      description: The interval parameter can be either minutes or days
-      required: false
-      schema:
-        type: string
-        default: minutes
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
-    timespan_VD02:
-      name: timespan
-      in: query
-      description: The timespan parameter defines the period of time, during which we want to receive the change in a vessel's details </br></br> The maximum value can be either 5 when the interval parameter is set to days or 2880 when the interval is set to minutes
-      required: false
-      schema:
-        type: integer
-    vessel_id_VD01:
-      name: vessel_id
-      in: query
-      description: The Maritime Mobile Service Identity (MMSI) or the IMO number of the vessel </br></br> You can <b>instead</b> use shipid
-      required: true
-      schema:
-        type: integer
-    shipid_VD02:
-      name: shipid
-      in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel (single or comma separated values)
-      required: false
-      schema:
-        type: integer
-    protocol:
-      name: protocol
-      in: query
-      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
-      required: false
-      schema:
-        type: string
-        default: xml
     msgtype_VD02:
       name: msgtype
       in: query
@@ -256,11 +241,19 @@ components:
       schema:
         type: string
         default: simple
-    imo_VD02:
-      name: imo
+    protocol:
+      name: protocol
       in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to track (single or comma separated values)
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
       required: false
+      schema:
+        type: string
+        default: xml
+    vessel_id_VD01:
+      name: vessel_id
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) or the IMO number of the vessel </br></br> You can <b>instead</b> use shipid
+      required: true
       schema:
         type: integer
     v_VD02:
@@ -271,7 +264,164 @@ components:
       schema:
         type: integer
         default: 1
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
   schemas:
+    200_vd02_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          ENI:
+            type: string
+            description: European Number of Identification - a unique eight-digit registration number for vessels capable of navigating on inland European waters
+          NAME:
+            type: string
+            description: The Name of the subject vessel
+          BUILDER:
+            type: string
+            description: The Builder of the subject vessel
+          PLACE_OF_BUILD:
+            type: string
+            description: The place the subject vessel was built at
+          BUILD:
+            type: string
+            description: The year that the subject vessel was built
+          YARD_NUMBER:
+            type: string
+            description: The number assigned to the subject vessel from the Shipyard (prior to her commercial name)
+          BREADTH_EXTREME:
+            type: string
+            description: The extreme breadth (in metres) of the subject vessel
+          BREADTH_MOULDED:
+            type: string
+            description: The Moulded Breadth (in meters) of the subject vessel
+          DEPTH:
+            type: string
+            description: The Extreme Depth (in meters) of the subject vessel
+          SUMMER_DWT:
+            type: string
+            description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
+          DISPLACEMENT_SUMMER:
+            type: string
+            description: Displacement - a measure of the vessel's weight
+          CALLSIGN:
+            type: string
+            description: A uniquely designated identifier for the vessel's transmitter station
+          FLAG:
+            type: string
+            description: The flag of the subject vessel according to AIS transmissions - <a href="https://support.marinetraffic.com/en/articles/9552863-how-does-marinetraffic-identify-a-vessel-s-country-and-flag">more</a>
+          DRAUGHT:
+            type: string
+            description: The Maximum Draught (in metres) of the subject vessel
+          LENGHT_OVERALL:
+            type: string
+            description: The Overall Length (in metres) of the subject vessel
+          LENGTH_B_W_PERPENDICULARS:
+            type: string
+            description: The Length (in meters) measured between perpendiculars for the subject vessel
+          FUEL_CONSUMPTION:
+            type: string
+            description: The Fuel Consumption of the subject vessel
+          SPEED_MAX:
+            type: string
+            description: The Maximum Operational Speed of the subject vessel
+          SPEED_SERVICE:
+            type: string
+            description: The Speed that the vessel is designed to sail under certain conditions
+          TEU:
+            type: string
+            description: The Capacity of a containership measured in twenty-foot equivalent units (TEU)
+          GROSS_TONNAGE:
+            type: string
+            description: The Gross Tonnage of the subject vessel
+          NET_TONNAGE:
+            type: string
+            description: The Net Tonnage of the subject vessel
+          LIQUID_OIL:
+            type: string
+            description: The Capacity (in cubic metres) of the wet cargo the vessel can carry
+          LIQUID_GAS:
+            type: string
+            description: The Capacity (in cubic metres) of the gas cargo the vessel can carry
+          GRAIN:
+            type: string
+            description: The Capacity (in cubic metres) of the grain cargo the vessel can carry
+          OWNER:
+            type: string
+            description: The Owning Company of the subject vessel
+          MANAGER:
+            type: string
+            description: The Managing Company of the subject vessel
+          FINANCIAL_OWNER:
+            type: string
+            description: The Financial Owner of the subject vessel
+          TECHNICAL_MANAGER:
+            type: string
+            description: The Technical Manager of the subject vessel
+          INSURER:
+            type: string
+            description: The Insurer of the subject vessel
+          VESSEL_TYPE:
+            type: string
+            description: The specific type of the subject vessel
+      example:
+      - MMSI: '440389000'
+        IMO: '9360283'
+        ENI: null
+        NAME: DONGJIN AUBE
+        BUILDER: HAKATA SHIPBUILDING
+        PLACE_OF_BUILD: MATSUYAMA JAPAN
+        BUILD: '2005'
+        YARD_NUMBER: HN. 670
+        BREADTH_EXTREME: '25'
+        BREADTH_MOULDED: '25'
+        DEPTH: '13.7'
+        SUMMER_DWT: '15220'
+        DISPLACEMENT_SUMMER: null
+        CALLSIGN: D7OT
+        FLAG: KR
+        DRAUGHT: '8.97'
+        LENGTH_OVERALL: '147'
+        LENGTH_B_W_PERPENDICULARS: '135'
+        FUEL_CONSUMPTION: 36 t/day at 17.50 kn
+        SPEED_MAX: null
+        SPEED_SERVICE: '18'
+        TEU: '1060'
+        GROSS_TONNAGE: '12679'
+        NET_TONNAGE: '5614'
+        LIQUID_OIL: null
+        LIQUID_GAS: null
+        GRAIN: null
+        OWNER: DONG JIN SHIPPING CO LTD
+        MANAGER: DONG JIN SHIPPING CO LTD
+        FINANCIAL_OWNER: DONG JIN SHIPPING CO LTD
+        TECHNICAL_MANAGER: null
+        INSURER: JAPAN SHIP OWNERS P & I ASSOCIATION
+        VESSEL_TYPE: CONTAINER SHIP
+    200_vd01_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          URL:
+            type: string
+            description: The URL of the photo.
+      example:
+      - URL: https://photos.marinetraffic.com/ais/showphoto.aspx?photoid=534918
     429_too_many_requests:
       title: Too many requests
       type: object
@@ -537,145 +687,6 @@ components:
         W_LEFT: '25'
         FINANCIAL_OWNER_COUNTRY: null,
         TECHNICAL_MANAGER_COUNTRY: CYPRUS
-    200_vd02_default:
-      title: Simple
-      type: array
-      items:
-        type: object
-        properties:
-          MMSI:
-            type: string
-            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
-          IMO:
-            type: string
-            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
-          ENI:
-            type: string
-            description: European Number of Identification - a unique eight-digit registration number for vessels capable of navigating on inland European waters
-          NAME:
-            type: string
-            description: The Name of the subject vessel
-          BUILDER:
-            type: string
-            description: The Builder of the subject vessel
-          PLACE_OF_BUILD:
-            type: string
-            description: The place the subject vessel was built at
-          BUILD:
-            type: string
-            description: The year that the subject vessel was built
-          YARD_NUMBER:
-            type: string
-            description: The number assigned to the subject vessel from the Shipyard (prior to her commercial name)
-          BREADTH_EXTREME:
-            type: string
-            description: The extreme breadth (in metres) of the subject vessel
-          BREADTH_MOULDED:
-            type: string
-            description: The Moulded Breadth (in meters) of the subject vessel
-          DEPTH:
-            type: string
-            description: The Extreme Depth (in meters) of the subject vessel
-          SUMMER_DWT:
-            type: string
-            description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
-          DISPLACEMENT_SUMMER:
-            type: string
-            description: Displacement - a measure of the vessel's weight
-          CALLSIGN:
-            type: string
-            description: A uniquely designated identifier for the vessel's transmitter station
-          FLAG:
-            type: string
-            description: The flag of the subject vessel according to AIS transmissions - <a href="https://support.marinetraffic.com/en/articles/9552863-how-does-marinetraffic-identify-a-vessel-s-country-and-flag">more</a>
-          DRAUGHT:
-            type: string
-            description: The Maximum Draught (in metres) of the subject vessel
-          LENGHT_OVERALL:
-            type: string
-            description: The Overall Length (in metres) of the subject vessel
-          LENGTH_B_W_PERPENDICULARS:
-            type: string
-            description: The Length (in meters) measured between perpendiculars for the subject vessel
-          FUEL_CONSUMPTION:
-            type: string
-            description: The Fuel Consumption of the subject vessel
-          SPEED_MAX:
-            type: string
-            description: The Maximum Operational Speed of the subject vessel
-          SPEED_SERVICE:
-            type: string
-            description: The Speed that the vessel is designed to sail under certain conditions
-          TEU:
-            type: string
-            description: The Capacity of a containership measured in twenty-foot equivalent units (TEU)
-          GROSS_TONNAGE:
-            type: string
-            description: The Gross Tonnage of the subject vessel
-          NET_TONNAGE:
-            type: string
-            description: The Net Tonnage of the subject vessel
-          LIQUID_OIL:
-            type: string
-            description: The Capacity (in cubic metres) of the wet cargo the vessel can carry
-          LIQUID_GAS:
-            type: string
-            description: The Capacity (in cubic metres) of the gas cargo the vessel can carry
-          GRAIN:
-            type: string
-            description: The Capacity (in cubic metres) of the grain cargo the vessel can carry
-          OWNER:
-            type: string
-            description: The Owning Company of the subject vessel
-          MANAGER:
-            type: string
-            description: The Managing Company of the subject vessel
-          FINANCIAL_OWNER:
-            type: string
-            description: The Financial Owner of the subject vessel
-          TECHNICAL_MANAGER:
-            type: string
-            description: The Technical Manager of the subject vessel
-          INSURER:
-            type: string
-            description: The Insurer of the subject vessel
-          VESSEL_TYPE:
-            type: string
-            description: The specific type of the subject vessel
-      example:
-      - MMSI: '440389000'
-        IMO: '9360283'
-        ENI: null
-        NAME: DONGJIN AUBE
-        BUILDER: HAKATA SHIPBUILDING
-        PLACE_OF_BUILD: MATSUYAMA JAPAN
-        BUILD: '2005'
-        YARD_NUMBER: HN. 670
-        BREADTH_EXTREME: '25'
-        BREADTH_MOULDED: '25'
-        DEPTH: '13.7'
-        SUMMER_DWT: '15220'
-        DISPLACEMENT_SUMMER: null
-        CALLSIGN: D7OT
-        FLAG: KR
-        DRAUGHT: '8.97'
-        LENGTH_OVERALL: '147'
-        LENGTH_B_W_PERPENDICULARS: '135'
-        FUEL_CONSUMPTION: 36 t/day at 17.50 kn
-        SPEED_MAX: null
-        SPEED_SERVICE: '18'
-        TEU: '1060'
-        GROSS_TONNAGE: '12679'
-        NET_TONNAGE: '5614'
-        LIQUID_OIL: null
-        LIQUID_GAS: null
-        GRAIN: null
-        OWNER: DONG JIN SHIPPING CO LTD
-        MANAGER: DONG JIN SHIPPING CO LTD
-        FINANCIAL_OWNER: DONG JIN SHIPPING CO LTD
-        TECHNICAL_MANAGER: null
-        INSURER: JAPAN SHIP OWNERS P & I ASSOCIATION
-        VESSEL_TYPE: CONTAINER SHIP
     400_vd01_missing_or_invalid_ship_identifier:
       title: Missing or invalid ship identifier
       type: object
@@ -695,17 +706,6 @@ components:
         errors:
         - code: '2'
           detail: VESSEL MMSI OR IMO OR SHIPID MISSING
-    200_vd01_default:
-      title: Simple
-      type: array
-      items:
-        type: object
-        properties:
-          URL:
-            type: string
-            description: The URL of the photo.
-      example:
-      - URL: https://photos.marinetraffic.com/ais/showphoto.aspx?photoid=534918
 x-tagGroups:
 - name: Solutions
   tags:
