@@ -297,17 +297,17 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   parameters:
-    shipid_PU01:
-      name: shipid
+    mmsi_PU01:
+      name: mmsi
       in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel, comma separated values supported
-      required: false
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to handle, comma separated values supported </br></br> You can <b>instead</b> use imo or shipid
+      required: true
       schema:
         type: integer
-    imo_PU01:
-      name: imo
+    fleet_id_PU01:
+      name: fleet_id
       in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to handle, comma separated values supported
+      description: If used, vessel will be added to the specific fleet, otherwise default fleet is used
       required: false
       schema:
         type: integer
@@ -319,13 +319,6 @@ components:
       schema:
         type: string
         default: xml
-    page_PU02:
-      name: page
-      in: query
-      description: Specifies the number of the results page to return. Use this parameter to navigate through paginated results (with version 2) when the fleet contains more than 100 vessels.
-      required: false
-      schema:
-        type: integer
     fleet_id_PU05:
       name: fleet_id
       in: query
@@ -333,42 +326,6 @@ components:
       required: true
       schema:
         type: integer
-    mmsi_PU01:
-      name: mmsi
-      in: query
-      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to handle, comma separated values supported </br></br> You can <b>instead</b> use imo or shipid
-      required: true
-      schema:
-        type: integer
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
-    fleet_id_PU01:
-      name: fleet_id
-      in: query
-      description: If used, vessel will be added to the specific fleet, otherwise default fleet is used
-      required: false
-      schema:
-        type: integer
-    fleet_id_PU02:
-      name: fleet_id
-      in: query
-      description: If used, will return specific fleet otherwise default fleet is used
-      required: false
-      schema:
-        type: integer
-    v_PU02:
-      name: v
-      in: query
-      description: Version of the service to be executed. Use version 2 to get the latest
-      required: true
-      schema:
-        type: integer
-        default: 1
     delete_PU01:
       name: delete
       in: query
@@ -383,9 +340,72 @@ components:
       required: false
       schema:
         type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    shipid_PU01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel, comma separated values supported
+      required: false
+      schema:
+        type: integer
+    v_PU02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 2 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    imo_PU01:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to handle, comma separated values supported
+      required: false
+      schema:
+        type: integer
+    fleet_id_PU02:
+      name: fleet_id
+      in: query
+      description: If used, will return specific fleet otherwise default fleet is used
+      required: false
+      schema:
+        type: integer
+    page_PU02:
+      name: page
+      in: query
+      description: Specifies the number of the results page to return. Use this parameter to navigate through paginated results (with version 2) when the fleet contains more than 100 vessels.
+      required: false
+      schema:
+        type: integer
   schemas:
-    400_pu01_missing_ship_identifier:
-      title: Missing ship identifier
+    200_pu01_update:
+      title: Update Fleet
+      type: object
+      properties:
+        status:
+          type: array
+          items:
+            type: object
+            properties:
+              success:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Success code
+                    description:
+                      type: string
+                      description: Success message
+    400_pu02_empty_fleet:
+      title: Empty fleet
       type: object
       properties:
         errors:
@@ -401,46 +421,55 @@ components:
                 description: Error message
       example:
         errors:
-        - code: '2'
-          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
-    404_pu05_missing_or_invalid_fleet_identifier:
-      title: Missing or invalid fleet identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
+        - code: '7'
+          detail: FLEET IS EMPTY
+    200_pu02_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          ACTIVE:
+            type: string
+            description: The Status of the subject vessel (Off = 0, Terrestrial = 1, Satellite = 2 )
       example:
-        errors:
-        - code: 6b
-          detail: FLEET NOT FOUND
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
+      - SHIP_ID: '319'
+        MMSI: '228316700'
+        IMO: '9387542'
+        SHIPNAME: KAOMBO NORTE
+        ACTIVE: '1'
+      - SHIP_ID: '326'
+        MMSI: '256609000'
+        IMO: '9409156'
+        SHIPNAME: LAPEROUSE
+        ACTIVE: '1'
+      - SHIP_ID: '487'
+        MMSI: '228333700'
+        IMO: '9320075'
+        SHIPNAME: GASELYS
+        ACTIVE: '1'
+      - SHIP_ID: '510'
+        MMSI: '228337700'
+        IMO: '9306495'
+        SHIPNAME: PROVALYS
+        ACTIVE: '1'
+      - SHIP_ID: '1595'
+        MMSI: '229036000'
+        IMO: '9529475'
+        SHIPNAME: PETALIDI
+        ACTIVE: '1'
     200_pu03_default:
       title: Simple
       type: array
@@ -506,53 +535,44 @@ components:
         errors:
         - code: 6b
           detail: FLEET NOT FOUND
-    200_pu02_default:
-      title: Simple
-      type: array
-      items:
-        type: object
-        properties:
-          SHIP_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the subject vessel
-          MMSI:
-            type: string
-            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
-          IMO:
-            type: string
-            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
-          SHIPNAME:
-            type: string
-            description: The Shipname of the subject vessel
-          ACTIVE:
-            type: string
-            description: The Status of the subject vessel (Off = 0, Terrestrial = 1, Satellite = 2 )
+    404_pu05_missing_or_invalid_fleet_identifier:
+      title: Missing or invalid fleet identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
       example:
-      - SHIP_ID: '319'
-        MMSI: '228316700'
-        IMO: '9387542'
-        SHIPNAME: KAOMBO NORTE
-        ACTIVE: '1'
-      - SHIP_ID: '326'
-        MMSI: '256609000'
-        IMO: '9409156'
-        SHIPNAME: LAPEROUSE
-        ACTIVE: '1'
-      - SHIP_ID: '487'
-        MMSI: '228333700'
-        IMO: '9320075'
-        SHIPNAME: GASELYS
-        ACTIVE: '1'
-      - SHIP_ID: '510'
-        MMSI: '228337700'
-        IMO: '9306495'
-        SHIPNAME: PROVALYS
-        ACTIVE: '1'
-      - SHIP_ID: '1595'
-        MMSI: '229036000'
-        IMO: '9529475'
-        SHIPNAME: PETALIDI
-        ACTIVE: '1'
+        errors:
+        - code: 6b
+          detail: FLEET NOT FOUND
+    400_pu01_missing_ship_identifier:
+      title: Missing ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
     400_pu01_invalid_ship_identifier:
       title: Invalid ship identifier
       type: object
@@ -572,43 +592,8 @@ components:
         errors:
         - code: '1'
           detail: INCORRECT CALL-CHECK PARAMETERS
-    200_pu01_update:
-      title: Update Fleet
-      type: object
-      properties:
-        status:
-          type: array
-          items:
-            type: object
-            properties:
-              success:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    code:
-                      type: string
-                      description: Success code
-                    description:
-                      type: string
-                      description: Success message
-    200_pu05_default:
-      title: Simple
-      type: array
-      items:
-        type: object
-        properties:
-          FLEET_ID:
-            type: string
-            description: The fleet_id you wish to clear
-          DELETE:
-            type: string
-            description: Indicates whether the vessels were successfully deleted from a fleet (0:no, 1:yes)
-      example:
-      - FLEET_ID: '1716163'
-        DELETE: '1'
-    400_pu02_empty_fleet:
-      title: Empty fleet
+    429_too_many_requests:
+      title: Too many requests
       type: object
       properties:
         errors:
@@ -624,8 +609,23 @@ components:
                 description: Error message
       example:
         errors:
-        - code: '7'
-          detail: FLEET IS EMPTY
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    200_pu05_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          FLEET_ID:
+            type: string
+            description: The fleet_id you wish to clear
+          DELETE:
+            type: string
+            description: Indicates whether the vessels were successfully deleted from a fleet (0:no, 1:yes)
+      example:
+      - FLEET_ID: '1716163'
+        DELETE: '1'
 x-tagGroups:
 - name: Solutions
   tags:

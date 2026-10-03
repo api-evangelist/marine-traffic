@@ -64,25 +64,6 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   schemas:
-    200_pu04_default:
-      title: Simple
-      type: array
-      items:
-        type: object
-        properties:
-          USER_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the subject MarineTraffic registered user
-          CREDIT_BALANCE:
-            type: string
-            description: The current Credits balance of the user
-          LAST_CHARGED:
-            type: string
-            description: The last date and time (in UTC) that the user purchased Credits
-      example:
-      - USER_ID: '13541873'
-        CREDIT_BALANCE: '1542'
-        LAST_CHARGED: '2017-01-17T12:23:24.000Z'
     429_too_many_requests:
       title: Too many requests
       type: object
@@ -102,6 +83,25 @@ components:
         errors:
         - code: 1r
           detail: TOO MANY REQUESTS
+    200_pu04_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          USER_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject MarineTraffic registered user
+          CREDIT_BALANCE:
+            type: string
+            description: The current Credits balance of the user
+          LAST_CHARGED:
+            type: string
+            description: The last date and time (in UTC) that the user purchased Credits
+      example:
+      - USER_ID: '13541873'
+        CREDIT_BALANCE: '1542'
+        LAST_CHARGED: '2017-01-17T12:23:24.000Z'
   parameters:
     api_key:
       name: api_key

@@ -105,25 +105,6 @@ components:
       - imo: 9750701
         file: your_file.rtz
         suez: jsono
-    200_pu06_default:
-      title: Simple
-      type: object
-      properties:
-        status:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Success Code Status
-              description:
-                type: string
-                description: Success Code Description
-      example:
-        status:
-        - code: s8
-          description: PASSAGE PLAN IMPORTED
     400_pu06_vessel_not_found:
       title: Vessel not found
       type: object
@@ -143,7 +124,33 @@ components:
         error:
         - code: 2a11
           description: VESSEL NOT FOUND
+    200_pu06_default:
+      title: Simple
+      type: object
+      properties:
+        status:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Success Code Status
+              description:
+                type: string
+                description: Success Code Description
+      example:
+        status:
+        - code: s8
+          description: PASSAGE PLAN IMPORTED
   parameters:
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
     content_type_pu06:
       name: Content-Type
       in: header
@@ -152,13 +159,6 @@ components:
       schema:
         type: string
         default: multipart/form-data
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
 x-tagGroups:
 - name: Solutions
   tags:

@@ -233,6 +233,14 @@ paths:
                 $ref: '#/components/schemas/429_too_many_requests'
 components:
   parameters:
+    limit:
+      name: limit
+      in: query
+      description: The limit of vessels per page (min=1000, max=5000)
+      required: false
+      schema:
+        type: integer
+        default: 2000
     shipid_PS07:
       name: shipid
       in: query
@@ -247,65 +255,6 @@ components:
       required: false
       schema:
         type: integer
-    v_MTA030AD_2:
-      name: v
-      in: query
-      description: Use latest version **2**
-      required: true
-      schema:
-        type: integer
-    v_MTA030AD_3:
-      name: v
-      in: query
-      description: Use latest version **6**
-      required: true
-      schema:
-        type: integer
-    imo_PS07:
-      name: imo
-      in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to track
-      required: false
-      schema:
-        type: integer
-    mmsi_PS07:
-      name: mmsi
-      in: query
-      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
-      required: false
-      schema:
-        type: integer
-    cursor:
-      name: cursor
-      in: query
-      description: The pagination cursor provided in the metadata section of the previous response
-      required: false
-      schema:
-        type: string
-    protocol_mandatory:
-      name: protocol
-      in: query
-      description: "Response type. Use one of the following: <ul>\n  <li>jsono</li>\n  <li>csv</li>"
-      required: false
-      schema:
-        type: string
-        default: jsono
-    limit:
-      name: limit
-      in: query
-      description: The limit of vessels per page (min=1000, max=5000)
-      required: false
-      schema:
-        type: integer
-        default: 2000
-    timespan_MTA030AD:
-      name: timespan
-      in: query
-      description: Overrides the default timespan
-      required: false
-      schema:
-        type: integer
-        default: 5
     api_key:
       name: api_key
       in: path
@@ -320,7 +269,274 @@ components:
       required: true
       schema:
         type: integer
+    imo_PS07:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    v_MTA030AD_3:
+      name: v
+      in: query
+      description: Use latest version **6**
+      required: true
+      schema:
+        type: integer
+    mmsi_PS07:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    protocol_mandatory:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>jsono</li>\n  <li>csv</li>"
+      required: false
+      schema:
+        type: string
+        default: jsono
+    timespan_MTA030AD:
+      name: timespan
+      in: query
+      description: Overrides the default timespan
+      required: false
+      schema:
+        type: integer
+        default: 5
+    v_MTA030AD_2:
+      name: v
+      in: query
+      description: Use latest version **2**
+      required: true
+      schema:
+        type: integer
+    cursor:
+      name: cursor
+      in: query
+      description: The pagination cursor provided in the metadata section of the previous response
+      required: false
+      schema:
+        type: string
   schemas:
+    200_MTA030AD_single:
+      title: Default
+      type: array
+      items:
+        type: object
+        properties:
+          MMSI:
+            type: string
+            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
+          IMO:
+            type: string
+            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
+          SHIP_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the subject vessel
+          LAT:
+            type: string
+            description: Latitude - a geographic coordinate that specifies the north-south position of the vessel on the Earth's surface
+          LON:
+            type: string
+            description: Longitude - a geographic coordinate that specifies the east-west position of the vessel on the Earth's surface
+          SPEED:
+            type: string
+            description: The speed (in knots x10) that the subject vessel is reporting according to AIS transmissions
+          HEADING:
+            type: string
+            description: The heading (in degrees) that the subject vessel is reporting according to AIS transmissions
+          COURSE:
+            type: string
+            description: The course (in degrees) that the subject vessel is reporting according to AIS transmissions
+          STATUS:
+            type: string
+            description: The AIS Navigational Status of the subject vessel as input by the vessel's crew. There might be discrepancies with the vessel's detail page when vessel speed is near zero (0) knots
+          TIMESTAMP:
+            type: string
+            description: The date and time (in UTC) that the subject vessel's position or event was recorded by MarineTraffic
+            format: date-time
+          DSRC:
+            type: string
+            description: Describes whether the transmitted AIS message was received by a terrestrial, satellite or roaming AIS antenna
+          UTC_SECONDS:
+            type: string
+            description: The time slot that the subject vessel uses to transmit information
+          MARKET:
+            type: string
+            description: Vessel's commercial market
+          SHIPNAME:
+            type: string
+            description: The Shipname of the subject vessel
+          SHIPTYPE:
+            type: string
+            description: The Shiptype of the subject vessel according to AIS transmissions
+          CALLSIGN:
+            type: string
+            description: A uniquely designated identifier for the vessel's transmitter station
+          FLAG:
+            type: string
+            description: The flag of the subject vessel according to AIS transmissions
+          LENGTH:
+            type: string
+            description: The overall Length (in metres) of the subject vessel
+          WIDTH:
+            type: string
+            description: The Breadth (in metres) of the subject vessel
+          GRT:
+            type: string
+            description: Gross Tonnage - unitless measure that calculates the moulded volume of all enclosed spaces of a ship
+          DWT:
+            type: string
+            description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
+          DRAUGHT:
+            type: string
+            description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
+          YEAR_BUILT:
+            type: string
+            description: The year that the subject vessel was built
+          SHIP_COUNTRY:
+            type: string
+            description: The vessel's country
+          SHIP_CLASS:
+            type: string
+            description: Vessel's class based on commercial market, capacity and/or dimensions
+          ROT:
+            type: string
+            description: Rate of Turn
+          TYPE_NAME:
+            type: string
+            description: The MarineTraffic ship type of the vessel
+          AIS_TYPE_SUMMARY:
+            type: string
+            description: Further explanation of the SHIPTYPE ID
+          DESTINATION:
+            type: string
+            description: The Destination of the subject vessel according to the AIS transmissions
+          ETA:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
+            format: date-time
+          L_FORE:
+            type: string
+            description: The relative distance from the AIS station of the vessel to the foremost of it (front / bow)
+          W_LEFT:
+            type: string
+            description: The relative distance from the AIS station of the vessel to the leftmost of it (left side / port)
+          LAST_PORT:
+            type: string
+            description: The Name of the Last Port the vessel has visited
+          LAST_PORT_TIME:
+            type: string
+            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
+            format: date-time
+          LAST_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Last Port
+          LAST_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Last Port
+          LAST_PORT_COUNTRY:
+            type: string
+            description: The Country that the Last Port is located at
+          CURRENT_PORT:
+            type: string
+            description: The name of the Port the subject vessel is currently in (NULL if the vessel is underway)
+          CURRENT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Current Port
+          CURRENT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Current Port
+          CURRENT_PORT_COUNTRY:
+            type: string
+            description: The Country that the Current Port is located at
+          NEXT_PORT_ID:
+            type: string
+            description: A uniquely assigned ID by MarineTraffic for the Next Port
+          NEXT_PORT_UNLOCODE:
+            type: string
+            description: A uniquely assigned ID by United Nations for the Next Port
+          NEXT_PORT_NAME:
+            type: string
+            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
+          NEXT_PORT_COUNTRY:
+            type: string
+            description: The Country that the Next Port is located at
+          ETA_CALC:
+            type: string
+            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
+            format: date-time
+          ETA_UPDATED:
+            type: string
+            description: The date and time (in UTC) that the ETA was calculated by MarineTraffic
+            format: date-time
+          DISTANCE_TO_GO:
+            type: string
+            description: The Remaining Distance (in NM) for the subject vessel to reach the reported Destination
+          DISTANCE_TRAVELLED:
+            type: string
+            description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
+          AVG_SPEED:
+            type: string
+            description: The average speed of the vessel (in knots) during the current voyage (since last port departure), calculated using AIS position readings from the last 24 hours where speed exceeds 5 knots.
+          MAX_SPEED:
+            type: string
+            description: The maximum speed (in knots) recorded during the current voyage (since last port departure). This value updates gradually and may lag behind the current speed following a sudden acceleration or shortly after port departure.
+      example:
+      - MMSI: '538003913'
+        IMO: '9470959'
+        SHIP_ID: '713139'
+        LAT: '37.388430'
+        LON: '23.871230'
+        SPEED: '6'
+        HEADING: '104'
+        COURSE: '41'
+        STATUS: '0'
+        TIMESTAMP: '2020-10-15T12:21:44.000Z'
+        DSRC: TER
+        UTC_SECONDS: '45'
+        MARKET: SUPPORTING VESSELS
+        SHIPNAME: SUNNY STAR
+        SHIPTYPE: '89'
+        CALLSIGN: V7TZ6
+        FLAG: MH
+        LENGTH: '184'
+        WIDTH: '27.43'
+        GRT: '23313'
+        DWT: '37857'
+        DRAUGHT: '95'
+        YEAR_BUILT: '2010'
+        SHIP_COUNTRY: Marshall Is
+        SHIP_CLASS: HANDYSIZE
+        ROT: '0'
+        TYPE_NAME: Oil/Chemical Tanker
+        AIS_TYPE_SUMMARY: Tanker
+        DESTINATION: FOR ORDERS
+        ETA: '2020-10-14T12:00:00.000Z'
+        L_FORE: '5'
+        W_LEFT: '5'
+        CURRENT_PORT: ''
+        LAST_PORT: AGIOI THEODOROI
+        LAST_PORT_TIME: '2020-10-13T23:39:00.000Z'
+        CURRENT_PORT_ID: ''
+        CURRENT_PORT_UNLOCODE: ''
+        CURRENT_PORT_COUNTRY: ''
+        LAST_PORT_ID: '29'
+        LAST_PORT_UNLOCODE: GRAGT
+        LAST_PORT_COUNTRY: GR
+        NEXT_PORT_ID: ''
+        NEXT_PORT_UNLOCODE: ''
+        NEXT_PORT_NAME: ''
+        NEXT_PORT_COUNTRY: ''
+        ETA_CALC: ''
+        ETA_UPDATED: ''
+        DISTANCE_TO_GO: '0'
+        DISTANCE_TRAVELLED: '74'
+        AVG_SPEED: '12.6'
+        MAX_SPEED: '13.2'
     200_MTA030AD:
       title: Default
       type: object
@@ -559,222 +775,6 @@ components:
           CURSOR: abcdef
           DATE_FROM: '2023-11-20 15:57:00'
           DATE_TO: '2023-11-20 16:57:00'
-    200_MTA030AD_single:
-      title: Default
-      type: array
-      items:
-        type: object
-        properties:
-          MMSI:
-            type: string
-            description: Maritime Mobile Service Identity - a nine-digit number sent in digital form over a radio frequency that identifies the vessel's transmitter station
-          IMO:
-            type: string
-            description: International Maritime Organisation number - a seven-digit number that uniquely identifies vessels
-          SHIP_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the subject vessel
-          LAT:
-            type: string
-            description: Latitude - a geographic coordinate that specifies the north-south position of the vessel on the Earth's surface
-          LON:
-            type: string
-            description: Longitude - a geographic coordinate that specifies the east-west position of the vessel on the Earth's surface
-          SPEED:
-            type: string
-            description: The speed (in knots x10) that the subject vessel is reporting according to AIS transmissions
-          HEADING:
-            type: string
-            description: The heading (in degrees) that the subject vessel is reporting according to AIS transmissions
-          COURSE:
-            type: string
-            description: The course (in degrees) that the subject vessel is reporting according to AIS transmissions
-          STATUS:
-            type: string
-            description: The AIS Navigational Status of the subject vessel as input by the vessel's crew. There might be discrepancies with the vessel's detail page when vessel speed is near zero (0) knots
-          TIMESTAMP:
-            type: string
-            description: The date and time (in UTC) that the subject vessel's position or event was recorded by MarineTraffic
-            format: date-time
-          DSRC:
-            type: string
-            description: Describes whether the transmitted AIS message was received by a terrestrial, satellite or roaming AIS antenna
-          UTC_SECONDS:
-            type: string
-            description: The time slot that the subject vessel uses to transmit information
-          MARKET:
-            type: string
-            description: Vessel's commercial market
-          SHIPNAME:
-            type: string
-            description: The Shipname of the subject vessel
-          SHIPTYPE:
-            type: string
-            description: The Shiptype of the subject vessel according to AIS transmissions
-          CALLSIGN:
-            type: string
-            description: A uniquely designated identifier for the vessel's transmitter station
-          FLAG:
-            type: string
-            description: The flag of the subject vessel according to AIS transmissions
-          LENGTH:
-            type: string
-            description: The overall Length (in metres) of the subject vessel
-          WIDTH:
-            type: string
-            description: The Breadth (in metres) of the subject vessel
-          GRT:
-            type: string
-            description: Gross Tonnage - unitless measure that calculates the moulded volume of all enclosed spaces of a ship
-          DWT:
-            type: string
-            description: Deadweight - a measure (in metric tons) of how much weight a vessel can safely carry (excluding the vessel's own weight)
-          DRAUGHT:
-            type: string
-            description: The Draught (in metres x10) of the subject vessel according to the AIS transmissions
-          YEAR_BUILT:
-            type: string
-            description: The year that the subject vessel was built
-          SHIP_COUNTRY:
-            type: string
-            description: The vessel's country
-          SHIP_CLASS:
-            type: string
-            description: Vessel's class based on commercial market, capacity and/or dimensions
-          ROT:
-            type: string
-            description: Rate of Turn
-          TYPE_NAME:
-            type: string
-            description: The MarineTraffic ship type of the vessel
-          AIS_TYPE_SUMMARY:
-            type: string
-            description: Further explanation of the SHIPTYPE ID
-          DESTINATION:
-            type: string
-            description: The Destination of the subject vessel according to the AIS transmissions
-          ETA:
-            type: string
-            description: The Estimated Time of Arrival to Destination of the subject vessel according to the AIS transmissions
-            format: date-time
-          L_FORE:
-            type: string
-            description: The relative distance from the AIS station of the vessel to the foremost of it (front / bow)
-          W_LEFT:
-            type: string
-            description: The relative distance from the AIS station of the vessel to the leftmost of it (left side / port)
-          LAST_PORT:
-            type: string
-            description: The Name of the Last Port the vessel has visited
-          LAST_PORT_TIME:
-            type: string
-            description: The Date and Time (in UTC) that the subject vessel departed from the Last Port
-            format: date-time
-          LAST_PORT_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the Last Port
-          LAST_PORT_UNLOCODE:
-            type: string
-            description: A uniquely assigned ID by United Nations for the Last Port
-          LAST_PORT_COUNTRY:
-            type: string
-            description: The Country that the Last Port is located at
-          CURRENT_PORT:
-            type: string
-            description: The name of the Port the subject vessel is currently in (NULL if the vessel is underway)
-          CURRENT_PORT_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the Current Port
-          CURRENT_PORT_UNLOCODE:
-            type: string
-            description: A uniquely assigned ID by United Nations for the Current Port
-          CURRENT_PORT_COUNTRY:
-            type: string
-            description: The Country that the Current Port is located at
-          NEXT_PORT_ID:
-            type: string
-            description: A uniquely assigned ID by MarineTraffic for the Next Port
-          NEXT_PORT_UNLOCODE:
-            type: string
-            description: A uniquely assigned ID by United Nations for the Next Port
-          NEXT_PORT_NAME:
-            type: string
-            description: The Name of the Next Port as derived by MarineTraffic based on the subject vessel's reported Destination
-          NEXT_PORT_COUNTRY:
-            type: string
-            description: The Country that the Next Port is located at
-          ETA_CALC:
-            type: string
-            description: The Estimated Time of Arrival to Destination of the subject vessel according to the MarineTraffic calculations
-            format: date-time
-          ETA_UPDATED:
-            type: string
-            description: The date and time (in UTC) that the ETA was calculated by MarineTraffic
-            format: date-time
-          DISTANCE_TO_GO:
-            type: string
-            description: The Remaining Distance (in NM) for the subject vessel to reach the reported Destination
-          DISTANCE_TRAVELLED:
-            type: string
-            description: The Distance (in NM) that the subject vessel has travelled since departing from Last Port
-          AVG_SPEED:
-            type: string
-            description: The average speed of the vessel (in knots) during the current voyage (since last port departure), calculated using AIS position readings from the last 24 hours where speed exceeds 5 knots.
-          MAX_SPEED:
-            type: string
-            description: The maximum speed (in knots) recorded during the current voyage (since last port departure). This value updates gradually and may lag behind the current speed following a sudden acceleration or shortly after port departure.
-      example:
-      - MMSI: '538003913'
-        IMO: '9470959'
-        SHIP_ID: '713139'
-        LAT: '37.388430'
-        LON: '23.871230'
-        SPEED: '6'
-        HEADING: '104'
-        COURSE: '41'
-        STATUS: '0'
-        TIMESTAMP: '2020-10-15T12:21:44.000Z'
-        DSRC: TER
-        UTC_SECONDS: '45'
-        MARKET: SUPPORTING VESSELS
-        SHIPNAME: SUNNY STAR
-        SHIPTYPE: '89'
-        CALLSIGN: V7TZ6
-        FLAG: MH
-        LENGTH: '184'
-        WIDTH: '27.43'
-        GRT: '23313'
-        DWT: '37857'
-        DRAUGHT: '95'
-        YEAR_BUILT: '2010'
-        SHIP_COUNTRY: Marshall Is
-        SHIP_CLASS: HANDYSIZE
-        ROT: '0'
-        TYPE_NAME: Oil/Chemical Tanker
-        AIS_TYPE_SUMMARY: Tanker
-        DESTINATION: FOR ORDERS
-        ETA: '2020-10-14T12:00:00.000Z'
-        L_FORE: '5'
-        W_LEFT: '5'
-        CURRENT_PORT: ''
-        LAST_PORT: AGIOI THEODOROI
-        LAST_PORT_TIME: '2020-10-13T23:39:00.000Z'
-        CURRENT_PORT_ID: ''
-        CURRENT_PORT_UNLOCODE: ''
-        CURRENT_PORT_COUNTRY: ''
-        LAST_PORT_ID: '29'
-        LAST_PORT_UNLOCODE: GRAGT
-        LAST_PORT_COUNTRY: GR
-        NEXT_PORT_ID: ''
-        NEXT_PORT_UNLOCODE: ''
-        NEXT_PORT_NAME: ''
-        NEXT_PORT_COUNTRY: ''
-        ETA_CALC: ''
-        ETA_UPDATED: ''
-        DISTANCE_TO_GO: '0'
-        DISTANCE_TRAVELLED: '74'
-        AVG_SPEED: '12.6'
-        MAX_SPEED: '13.2'
     400_ps07__missing_ship_identifier:
       title: ' Missing ship identifier'
       type: object

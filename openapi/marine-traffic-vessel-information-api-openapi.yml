@@ -181,97 +181,26 @@ paths:
                   summary: Too Many Requests
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
-  parameters:
-    imo_VD02:
-      name: imo
-      in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to track (single or comma separated values)
-      required: false
-      schema:
-        type: integer
-    timespan_VD02:
-      name: timespan
-      in: query
-      description: The timespan parameter defines the period of time, during which we want to receive the change in a vessel's details </br></br> The maximum value can be either 5 when the interval parameter is set to days or 2880 when the interval is set to minutes
-      required: false
-      schema:
-        type: integer
-    shipid_VD02:
-      name: shipid
-      in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel (single or comma separated values)
-      required: false
-      schema:
-        type: integer
-    mmsi_VD02:
-      name: mmsi
-      in: query
-      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track (single or comma separated values) </br></br> You can <b>instead</b> use imo or shipid
-      required: true
-      schema:
-        type: integer
-    interval_VD02:
-      name: interval
-      in: query
-      description: The interval parameter can be either minutes or days
-      required: false
-      schema:
-        type: string
-        default: minutes
-    shipid_VD01:
-      name: shipid
-      in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel
-      required: false
-      schema:
-        type: integer
-    page_VD02:
-      name: page
-      in: query
-      description: Page number of the results to be returned
-      required: false
-      schema:
-        type: integer
-        default: 1
-    msgtype_VD02:
-      name: msgtype
-      in: query
-      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  </ul>"
-      required: false
-      schema:
-        type: string
-        default: simple
-    protocol:
-      name: protocol
-      in: query
-      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
-      required: false
-      schema:
-        type: string
-        default: xml
-    vessel_id_VD01:
-      name: vessel_id
-      in: query
-      description: The Maritime Mobile Service Identity (MMSI) or the IMO number of the vessel </br></br> You can <b>instead</b> use shipid
-      required: true
-      schema:
-        type: integer
-    v_VD02:
-      name: v
-      in: query
-      description: Version of the service to be executed. Use version 5 to get the latest
-      required: true
-      schema:
-        type: integer
-        default: 1
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
   schemas:
+    400_vd01_missing_or_invalid_ship_identifier:
+      title: Missing or invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
     200_vd02_default:
       title: Simple
       type: array
@@ -411,36 +340,6 @@ components:
         TECHNICAL_MANAGER: null
         INSURER: JAPAN SHIP OWNERS P & I ASSOCIATION
         VESSEL_TYPE: CONTAINER SHIP
-    200_vd01_default:
-      title: Simple
-      type: array
-      items:
-        type: object
-        properties:
-          URL:
-            type: string
-            description: The URL of the photo.
-      example:
-      - URL: https://photos.marinetraffic.com/ais/showphoto.aspx?photoid=534918
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
     400_vd02_missing_or_invalid_ship_identifier:
       title: Missing or invalid ship identifier
       type: object
@@ -687,8 +586,19 @@ components:
         W_LEFT: '25'
         FINANCIAL_OWNER_COUNTRY: null,
         TECHNICAL_MANAGER_COUNTRY: CYPRUS
-    400_vd01_missing_or_invalid_ship_identifier:
-      title: Missing or invalid ship identifier
+    200_vd01_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          URL:
+            type: string
+            description: The URL of the photo.
+      example:
+      - URL: https://photos.marinetraffic.com/ais/showphoto.aspx?photoid=534918
+    429_too_many_requests:
+      title: Too many requests
       type: object
       properties:
         errors:
@@ -704,8 +614,98 @@ components:
                 description: Error message
       example:
         errors:
-        - code: '2'
-          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+        - code: 1r
+          detail: TOO MANY REQUESTS
+  parameters:
+    shipid_VD01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel
+      required: false
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    v_VD02:
+      name: v
+      in: query
+      description: Version of the service to be executed. Use version 5 to get the latest
+      required: true
+      schema:
+        type: integer
+        default: 1
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    interval_VD02:
+      name: interval
+      in: query
+      description: The interval parameter can be either minutes or days
+      required: false
+      schema:
+        type: string
+        default: minutes
+    mmsi_VD02:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track (single or comma separated values) </br></br> You can <b>instead</b> use imo or shipid
+      required: true
+      schema:
+        type: integer
+    page_VD02:
+      name: page
+      in: query
+      description: Page number of the results to be returned
+      required: false
+      schema:
+        type: integer
+        default: 1
+    msgtype_VD02:
+      name: msgtype
+      in: query
+      description: "Resolution of the response. Available values: <ul>\n  <li>simple</li>\n  <li>extended</li>\n  </ul>"
+      required: false
+      schema:
+        type: string
+        default: simple
+    shipid_VD02:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel (single or comma separated values)
+      required: false
+      schema:
+        type: integer
+    timespan_VD02:
+      name: timespan
+      in: query
+      description: The timespan parameter defines the period of time, during which we want to receive the change in a vessel's details </br></br> The maximum value can be either 5 when the interval parameter is set to days or 2880 when the interval is set to minutes
+      required: false
+      schema:
+        type: integer
+    imo_VD02:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track (single or comma separated values)
+      required: false
+      schema:
+        type: integer
+    vessel_id_VD01:
+      name: vessel_id
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) or the IMO number of the vessel </br></br> You can <b>instead</b> use shipid
+      required: true
+      schema:
+        type: integer
 x-tagGroups:
 - name: Solutions
   tags:
