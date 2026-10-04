@@ -63,26 +63,15 @@ paths:
                   summary: Too Many Requests
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
+  parameters:
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
   schemas:
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
     200_pu04_default:
       title: Simple
       type: array
@@ -102,14 +91,25 @@ components:
       - USER_ID: '13541873'
         CREDIT_BALANCE: '1542'
         LAST_CHARGED: '2017-01-17T12:23:24.000Z'
-  parameters:
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
 x-tagGroups:
 - name: Solutions
   tags:

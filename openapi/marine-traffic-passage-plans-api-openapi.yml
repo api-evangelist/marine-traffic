@@ -86,6 +86,25 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"2a11\" DESCRIPTION=\"VESSEL NOT FOUND\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   schemas:
+    200_pu06_default:
+      title: Simple
+      type: object
+      properties:
+        status:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Success Code Status
+              description:
+                type: string
+                description: Success Code Description
+      example:
+        status:
+        - code: s8
+          description: PASSAGE PLAN IMPORTED
     pu06_request_body:
       title: Request Body
       type: array
@@ -124,33 +143,7 @@ components:
         error:
         - code: 2a11
           description: VESSEL NOT FOUND
-    200_pu06_default:
-      title: Simple
-      type: object
-      properties:
-        status:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Success Code Status
-              description:
-                type: string
-                description: Success Code Description
-      example:
-        status:
-        - code: s8
-          description: PASSAGE PLAN IMPORTED
   parameters:
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
     content_type_pu06:
       name: Content-Type
       in: header
@@ -159,6 +152,13 @@ components:
       schema:
         type: string
         default: multipart/form-data
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
 x-tagGroups:
 - name: Solutions
   tags:

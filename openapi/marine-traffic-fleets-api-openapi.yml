@@ -297,6 +297,42 @@ paths:
                   value: "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<RESPONSE>\n    <STATUS>\n        <ERROR CODE=\"1r\" DESCRIPTION=\"TOO MANY REQUESTS\"/>\n    </STATUS>\n</RESPONSE>"
 components:
   parameters:
+    delete_PU01:
+      name: delete
+      in: query
+      description: Set this parameter to 1 to delete a vessel from your fleet
+      required: false
+      schema:
+        type: integer
+    shipid_PU01:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel, comma separated values supported
+      required: false
+      schema:
+        type: integer
+    protocol:
+      name: protocol
+      in: query
+      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
+      required: false
+      schema:
+        type: string
+        default: xml
+    fleet_id_PU02:
+      name: fleet_id
+      in: query
+      description: If used, will return specific fleet otherwise default fleet is used
+      required: false
+      schema:
+        type: integer
+    active_PU01:
+      name: active
+      in: query
+      description: "Possible values are:  <ul>\n  <li>0 to set to inactive</li>\n  <li>1 to activate</li>\n  <li>2 to enable satellite coverage</li>\n</ul>"
+      required: false
+      schema:
+        type: integer
     mmsi_PU01:
       name: mmsi
       in: query
@@ -311,32 +347,10 @@ components:
       required: false
       schema:
         type: integer
-    protocol:
-      name: protocol
+    imo_PU01:
+      name: imo
       in: query
-      description: "Response type. Use one of the following: <ul>\n  <li>xml</li>\n  <li>csv</li>\n  <li>json</li>\n  <li>jsono</li>"
-      required: false
-      schema:
-        type: string
-        default: xml
-    fleet_id_PU05:
-      name: fleet_id
-      in: query
-      description: The fleet id you wish to clear
-      required: true
-      schema:
-        type: integer
-    delete_PU01:
-      name: delete
-      in: query
-      description: Set this parameter to 1 to delete a vessel from your fleet
-      required: false
-      schema:
-        type: integer
-    active_PU01:
-      name: active
-      in: query
-      description: "Possible values are:  <ul>\n  <li>0 to set to inactive</li>\n  <li>1 to activate</li>\n  <li>2 to enable satellite coverage</li>\n</ul>"
+      description: The International Maritime Organization (IMO) number of the vessel you wish to handle, comma separated values supported
       required: false
       schema:
         type: integer
@@ -347,13 +361,6 @@ components:
       required: true
       schema:
         type: string
-    shipid_PU01:
-      name: shipid
-      in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel, comma separated values supported
-      required: false
-      schema:
-        type: integer
     v_PU02:
       name: v
       in: query
@@ -362,18 +369,11 @@ components:
       schema:
         type: integer
         default: 1
-    imo_PU01:
-      name: imo
-      in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to handle, comma separated values supported
-      required: false
-      schema:
-        type: integer
-    fleet_id_PU02:
+    fleet_id_PU05:
       name: fleet_id
       in: query
-      description: If used, will return specific fleet otherwise default fleet is used
-      required: false
+      description: The fleet id you wish to clear
+      required: true
       schema:
         type: integer
     page_PU02:
@@ -384,28 +384,8 @@ components:
       schema:
         type: integer
   schemas:
-    200_pu01_update:
-      title: Update Fleet
-      type: object
-      properties:
-        status:
-          type: array
-          items:
-            type: object
-            properties:
-              success:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    code:
-                      type: string
-                      description: Success code
-                    description:
-                      type: string
-                      description: Success message
-    400_pu02_empty_fleet:
-      title: Empty fleet
+    429_too_many_requests:
+      title: Too many requests
       type: object
       properties:
         errors:
@@ -421,8 +401,61 @@ components:
                 description: Error message
       example:
         errors:
-        - code: '7'
-          detail: FLEET IS EMPTY
+        - code: 1r
+          detail: TOO MANY REQUESTS
+    200_pu05_default:
+      title: Simple
+      type: array
+      items:
+        type: object
+        properties:
+          FLEET_ID:
+            type: string
+            description: The fleet_id you wish to clear
+          DELETE:
+            type: string
+            description: Indicates whether the vessels were successfully deleted from a fleet (0:no, 1:yes)
+      example:
+      - FLEET_ID: '1716163'
+        DELETE: '1'
+    400_pu01_missing_ship_identifier:
+      title: Missing ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '2'
+          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
+    404_pu05_missing_or_invalid_fleet_identifier:
+      title: Missing or invalid fleet identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 6b
+          detail: FLEET NOT FOUND
     200_pu02_default:
       title: Simple
       type: array
@@ -470,6 +503,45 @@ components:
         IMO: '9529475'
         SHIPNAME: PETALIDI
         ACTIVE: '1'
+    400_pu01_invalid_ship_identifier:
+      title: Invalid ship identifier
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: '1'
+          detail: INCORRECT CALL-CHECK PARAMETERS
+    200_pu01_update:
+      title: Update Fleet
+      type: object
+      properties:
+        status:
+          type: array
+          items:
+            type: object
+            properties:
+              success:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Success code
+                    description:
+                      type: string
+                      description: Success message
     200_pu03_default:
       title: Simple
       type: array
@@ -535,8 +607,8 @@ components:
         errors:
         - code: 6b
           detail: FLEET NOT FOUND
-    404_pu05_missing_or_invalid_fleet_identifier:
-      title: Missing or invalid fleet identifier
+    400_pu02_empty_fleet:
+      title: Empty fleet
       type: object
       properties:
         errors:
@@ -552,80 +624,8 @@ components:
                 description: Error message
       example:
         errors:
-        - code: 6b
-          detail: FLEET NOT FOUND
-    400_pu01_missing_ship_identifier:
-      title: Missing ship identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: '2'
-          detail: VESSEL MMSI OR IMO OR SHIPID MISSING
-    400_pu01_invalid_ship_identifier:
-      title: Invalid ship identifier
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: '1'
-          detail: INCORRECT CALL-CHECK PARAMETERS
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
-    200_pu05_default:
-      title: Simple
-      type: array
-      items:
-        type: object
-        properties:
-          FLEET_ID:
-            type: string
-            description: The fleet_id you wish to clear
-          DELETE:
-            type: string
-            description: Indicates whether the vessels were successfully deleted from a fleet (0:no, 1:yes)
-      example:
-      - FLEET_ID: '1716163'
-        DELETE: '1'
+        - code: '7'
+          detail: FLEET IS EMPTY
 x-tagGroups:
 - name: Solutions
   tags:

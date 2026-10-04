@@ -233,61 +233,11 @@ paths:
                 $ref: '#/components/schemas/429_too_many_requests'
 components:
   parameters:
-    limit:
-      name: limit
-      in: query
-      description: The limit of vessels per page (min=1000, max=5000)
-      required: false
-      schema:
-        type: integer
-        default: 2000
-    shipid_PS07:
-      name: shipid
-      in: query
-      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
-      required: true
-      schema:
-        type: integer
-    vessel_type:
-      name: vesseltypeid
-      in: query
-      description: Filter vessels based on vessel types, comma separated ids supported </br></br><a href="https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types" target='_blank'>more</a>
-      required: false
-      schema:
-        type: integer
-    api_key:
-      name: api_key
-      in: path
-      description: 'API key: 40-character hexadecimal number'
-      required: true
-      schema:
-        type: string
-    v_MTA030AD_1:
-      name: v
-      in: query
-      description: Use latest version **9**
-      required: true
-      schema:
-        type: integer
-    imo_PS07:
-      name: imo
-      in: query
-      description: The International Maritime Organization (IMO) number of the vessel you wish to track
-      required: false
-      schema:
-        type: integer
     v_MTA030AD_3:
       name: v
       in: query
       description: Use latest version **6**
       required: true
-      schema:
-        type: integer
-    mmsi_PS07:
-      name: mmsi
-      in: query
-      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
-      required: false
       schema:
         type: integer
     protocol_mandatory:
@@ -298,6 +248,70 @@ components:
       schema:
         type: string
         default: jsono
+    cursor:
+      name: cursor
+      in: query
+      description: The pagination cursor provided in the metadata section of the previous response
+      required: false
+      schema:
+        type: string
+    vessel_type:
+      name: vesseltypeid
+      in: query
+      description: Filter vessels based on vessel types, comma separated ids supported </br></br><a href="https://support.marinetraffic.com/en/articles/9552888-what-is-the-significance-of-the-marinetraffic-ship-types" target='_blank'>more</a>
+      required: false
+      schema:
+        type: integer
+    imo_PS07:
+      name: imo
+      in: query
+      description: The International Maritime Organization (IMO) number of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    shipid_PS07:
+      name: shipid
+      in: query
+      description: A uniquely assigned ID by MarineTraffic for the subject vessel </br></br> You can <b>instead</b> use imo or mmsi
+      required: true
+      schema:
+        type: integer
+    v_MTA030AD_1:
+      name: v
+      in: query
+      description: Use latest version **9**
+      required: true
+      schema:
+        type: integer
+    api_key:
+      name: api_key
+      in: path
+      description: 'API key: 40-character hexadecimal number'
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: The limit of vessels per page (min=1000, max=5000)
+      required: false
+      schema:
+        type: integer
+        default: 2000
+    mmsi_PS07:
+      name: mmsi
+      in: query
+      description: The Maritime Mobile Service Identity (MMSI) of the vessel you wish to track
+      required: false
+      schema:
+        type: integer
+    v_MTA030AD_2:
+      name: v
+      in: query
+      description: Use latest version **2**
+      required: true
+      schema:
+        type: integer
     timespan_MTA030AD:
       name: timespan
       in: query
@@ -306,20 +320,6 @@ components:
       schema:
         type: integer
         default: 5
-    v_MTA030AD_2:
-      name: v
-      in: query
-      description: Use latest version **2**
-      required: true
-      schema:
-        type: integer
-    cursor:
-      name: cursor
-      in: query
-      description: The pagination cursor provided in the metadata section of the previous response
-      required: false
-      schema:
-        type: string
   schemas:
     200_MTA030AD_single:
       title: Default
@@ -537,6 +537,25 @@ components:
         DISTANCE_TRAVELLED: '74'
         AVG_SPEED: '12.6'
         MAX_SPEED: '13.2'
+    429_too_many_requests:
+      title: Too many requests
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Error code
+              detail:
+                type: string
+                description: Error message
+      example:
+        errors:
+        - code: 1r
+          detail: TOO MANY REQUESTS
     200_MTA030AD:
       title: Default
       type: object
@@ -794,25 +813,6 @@ components:
         errors:
         - code: '2'
           detail: VESSEL MMSI OR IMO OR SHIPID MISSING
-    429_too_many_requests:
-      title: Too many requests
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Error code
-              detail:
-                type: string
-                description: Error message
-      example:
-        errors:
-        - code: 1r
-          detail: TOO MANY REQUESTS
 x-tagGroups:
 - name: Solutions
   tags:
