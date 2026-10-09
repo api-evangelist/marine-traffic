@@ -1,3 +1,8 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (dated 2026-05-25 by the file itself), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
+generated: '2026-05-25'
 specification: FinOps Framework
 specificationVersion: '1.0'
 schema: https://www.finops.org/framework/
@@ -85,13 +90,10 @@ discountModels:
 unitEconomics:
   - name: Cost per tracked vessel per day
     metric: credits_consumed / unique_vessels_seen
-    target: Drive down via PS02/PS04 batch fleet queries (one call, many rows).
   - name: Wasted-cache ratio
     metric: cached_responses / total_requests
-    target: Low — repeat calls before refresh elapses indicate over-polling.
   - name: ETA forecast vs raw-position polling
     metric: cost(VI01+VI07) / cost(equivalent PS05 polling)
-    target: Use VI01/VI07 for ETA needs — they are far cheaper than minute-by-minute PS05 polling.
 principles:
   - name: Visibility
     description: Poll /exportcredits/{api_key} (PU06) regularly and ship the balance to a metric store; it is free.
