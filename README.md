@@ -1,4 +1,4 @@
-# MarineTraffic (marine-traffic)
+# MarineTraffic
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,233 +66,191 @@
 
 MarineTraffic is the leading maritime intelligence and AIS ship-tracking platform — now part of Kpler. The MarineTraffic AIS Data API exposes the same live + historical vessel positions, port calls, berth calls, vessel master data, voyage forecasts, predictive arrivals, port-congestion analytics, sea-lane routing, reverse geocoding, and fleet management endpoints that power the public marinetraffic.com map and the Kpler maritime data services. Data is sourced from 13,000+ terrestrial AIS receivers plus satellite AIS, served as REST/JSON (with CSV / XML / JSONO alternatives), authenticated via a per-key prepaid credit balance, and metered in credits per response row with per-service refresh-interval caching.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/marine-traffic/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/marine-traffic/refs/heads/main/apis.yml)
+**Areas:** AIS · Maritime · Vessel Tracking · Shipping · Ports · Voyage Forecasting · Geospatial · Kpler
 
-## Scope
+## MarineTraffic on APIs.io
 
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for MarineTraffic is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/marine-traffic/](https://apis.io/providers/marine-traffic/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (14)
 
-- AIS
-- Maritime
-- Vessel Tracking
-- Shipping
-- Ports
-- Voyage Forecasting
-- Geospatial
-- Kpler
+- [MarineTraffic AIS API](https://apis.io/apis/marine-traffic/marine-traffic-ais-api-api/) — The AIS API API from MarineTraffic — 3 operation(s) for ais api.
+- [MarineTraffic Balances API](https://apis.io/apis/marine-traffic/marine-traffic-balances-api/) — The Balances API from MarineTraffic — 1 operation(s) for balances.
+- [MarineTraffic Fleets API](https://apis.io/apis/marine-traffic/marine-traffic-fleets-api/) — The Fleets API from MarineTraffic — 4 operation(s) for fleets.
+- [MarineTraffic Passage Plans API](https://apis.io/apis/marine-traffic/marine-traffic-passage-plans-api/) — The Passage Plans API from MarineTraffic — 1 operation(s) for passage plans.
+- [MarineTraffic Port Events API](https://apis.io/apis/marine-traffic/marine-traffic-port-events-api/) — The Port Events API from MarineTraffic — 2 operation(s) for port events.
+- [MarineTraffic Ports Information API](https://apis.io/apis/marine-traffic/marine-traffic-ports-information-api/) — The Ports Information API from MarineTraffic — 4 operation(s) for ports information.
+- [MarineTraffic Reverse Geocoding API](https://apis.io/apis/marine-traffic/marine-traffic-reverse-geocoding-api/) — The Reverse Geocoding API from MarineTraffic — 1 operation(s) for reverse geocoding.
+- [MarineTraffic Routing Information API](https://apis.io/apis/marine-traffic/marine-traffic-routing-information-api/) — The Routing Information API from MarineTraffic — 2 operation(s) for routing information.
+- [MarineTraffic Search Vessel API](https://apis.io/apis/marine-traffic/marine-traffic-search-vessel-api/) — The Search Vessel API from MarineTraffic — 2 operation(s) for search vessel.
+- [MarineTraffic Single Vessel Events API](https://apis.io/apis/marine-traffic/marine-traffic-single-vessel-events-api/) — The Single Vessel Events API from MarineTraffic — 3 operation(s) for single vessel events.
+- [MarineTraffic Vessel Historical Track API](https://apis.io/apis/marine-traffic/marine-traffic-vessel-historical-track-api/) — The Vessel Historical Track API from MarineTraffic — 2 operation(s) for vessel historical track.
+- [MarineTraffic Vessel Information API](https://apis.io/apis/marine-traffic/marine-traffic-vessel-information-api/) — The Vessel Information API from MarineTraffic — 2 operation(s) for vessel information.
+- [MarineTraffic Vessel Positions (Legacy API) API](https://apis.io/apis/marine-traffic/marine-traffic-vessel-positions-legacy-api-api/) — The Vessel Positions (Legacy API) API from MarineTraffic — 7 operation(s) for vessel positions (legacy api).
+- [MarineTraffic Voyage Information API](https://apis.io/apis/marine-traffic/marine-traffic-voyage-information-api/) — The Voyage Information API from MarineTraffic — 5 operation(s) for voyage information.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-25T00:00:00.000Z
-- **Modified:** 2026-05-25
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### MarineTraffic Vessel Positions API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Real-time and historical AIS vessel positions sourced from 13,000+ terrestrial AIS receivers and satellite AIS feeds. Query by single vessel (MMSI / IMO / SHIP_ID), by fleet, by predefined area of interest, by port, or by a custom bounding box. Includes both the modern AIS API (`/exportvessels`, `/exportvessel`, `/exportvessels-custom-area` — MTA030AD-family with cursor pagination) and the legacy PS01–PS08 surface, plus the Vessel Historical Track endpoint (`/exportvesseltrack`) for replaying a vessel's track over a defined window.
+- [Marine Traffic Agentic Access](https://apis.io/agentic-access/marine-traffic/marine-traffic-agentic-access/)
 
-- **Human URL:** [https://servicedocs.marinetraffic.com/](https://servicedocs.marinetraffic.com/)
+#### JSON Schema (5)
 
-#### Tags
+The data models the API reads and writes.
 
-- AIS
-- Maritime
-- Vessel Tracking
-- Vessel Positions
+- [MarineTraffic Port](https://apis.io/schemas/marine-traffic/marine-traffic-port/)
+- [MarineTraffic Port Call](https://apis.io/schemas/marine-traffic/marine-traffic-port-call/)
+- [MarineTraffic Vessel Master Data](https://apis.io/schemas/marine-traffic/marine-traffic-vessel-master/)
+- [MarineTraffic Vessel Position](https://apis.io/schemas/marine-traffic/marine-traffic-vessel-position/)
+- [MarineTraffic Voyage Forecast](https://apis.io/schemas/marine-traffic/marine-traffic-voyage-forecast/)
 
-#### Properties
+#### JSON-LD (1)
 
+Linked-data contexts for the provider's vocabulary.
+
+- [Marine Traffic Context](https://apis.io/jsonld/marine-traffic/marine-traffic-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Marine Traffic Vocabulary](https://apis.io/vocabularies/marine-traffic/marine-traffic-vocabulary/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Marine Traffic Port Call Example](https://apis.io/examples/marine-traffic/marine-traffic-port-call-example/)
+- [Marine Traffic Vessel Position Example](https://apis.io/examples/marine-traffic/marine-traffic-vessel-position-example/)
+- [Marine Traffic Voyage Forecast Example](https://apis.io/examples/marine-traffic/marine-traffic-voyage-forecast-example/)
+
+#### Collections (23)
+
+Postman and Open Collection request collections.
+
+- [MarineTraffic AIS Data API](https://apis.io/collections/marine-traffic/open-marine-traffic/)
+- [MarineTraffic Events AIS API API](https://apis.io/collections/marine-traffic/open-marine-traffic-ais-api-api/)
+- [MarineTraffic Events AIS API Balances API](https://apis.io/collections/marine-traffic/open-marine-traffic-balances-api/)
+- [MarineTraffic Events API](https://apis.io/collections/marine-traffic/open-marine-traffic-events/)
+- [MarineTraffic Events AIS API Fleets API](https://apis.io/collections/marine-traffic/open-marine-traffic-fleets-api/)
+- [MarineTraffic Events AIS API Passage Plans API](https://apis.io/collections/marine-traffic/open-marine-traffic-passage-plans-api/)
+- [MarineTraffic Events AIS API Port Events API](https://apis.io/collections/marine-traffic/open-marine-traffic-port-events-api/)
+- [MarineTraffic Ports Information API](https://apis.io/collections/marine-traffic/open-marine-traffic-ports-info/)
+- [MarineTraffic Events AIS API Ports Information API](https://apis.io/collections/marine-traffic/open-marine-traffic-ports-information-api/)
+- [MarineTraffic Power User API](https://apis.io/collections/marine-traffic/open-marine-traffic-power-user/)
+- [MarineTraffic Reverse Geocoding API](https://apis.io/collections/marine-traffic/open-marine-traffic-reverse-geocoding/)
+- [MarineTraffic Events AIS API Reverse Geocoding API](https://apis.io/collections/marine-traffic/open-marine-traffic-reverse-geocoding-api/)
+- [MarineTraffic Routing Information API](https://apis.io/collections/marine-traffic/open-marine-traffic-routing/)
+- [MarineTraffic Events AIS API Routing Information API](https://apis.io/collections/marine-traffic/open-marine-traffic-routing-information-api/)
+- [MarineTraffic Events AIS API Search Vessel API](https://apis.io/collections/marine-traffic/open-marine-traffic-search-vessel-api/)
+- [MarineTraffic Events AIS API Single Vessel Events API](https://apis.io/collections/marine-traffic/open-marine-traffic-single-vessel-events-api/)
+- [MarineTraffic Events AIS API Vessel Historical Track API](https://apis.io/collections/marine-traffic/open-marine-traffic-vessel-historical-track-api/)
+- [MarineTraffic Events AIS API Vessel Information API](https://apis.io/collections/marine-traffic/open-marine-traffic-vessel-information-api/)
+- [MarineTraffic Vessel Positions API](https://apis.io/collections/marine-traffic/open-marine-traffic-vessel-positions/)
+- [MarineTraffic Events AIS API Vessel Positions (Legacy API) API](https://apis.io/collections/marine-traffic/open-marine-traffic-vessel-positions-legacy-api-api/)
+- [MarineTraffic Vessels Data API](https://apis.io/collections/marine-traffic/open-marine-traffic-vessels-data/)
+- [MarineTraffic Voyage Information API](https://apis.io/collections/marine-traffic/open-marine-traffic-voyage-info/)
+- [MarineTraffic Events AIS API Voyage Information API](https://apis.io/collections/marine-traffic/open-marine-traffic-voyage-information-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [MarineTraffic — jsonschema rules](https://apis.io/rules/marine-traffic/marine-traffic-jsonschema-spectral-rules/)
+- [MarineTraffic API Rules](https://apis.io/rules/marine-traffic/marine-traffic-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Marine Traffic Authentication](https://apis.io/security/marine-traffic/marine-traffic-authentication/)
+- [Marine Traffic Domain Security](https://apis.io/security/marine-traffic/marine-traffic-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Marine Traffic Plans Pricing](https://apis.io/plans/marine-traffic/marine-traffic-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Marine Traffic Rate Limits](https://apis.io/rate-limits/marine-traffic/marine-traffic-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Marine Traffic Finops](https://apis.io/finops/marine-traffic/marine-traffic-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.marinetraffic.com/)
 - [Documentation](https://servicedocs.marinetraffic.com/)
-- [OpenAPI](openapi/marine-traffic-vessel-positions-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/marine-traffic-vessel-positions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/marine-traffic-vessel-positions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/marine-traffic-vessel-position-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/marine-traffic-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Example](examples/marine-traffic-vessel-position-example.json)
-
-### MarineTraffic Events API
-
-Port calls, berth calls, and event timelines — surfaces every arrival, departure, and berth touch detected by the MarineTraffic AIS network. Scope by vessel (`/portcalls`, `/vesselevents`, `/berth-calls` with MMSI/IMO/SHIP_ID) or by port (same endpoints scoped with port_id / UNLOCODE / berth_id / terminal_id). Returns voyage duration, time-in-port, draught, market segment, and full vessel/port keys for downstream joining.
-
-- **Human URL:** [https://servicedocs.marinetraffic.com/](https://servicedocs.marinetraffic.com/)
-
-#### Tags
-
-- AIS
-- Maritime
-- Port Calls
-- Berth Calls
-- Events
-
-#### Properties
-
-- [Documentation](https://servicedocs.marinetraffic.com/)
-- [OpenAPI](openapi/marine-traffic-events-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/marine-traffic-events.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/marine-traffic-events.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/marine-traffic-port-call-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Example](examples/marine-traffic-port-call-example.json)
-
-### MarineTraffic Vessels Data API
-
-Vessel master data (`/vesselmasterdata`), vessel photographs (`/exportvesselphoto`), and the ship-database search surface (`/shipsearch` by identifier or by name). Returns the full static AIS record plus MarineTraffic enrichments — owner, manager, builder, classification society, build year, dimensions, deadweight, gross tonnage, and current operational status.
-
-- **Human URL:** [https://servicedocs.marinetraffic.com/](https://servicedocs.marinetraffic.com/)
-
-#### Tags
-
-- AIS
-- Maritime
-- Vessel Database
-- Search
-
-#### Properties
-
-- [Documentation](https://servicedocs.marinetraffic.com/)
-- [OpenAPI](openapi/marine-traffic-vessels-data-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/marine-traffic-vessels-data.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/marine-traffic-vessels-data.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/marine-traffic-vessel-master-schema.json) — [JSON Schema](https://json-schema.org/specification)
-
-### MarineTraffic Voyage Information API
-
-Machine-learning–powered voyage intelligence: voyage forecast (`/voyageforecast`), predictive destination areas (`/predictive-destination-areas`), and ETA-to-port (`/etatoport`). Combines live AIS positions, port-call history, and predictive routing to deliver destination predictions with probability scores, ranked alternative destination ports, and predictive ETAs that outperform raw AIS-broadcast ETAs.
-
-- **Human URL:** [https://servicedocs.marinetraffic.com/](https://servicedocs.marinetraffic.com/)
-
-#### Tags
-
-- AIS
-- Maritime
-- Voyage Forecasting
-- Predictive Intelligence
-- ETA
-
-#### Properties
-
-- [Documentation](https://servicedocs.marinetraffic.com/)
-- [OpenAPI](openapi/marine-traffic-voyage-info-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/marine-traffic-voyage-info.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/marine-traffic-voyage-info.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/marine-traffic-voyage-forecast-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Example](examples/marine-traffic-voyage-forecast-example.json)
-
-### MarineTraffic Ports Information API
-
-Port-centric analytics: expected port arrivals (`/expectedarrivals`), predictive arrivals using MarineTraffic's destination model (`/predictive-arrivals`), and port-congestion intelligence (`/port-congestion`) with anchorage-time, in-port-time, vessels-in-port, and call-count metrics aggregated by market or ship class for a given port and ISO week.
-
-- **Human URL:** [https://servicedocs.marinetraffic.com/](https://servicedocs.marinetraffic.com/)
-
-#### Tags
-
-- AIS
-- Maritime
-- Ports
-- Port Congestion
-- Predictive Arrivals
-
-#### Properties
-
-- [Documentation](https://servicedocs.marinetraffic.com/)
-- [OpenAPI](openapi/marine-traffic-ports-info-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/marine-traffic-ports-info.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/marine-traffic-ports-info.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/marine-traffic-port-schema.json) — [JSON Schema](https://json-schema.org/specification)
-
-### MarineTraffic Routing Information API
-
-Maritime route generation and distance calculation across global sea lanes via `/exportroutes`. Compute the great-circle or sea-lane-aware route from a vessel's current position (MMSI/IMO/SHIP_ID) — or an arbitrary origin port / LAT-LON pair — to a target port, with optional inland-waterway and alternative-route inclusion.
-
-- **Human URL:** [https://servicedocs.marinetraffic.com/](https://servicedocs.marinetraffic.com/)
-
-#### Tags
-
-- AIS
-- Maritime
-- Routing
-- Distance
-
-#### Properties
-
-- [Documentation](https://servicedocs.marinetraffic.com/)
-- [OpenAPI](openapi/marine-traffic-routing-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/marine-traffic-routing.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/marine-traffic-routing.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### MarineTraffic Reverse Geocoding API
-
-Maritime-aware reverse geocoding (`/reversegeocode`) — resolves a single coordinate pair to the nearest port, anchorage, terminal, berth, or standard / custom area within a configurable radius. The single geographic primitive in the API; useful for tagging AIS positions with port and berth context.
-
-- **Human URL:** [https://servicedocs.marinetraffic.com/](https://servicedocs.marinetraffic.com/)
-
-#### Tags
-
-- AIS
-- Maritime
-- Geocoding
-- Geographic
-
-#### Properties
-
-- [Documentation](https://servicedocs.marinetraffic.com/)
-- [OpenAPI](openapi/marine-traffic-reverse-geocoding-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/marine-traffic-reverse-geocoding.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/marine-traffic-reverse-geocoding.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### MarineTraffic Power User API
-
-Power-user administration surface: fleet CRUD (`/setfleet`, `/getfleet`, `/getfleets`, `/clearfleet`), API credit-balance inspection (`/exportcredits` — free), and passage-plan import (`/import-passage-plan`, POST). Used to maintain customer fleet definitions, monitor credit burn, and push voyage plans into the MarineTraffic platform.
-
-- **Human URL:** [https://servicedocs.marinetraffic.com/](https://servicedocs.marinetraffic.com/)
-
-#### Tags
-
-- AIS
-- Maritime
-- Fleet Management
-- Account
-- Passage Plans
-
-#### Properties
-
-- [Documentation](https://servicedocs.marinetraffic.com/)
-- [OpenAPI](openapi/marine-traffic-power-user-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/marine-traffic-power-user.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/marine-traffic-power-user.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Portal](https://www.marinetraffic.com/)
-- [Documentation](https://servicedocs.marinetraffic.com/)
-- [API Reference](https://servicedocs.marinetraffic.com/)
-- [Portal](https://www.kpler.com/product/maritime/data-services)
+- [API reference](https://servicedocs.marinetraffic.com/)
 - [Support](https://support.marinetraffic.com/en/articles/9552659-api-services)
-- [Errors](https://support.marinetraffic.com/en/articles/9552800-api-most-common-response-error-codes)
-- [Documentation](https://support.marinetraffic.com/en/articles/9552860-what-kind-of-information-is-ais-transmitted)
-- [Support](https://support.marinetraffic.com/)
-- [Sandbox](https://www.marinetraffic.com/en/ais/home)
-- [GitHub Organization](https://github.com/marinetraffic)
-- [Tool](https://github.com/marinetraffic/mt-ais-toolbox)
-- [LinkedIn](https://www.linkedin.com/company/marinetraffic)
-- [Twitter](https://twitter.com/MarineTraffic)
-- [OpenAPI](openapi/marine-traffic-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral Rules](rules/marine-traffic-rules.yml)
-- [Vocabulary](vocabulary/marine-traffic-vocabulary.yml)
-- [JSON-LD](json-ld/marine-traffic-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Plans](plans/marine-traffic-plans-pricing.yml)
-- [Rate Limits](rate-limits/marine-traffic-rate-limits.yml)
-- [Fin Ops](finops/marine-traffic-finops.yml)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [Integrations](undefined)
-- [Solutions](undefined)
+- [Terms of service](https://www.kpler.com/company/terms-of-use)
+- [GitHub](https://github.com/marinetraffic)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 40.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 62.5 |
+| Contract quality | 61.7 |
+| Contract governance | 27.3 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 50.0 |
+| Access clarity | 23.7 |
+
+**Agent readiness 30.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 20.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/marine-traffic/](https://apis.io/providers/marine-traffic/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for MarineTraffic: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/marine-traffic/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
